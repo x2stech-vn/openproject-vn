@@ -1,10 +1,15 @@
 <% content_for :header_tags do %>
-  <meta name="custom_fields_sidebar_enabled" data-enabled="<%= @custom_fields_sidebar_enabled %>">
-  <meta name="life_cycles_sidebar_enabled" data-enabled="<%= @life_cycles_sidebar_enabled %>">
+  <meta
+    name="custom_fields_sidebar_enabled"
+    data-enabled="<%= @custom_fields_sidebar_enabled %>"
+  >
+  <meta
+    name="life_cycles_sidebar_enabled"
+    data-enabled="<%= @life_cycles_sidebar_enabled %>"
+  >
 <% end -%>
 
-<%=
-  render(Primer::OpenProject::PageHeader.new) do |header|
+<%= render(Primer::OpenProject::PageHeader.new) do |header|
     header.with_title(variant: :medium) { t("overviews.label") }
     header.with_breadcrumbs(
       [
@@ -22,41 +27,59 @@
       data: { method: favored ? :delete : :post },
       classes: favored ? "op-primer--star-icon" : "",
       label: favored ? I18n.t(:button_unfavorite) : I18n.t(:button_favorite),
-      aria: { label: favored ? I18n.t(:button_unfavorite) : I18n.t(:button_favorite) },
-      test_selector: 'project-favorite-button'
-    )
+    },
+    test_selector: "project-favorite-button",
+  )
 
-    header.with_action_menu(menu_arguments: { anchor_align: :end },
-                            button_arguments: { icon: "op-kebab-vertical", "aria-label": t(:label_menu) }) do |menu|
+  header.with_action_menu(
+    menu_arguments: {
+      anchor_align: :end,
+    },
+    button_arguments: {
+      icon: "op-kebab-vertical",
+      "aria-label": t(:label_menu),
+    },
+  ) do |menu|
+    if User.current.allowed_in_project?(:select_project_custom_fields, @project)
+      menu.with_item(
+        label: t(:label_project_attribute_manage_link),
+        href: project_settings_project_custom_fields_path(@project),
+        data: {
+          turbo: false,
+        },
+      ) { |item| item.with_leading_visual_icon(icon: :pencil) }
+    end
 
-      if User.current.allowed_in_project?(:select_project_custom_fields, @project)
-        menu.with_item(
-          label: t(:label_project_attribute_manage_link),
-          href: project_settings_project_custom_fields_path(@project),
-          data: { turbo: false }
-        ) do |item|
-          item.with_leading_visual_icon(icon: :pencil)
-        end
-      end
-
-      if User.current.allowed_in_project?(:archive_project, @project)
-        menu.with_item(
-          label: t(:label_archive_project),
-          href: project_archive_path(@project, status: '', name: @project.name),
-          content_arguments: {
-            data: { method: :post, turbo: false, confirm: t('project.archive.are_you_sure', name: @project.name) },
-          }
-        ) do |item|
-          item.with_leading_visual_icon(icon: :lock)
-        end
-      end
-
+    if User.current.allowed_in_project?(:archive_project, @project)
+      menu.with_item(
+        label: t(:label_archive_project),
+        href: project_archive_path(@project, status: "", name: @project.name),
+        content_arguments: {
+          data: {
+            method: :post,
+            turbo: false,
+            confirm: t("project.archive.are_you_sure", name: @project.name),
+          },
+        },
+      ) { |item| item.with_leading_visual_icon(icon: :lock) }
     end
   end
-%>
+end %>
 
-<%# TEMPORARY #%>
-<%= link_to "log time", dialog_project_time_entries_path(@project),  data: { controller: "async-dialog", test_selector: "toggle-log-time-dialog-button" } %>
-<%= link_to "edit log time", dialog_project_time_entries_path(@project, time_entry_id: TimeEntry.first.id),  data: { controller: "async-dialog", test_selector: "toggle-log-time-dialog-button" } %>
+  <%# TEMPORARY # %>
+  <%- if Rails.env.development? %>
+    <%= link_to "log time",
+    dialog_project_time_entries_path(@project),
+    data: {
+      controller: "async-dialog",
+      test_selector: "toggle-log-time-dialog-button",
+    } %>
+    <%= link_to "edit log time",
+    dialog_project_time_entries_path(@project, time_entry_id: TimeEntry.first.id),
+    data: {
+      controller: "async-dialog",
+      test_selector: "toggle-log-time-dialog-button",
+    } %>
+  <% end %>
 
-<openproject-base></openproject-base>
+  <openproject-base></openproject-base>
