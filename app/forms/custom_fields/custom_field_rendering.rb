@@ -29,6 +29,8 @@
 #++
 
 module CustomFields::CustomFieldRendering
+  include ActiveSupport::Concern
+
   def render_custom_fields(form:)
     custom_fields.each do |custom_field|
       form.fields_for(:custom_field_values) do |builder|
@@ -59,7 +61,8 @@ module CustomFields::CustomFieldRendering
   def form_arguments(custom_field)
     {
       custom_field: custom_field,
-      object: model
+      object: model,
+      wrapper_id: @wrapper_id
     }.merge(additional_custom_field_input_arguments)
   end
 
