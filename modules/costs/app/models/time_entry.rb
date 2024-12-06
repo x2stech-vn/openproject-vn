@@ -52,7 +52,12 @@ class TimeEntry < ApplicationRecord
             if: -> { TimeEntry.must_track_start_and_end_time? }
 
   validates :start_time,
-            numericality: { only_integer: true, greater_than_or_equal_to: MIN_TIME, less_than_or_equal_to: MAX_TIME },
+            numericality: {
+              only_integer: true,
+              greater_than_or_equal_to: MIN_TIME,
+              less_than_or_equal_to: MAX_TIME,
+              message: :invalid_time
+            },
             allow_blank: true
 
   scope :on_work_packages, ->(work_packages) { where(work_package_id: work_packages) }
@@ -71,7 +76,7 @@ class TimeEntry < ApplicationRecord
   register_journal_formatted_fields "hours", formatter_key: :time_entry_hours
   register_journal_formatted_fields "user_id", formatter_key: :time_entry_named_association
   register_journal_formatted_fields "work_package_id", "activity_id", formatter_key: :named_association
-  register_journal_formatted_fields "comments", "spent_on", formatter_key: :plaintext
+  register_journal_formatted_fields "comments", "spent_on", "start_time", formatter_key: :plaintext
 
   def self.update_all(updates, conditions = nil, options = {})
     # instead of a update_all, perform an individual update during work_package#move
@@ -90,6 +95,14 @@ class TimeEntry < ApplicationRecord
 
   def hours=(value)
     write_attribute :hours, (value.is_a?(String) ? (value.to_hours || value) : value)
+  end
+
+  def start_time=(value)
+    if value.is_a?(String) && value =~ /\A(\d{1,2}):(\d{2})\z/
+      super(($1.to_i * 60) + $2.to_i)
+    else
+      super
+    end
   end
 
   # Returns true if the time entry can be edited by usr, otherwise false

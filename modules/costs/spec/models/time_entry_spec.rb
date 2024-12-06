@@ -84,7 +84,7 @@ RSpec.describe TimeEntry do
            roles: [create(:project_role, permissions:)])
   end
 
-  describe "#hours" do
+  describe "#hours=" do
     formats = { "2" => 2.0,
                 "21.1" => 21.1,
                 "2,1" => 2.1,
@@ -104,9 +104,24 @@ RSpec.describe TimeEntry do
 
     formats.each do |from, to|
       it "formats '#{from}'" do
-        t = TimeEntry.new(hours: from)
+        t = described_class.new(hours: from)
         expect(t.hours)
           .to eql to
+      end
+    end
+  end
+
+  describe "#start_time=" do
+    formats = {
+      "720" => 720,
+      "12:00" => 720,
+      "13:37" => 817
+    }
+
+    formats.each do |from, to|
+      it "formats '#{from}'" do
+        t = described_class.new(start_time: from)
+        expect(t.start_time).to eql(to)
       end
     end
   end
@@ -424,6 +439,17 @@ RSpec.describe TimeEntry do
         expect(time_entry).to be_valid
       end
 
+      it "allows string time values" do
+        time_entry.start_time = "12:00"
+        expect(time_entry).to be_valid
+      end
+
+      it "does not allow times > 23:59" do
+        time_entry.start_time = "26:00"
+        expect(time_entry).not_to be_valid
+        expect(time_entry.errors.full_messages).to include("Start time must be between 00:00 and 23:59.")
+      end
+
       it "does not allow non integer values" do
         time_entry.start_time = 1.5
         expect(time_entry).not_to be_valid
@@ -433,9 +459,7 @@ RSpec.describe TimeEntry do
         time_entry.start_time = -42
         expect(time_entry).not_to be_valid
       end
-    end
 
-    describe "start_time and end_time" do
       context "when enforcing times" do
         before do
           allow(described_class).to receive(:must_track_start_and_end_time?).and_return(true)
