@@ -29,14 +29,19 @@
  */
 
 import { Controller } from '@hotwired/stimulus';
+import { parseChronicDuration, outputChronicDuration } from 'core-app/shared/helpers/chronic_duration';
 import flatpickr from 'flatpickr';
+
+interface HTMLInputElementWithFlatpickr extends HTMLInputElement {
+  _flatpickr?:flatpickr.Instance;
+}
 
 export default class TimeEntryController extends Controller {
   static targets = ['startTimeInput', 'endTimeInput', 'hoursInput'];
 
-  declare readonly startTimeInputTarget: HTMLInputElement;
-  declare readonly endTimeInputTarget: HTMLInputElement;
-  declare readonly hoursInputTarget: HTMLInputElement;
+  declare readonly startTimeInputTarget:HTMLInputElementWithFlatpickr;
+  declare readonly endTimeInputTarget:HTMLInputElementWithFlatpickr;
+  declare readonly hoursInputTarget:HTMLInputElement;
 
   startTimeInputTargetConnected() {
     this.initTimePicker(this.startTimeInputTarget);
@@ -46,33 +51,62 @@ export default class TimeEntryController extends Controller {
     this.initTimePicker(this.endTimeInputTarget);
   }
 
-  dateChanged() {
+  datesChanged(initiatedBy:HTMLInputElement) {
     const startTimeParts = this.startTimeInputTarget.value.split(':');
     const endTimeParts = this.endTimeInputTarget.value.split(':');
 
-    const startTime = parseInt(startTimeParts[0], 10) * 60 + parseInt(startTimeParts[1], 10);
-    const endTime = parseInt(endTimeParts[0], 10) * 60 + parseInt(endTimeParts[1], 10);
+    const startTimeInMinutes = parseInt(startTimeParts[0], 10) * 60 + parseInt(startTimeParts[1], 10);
+    const endTimeInMinutes = parseInt(endTimeParts[0], 10) * 60 + parseInt(endTimeParts[1], 10);
+    const hoursInMinutes = Math.round((parseChronicDuration(this.hoursInputTarget.value) || 0) / 60);
 
-    this.toggleEndPlusOneDayCapion(endTime < startTime);
+    // We calculate the hours field if:
+    //  - We have start & end time and no hours
+    //  - We have start & end time and we have triggered the change from the end time field
+    if (startTimeInMinutes && endTimeInMinutes && (hoursInMinutes === 0 || initiatedBy === this.endTimeInputTarget)) {
+      const duration = endTimeInMinutes - startTimeInMinutes;
+      this.hoursInputTarget.value = outputChronicDuration(duration * 60, { format: 'hours_only' }) || '';
+    } else if (startTimeInMinutes && hoursInMinutes) {
+      const newEndTime = startTimeInMinutes + hoursInMinutes;
+
+      const targetDate = new Date();
+      targetDate.setHours(Math.floor(newEndTime / 60));
+      targetDate.setMinutes(Math.round(newEndTime % 60));
+      targetDate.setSeconds(0);
+      this.endTimeInputTarget._flatpickr!.setDate(targetDate); // eslint-disable-line no-underscore-dangle
+    }
+
+    this.toggleEndTimePlusCaption(startTimeInMinutes + hoursInMinutes);
   }
 
-  toggleEndPlusOneDayCapion(show: boolean) {
-    const formControl = this.endTimeInputTarget.closest('.FormControl') as HTMLElement;
+  hoursChanged() {
+    // Parse input through our chronic duration parser and then reformat as hours that can be nicely parsed on the
+    // backend
+    const hours = parseChronicDuration(this.hoursInputTarget.value, { defaultUnit: 'hours', ignoreSecondsWhenColonSeperated: true });
+    this.hoursInputTarget.value = outputChronicDuration(hours, { format: 'hours_only' }) || '';
 
-    if (show) {
-      const span = document.createElement('span');
-      span.className = 'FormControl-caption';
-      span.innerText = '+1 day';
-      formControl.append(span);
-    } else {
-      const caption = formControl.querySelector('.FormControl-caption');
-      if (caption) {
-        caption.remove();
-      }
+    this.datesChanged(this.hoursInputTarget);
+  }
+
+  hoursKeyEnterPress(event:KeyboardEvent) {
+    if (event.currentTarget instanceof HTMLInputElement) {
+      event.currentTarget.blur();
     }
   }
 
-  initTimePicker(field: HTMLInputElement) {
+  toggleEndTimePlusCaption(endTimeInMinutes:number) {
+    const formControl = this.endTimeInputTarget.closest('.FormControl') as HTMLElement;
+    formControl.querySelectorAll('.FormControl-caption').forEach((caption) => caption.remove());
+
+    if (endTimeInMinutes > (24 * 60)) {
+      const diffInDays = Math.floor(endTimeInMinutes / (60 * 24));
+      const span = document.createElement('span');
+      span.className = 'FormControl-caption';
+      span.innerText = `+ ${diffInDays} ${diffInDays === 1 ? 'day' : 'days'}`;
+      formControl.append(span);
+    }
+  }
+
+  initTimePicker(field:HTMLInputElement) {
     flatpickr(field, {
       enableTime: true,
       noCalendar: true,
@@ -81,7 +115,7 @@ export default class TimeEntryController extends Controller {
       static: true,
       appendTo: document.querySelector('#time-entry-dialog') as HTMLElement,
       onChange: () => {
-        this.dateChanged();
+        this.datesChanged(field);
       },
     });
   }

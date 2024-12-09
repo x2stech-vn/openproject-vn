@@ -128,6 +128,7 @@ class TimeEntry < ApplicationRecord
   def start_timestamp
     return nil if start_time.blank?
     return nil if time_zone.blank?
+    return nil if spent_on.blank?
 
     time_zone_object.local(spent_on.year, spent_on.month, spent_on.day, start_time / 60, start_time % 60)
   end
@@ -136,6 +137,7 @@ class TimeEntry < ApplicationRecord
     return nil if start_time.blank?
     return nil if time_zone.blank?
     return nil if hours.blank?
+    return nil if spent_on.blank?
 
     start_timestamp + hours.hours
   end

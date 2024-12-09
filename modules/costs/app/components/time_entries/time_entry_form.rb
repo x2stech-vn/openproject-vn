@@ -27,10 +27,10 @@ module TimeEntries
                            type: "date",
                            required: true,
                            datepicker_options: { inDialog: true },
+                           value: model.spent_on&.iso8601,
                            label: TimeEntry.human_attribute_name(:spent_on)
 
       f.group(layout: :horizontal) do |g|
-        # TODO: Add a time picker based on the date picker linked above
         g.text_field name: :start_time,
                      required: true,
                      label: TimeEntry.human_attribute_name(:start_time),
@@ -47,7 +47,8 @@ module TimeEntries
       f.text_field name: :hours,
                    required: true,
                    label: TimeEntry.human_attribute_name(:hours),
-                   data: { "time-entry-target" => "hoursInput" }
+                   data: { "time-entry-target" => "hoursInput",
+                           "action" => "blur->time-entry#hoursChanged keypress.enter->time-entry#hoursKeyEnterPress" }
 
       f.work_package_autocompleter name: :work_package_id,
                                    label: TimeEntry.human_attribute_name(:work_package),
