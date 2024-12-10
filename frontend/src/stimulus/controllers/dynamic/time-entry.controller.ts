@@ -66,7 +66,10 @@ export default class TimeEntryController extends Controller {
     } else if (startTimeInMinutes && hoursInMinutes) {
       const newEndTime = (startTimeInMinutes + hoursInMinutes) % (24 * 60);
 
-      this.endTimeInputTarget.value = `${Math.floor(newEndTime / 60).toString().padStart(2, '0')}:${Math.round(newEndTime % 60).toString().padStart(2, '0')}`;
+      this.endTimeInputTarget.value = [
+        Math.floor(newEndTime / 60).toString().padStart(2, '0'),
+        Math.round(newEndTime % 60).toString().padStart(2, '0'),
+      ].join(':');
     }
 
     this.toggleEndTimePlusCaption(startTimeInMinutes, hoursInMinutes);
@@ -95,7 +98,7 @@ export default class TimeEntryController extends Controller {
       const diffInDays = Math.floor((startTimeInMinutes + hoursInMinutes) / (60 * 24));
       const span = document.createElement('span');
       span.className = 'FormControl-caption';
-      span.innerText = `+ ${diffInDays} ${diffInDays === 1 ? 'day' : 'days'}`;
+      span.innerText = `+${diffInDays === 1 ? I18n.t('js.units.day.one') : I18n.t('js.units.day.other', { count: diffInDays })}`;
       formControl.append(span);
     }
   }
