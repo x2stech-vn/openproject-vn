@@ -125,7 +125,7 @@ class TimeEntry < ApplicationRecord
       (user_id == usr.id && usr.allowed_in_project?(:view_own_hourly_rate, project))
   end
 
-  def start_timestamp
+  def start_timestamp # rubocop:disable Metrics/AbcSize
     return nil if start_time.blank?
     return nil if time_zone.blank?
     return nil if spent_on.blank?

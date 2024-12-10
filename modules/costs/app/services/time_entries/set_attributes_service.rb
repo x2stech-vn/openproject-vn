@@ -30,7 +30,7 @@ module TimeEntries
   class SetAttributesService < ::BaseServices::SetAttributes
     private
 
-    def set_attributes(_attributes)
+    def set_attributes(_attributes) # rubocop:disable Metrics/AbcSize
       model.attributes = params
 
       ##
