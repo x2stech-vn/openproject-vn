@@ -35,7 +35,9 @@ export default class TimeEntryController extends Controller {
   static targets = ['startTimeInput', 'endTimeInput', 'hoursInput'];
 
   declare readonly startTimeInputTarget:HTMLInputElement;
+  declare readonly hasStartTimeInputTarget:boolean;
   declare readonly endTimeInputTarget:HTMLInputElement;
+  declare readonly hasEndTimeInputTarget:boolean;
   declare readonly hoursInputTarget:HTMLInputElement;
 
   timeInputChanged(event:InputEvent) {
@@ -43,6 +45,10 @@ export default class TimeEntryController extends Controller {
   }
 
   datesChanged(initiatedBy:HTMLInputElement) {
+    if (!this.hasStartTimeInputTarget || !this.hasEndTimeInputTarget) {
+      return;
+    }
+
     const startTimeParts = this.startTimeInputTarget.value.split(':');
     const endTimeParts = this.endTimeInputTarget.value.split(':');
 
