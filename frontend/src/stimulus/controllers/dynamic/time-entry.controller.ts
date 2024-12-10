@@ -30,25 +30,16 @@
 
 import { Controller } from '@hotwired/stimulus';
 import { parseChronicDuration, outputChronicDuration } from 'core-app/shared/helpers/chronic_duration';
-import flatpickr from 'flatpickr';
-
-interface HTMLInputElementWithFlatpickr extends HTMLInputElement {
-  _flatpickr?:flatpickr.Instance;
-}
 
 export default class TimeEntryController extends Controller {
   static targets = ['startTimeInput', 'endTimeInput', 'hoursInput'];
 
-  declare readonly startTimeInputTarget:HTMLInputElementWithFlatpickr;
-  declare readonly endTimeInputTarget:HTMLInputElementWithFlatpickr;
+  declare readonly startTimeInputTarget:HTMLInputElement;
+  declare readonly endTimeInputTarget:HTMLInputElement;
   declare readonly hoursInputTarget:HTMLInputElement;
 
-  startTimeInputTargetConnected() {
-    this.initTimePicker(this.startTimeInputTarget);
-  }
-
-  endTimeInputTargetConnected() {
-    this.initTimePicker(this.endTimeInputTarget);
+  timeInputChanged(event:InputEvent) {
+    this.datesChanged(event.currentTarget as HTMLInputElement);
   }
 
   datesChanged(initiatedBy:HTMLInputElement) {
@@ -57,25 +48,22 @@ export default class TimeEntryController extends Controller {
 
     const startTimeInMinutes = parseInt(startTimeParts[0], 10) * 60 + parseInt(startTimeParts[1], 10);
     const endTimeInMinutes = parseInt(endTimeParts[0], 10) * 60 + parseInt(endTimeParts[1], 10);
-    const hoursInMinutes = Math.round((parseChronicDuration(this.hoursInputTarget.value) || 0) / 60);
+    let hoursInMinutes = Math.round((parseChronicDuration(this.hoursInputTarget.value) || 0) / 60);
 
     // We calculate the hours field if:
     //  - We have start & end time and no hours
     //  - We have start & end time and we have triggered the change from the end time field
     if (startTimeInMinutes && endTimeInMinutes && (hoursInMinutes === 0 || initiatedBy === this.endTimeInputTarget)) {
-      const duration = endTimeInMinutes - startTimeInMinutes;
-      this.hoursInputTarget.value = outputChronicDuration(duration * 60, { format: 'hours_only' }) || '';
+      hoursInMinutes = endTimeInMinutes - startTimeInMinutes;
+      if (hoursInMinutes <= 0) { hoursInMinutes += 24 * 60; }
+      this.hoursInputTarget.value = outputChronicDuration(hoursInMinutes * 60, { format: 'hours_only' }) || '';
     } else if (startTimeInMinutes && hoursInMinutes) {
-      const newEndTime = startTimeInMinutes + hoursInMinutes;
+      const newEndTime = (startTimeInMinutes + hoursInMinutes) % (24 * 60);
 
-      const targetDate = new Date();
-      targetDate.setHours(Math.floor(newEndTime / 60));
-      targetDate.setMinutes(Math.round(newEndTime % 60));
-      targetDate.setSeconds(0);
-      this.endTimeInputTarget._flatpickr!.setDate(targetDate); // eslint-disable-line no-underscore-dangle
+      this.endTimeInputTarget.value = `${Math.floor(newEndTime / 60).toString().padStart(2, '0')}:${Math.round(newEndTime % 60).toString().padStart(2, '0')}`;
     }
 
-    this.toggleEndTimePlusCaption(startTimeInMinutes + hoursInMinutes);
+    this.toggleEndTimePlusCaption(startTimeInMinutes, hoursInMinutes);
   }
 
   hoursChanged() {
@@ -93,30 +81,16 @@ export default class TimeEntryController extends Controller {
     }
   }
 
-  toggleEndTimePlusCaption(endTimeInMinutes:number) {
+  toggleEndTimePlusCaption(startTimeInMinutes:number, hoursInMinutes:number) {
     const formControl = this.endTimeInputTarget.closest('.FormControl') as HTMLElement;
     formControl.querySelectorAll('.FormControl-caption').forEach((caption) => caption.remove());
 
-    if (endTimeInMinutes > (24 * 60)) {
-      const diffInDays = Math.floor(endTimeInMinutes / (60 * 24));
+    if (startTimeInMinutes + hoursInMinutes >= (24 * 60)) {
+      const diffInDays = Math.floor((startTimeInMinutes + hoursInMinutes) / (60 * 24));
       const span = document.createElement('span');
       span.className = 'FormControl-caption';
       span.innerText = `+ ${diffInDays} ${diffInDays === 1 ? 'day' : 'days'}`;
       formControl.append(span);
     }
-  }
-
-  initTimePicker(field:HTMLInputElement) {
-    flatpickr(field, {
-      enableTime: true,
-      noCalendar: true,
-      dateFormat: 'H:i',
-      time_24hr: true,
-      static: true,
-      appendTo: document.querySelector('#time-entry-dialog') as HTMLElement,
-      onChange: () => {
-        this.datesChanged(field);
-      },
-    });
   }
 }

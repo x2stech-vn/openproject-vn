@@ -32,16 +32,24 @@ module TimeEntries
 
       f.group(layout: :horizontal) do |g|
         g.text_field name: :start_time,
+                     type: "time",
                      required: true,
                      label: TimeEntry.human_attribute_name(:start_time),
                      value: model.start_timestamp&.strftime("%H:%M"),
-                     data: { "time-entry-target" => "startTimeInput" }
+                     data: {
+                       "time-entry-target" => "startTimeInput",
+                       "action" => "input->time-entry#timeInputChanged"
+                     }
 
         g.text_field name: :end_time,
+                     type: "time",
                      required: true,
                      label: TimeEntry.human_attribute_name(:end_time),
                      value: model.end_timestamp&.strftime("%H:%M"),
-                     data: { "time-entry-target" => "endTimeInput" }
+                     data: {
+                       "time-entry-target" => "endTimeInput",
+                       "action" => "input->time-entry#timeInputChanged"
+                     }
       end
 
       f.text_field name: :hours,
