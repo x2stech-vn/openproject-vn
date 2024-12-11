@@ -57,6 +57,7 @@ module TimeEntries
       f.text_field name: :hours,
                    required: true,
                    label: TimeEntry.human_attribute_name(:hours),
+                   value: ChronicDuration.output(model.hours * 3600, format: :hours_only),
                    data: { "time-entry-target" => "hoursInput",
                            "action" => "blur->time-entry#hoursChanged keypress.enter->time-entry#hoursKeyEnterPress" }
 
