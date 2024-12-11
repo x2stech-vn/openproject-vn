@@ -27,6 +27,12 @@
 #++
 
 Rails.application.routes.draw do
+  resources :time_entries, only: %i[create update] do
+    get :dialog, on: :collection
+    get "users/:user_id/tz_caption", action: :user_caption, on: :collection
+    get "work_packages/:work_package_id/time_entry_activities", action: :change_activities_input, on: :collection
+  end
+
   scope "projects/:project_id", as: "projects" do
     resources :cost_entries, controller: "costlog", only: %i[new create]
 
@@ -44,13 +50,12 @@ Rails.application.routes.draw do
       resource :time_entry_activities, only: %i[show update]
     end
 
-    resources :time_entries, only: %i[create update] do
-      get :dialog, on: :collection
-    end
+    get "/time_entries/dialog" => "time_entries#dialog"
   end
 
   scope "work_packages/:work_package_id", as: "work_packages" do
     resources :cost_entries, controller: "costlog", only: %i[new]
+    get "/time_entries/dialog" => "time_entries#dialog"
   end
 
   resources :cost_entries, controller: "costlog", only: %i[edit update destroy]

@@ -30,6 +30,8 @@
 
 import { Controller } from '@hotwired/stimulus';
 import { parseChronicDuration, outputChronicDuration } from 'core-app/shared/helpers/chronic_duration';
+import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service';
+import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 
 export default class TimeEntryController extends Controller {
   static targets = ['startTimeInput', 'endTimeInput', 'hoursInput'];
@@ -39,6 +41,21 @@ export default class TimeEntryController extends Controller {
   declare readonly endTimeInputTarget:HTMLInputElement;
   declare readonly hasEndTimeInputTarget:boolean;
   declare readonly hoursInputTarget:HTMLInputElement;
+
+  private turboRequests:TurboRequestsService;
+  private pathHelper:PathHelperService;
+
+  async connect() {
+    const context = await window.OpenProject.getPluginContext();
+    this.turboRequests = context.services.turboRequests;
+    this.pathHelper = context.services.pathHelperService;
+  }
+
+  userChanged(event:InputEvent) {
+    const userId = (event.currentTarget as HTMLInputElement).value;
+
+    void this.turboRequests.request(this.pathHelper.timeEntriesUserTimezoneCaption(userId), { method: 'GET' });
+  }
 
   timeInputChanged(event:InputEvent) {
     this.datesChanged(event.currentTarget as HTMLInputElement);
@@ -62,7 +79,9 @@ export default class TimeEntryController extends Controller {
     if (startTimeInMinutes && endTimeInMinutes && (hoursInMinutes === 0 || initiatedBy === this.endTimeInputTarget)) {
       hoursInMinutes = endTimeInMinutes - startTimeInMinutes;
       if (hoursInMinutes <= 0) { hoursInMinutes += 24 * 60; }
-      this.hoursInputTarget.value = outputChronicDuration(hoursInMinutes * 60, { format: 'hours_only' }) || '';
+
+      const formattedHours = outputChronicDuration(hoursInMinutes * 60, { format: 'hours_only' }) || '';
+      this.hoursInputTarget.value = formattedHours;
     } else if (startTimeInMinutes && hoursInMinutes) {
       const newEndTime = (startTimeInMinutes + hoursInMinutes) % (24 * 60);
 
@@ -92,9 +111,11 @@ export default class TimeEntryController extends Controller {
 
   toggleEndTimePlusCaption(startTimeInMinutes:number, hoursInMinutes:number) {
     const formControl = this.endTimeInputTarget.closest('.FormControl') as HTMLElement;
-    formControl.querySelectorAll('.FormControl-caption').forEach((caption) => caption.remove());
+    formControl
+      .querySelectorAll('.FormControl-caption')
+      .forEach((caption) => caption.remove());
 
-    if (startTimeInMinutes + hoursInMinutes >= (24 * 60)) {
+    if (startTimeInMinutes + hoursInMinutes >= 24 * 60) {
       const diffInDays = Math.floor((startTimeInMinutes + hoursInMinutes) / (60 * 24));
       const span = document.createElement('span');
       span.className = 'FormControl-caption';

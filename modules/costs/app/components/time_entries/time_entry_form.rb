@@ -5,15 +5,15 @@ module TimeEntries
     form do |f|
       f.autocompleter(
         name: :user_id,
+        id: "time_entry_user_id",
         label: TimeEntry.human_attribute_name(:user),
         required: true,
         autocomplete_options: {
           defaultData: true,
+          hiddenFieldAction: "change->time-entry#userChanged",
           component: "opce-user-autocompleter",
           url: ::API::V3::Utilities::PathHelper::ApiV3Path.principals,
-          filters: [{ name: "type", operator: "=", values: %w[User Group] },
-                    { name: "member", operator: "=", values: [model.project_id] },
-                    { name: "status", operator: "=", values: [Principal.statuses[:active], Principal.statuses[:invited]] }],
+          filters: user_completer_filter_options,
           searchKey: "any_name_attribute",
           resource: "principals",
           focusDirectly: false,
@@ -57,12 +57,13 @@ module TimeEntries
       f.text_field name: :hours,
                    required: true,
                    label: TimeEntry.human_attribute_name(:hours),
-                   value: ChronicDuration.output(model.hours * 3600, format: :hours_only),
+                   value: model.hours.present? ? ChronicDuration.output(model.hours * 3600, format: :hours_only) : "",
                    data: { "time-entry-target" => "hoursInput",
                            "action" => "blur->time-entry#hoursChanged keypress.enter->time-entry#hoursKeyEnterPress" }
 
       f.work_package_autocompleter name: :work_package_id,
                                    label: TimeEntry.human_attribute_name(:work_package),
+                                   required: true,
                                    autocomplete_options: {
                                      focusDirectly: false,
                                      append_to: "#time-entry-dialog",
@@ -71,10 +72,20 @@ module TimeEntries
                                      ]
                                    }
 
-      f.select_list name: :activity_id, label: TimeEntry.human_attribute_name(:activity), include_blank: true do |list|
+      f.autocompleter(
+        name: :activity_id,
+        label: TimeEntry.human_attribute_name(:activity),
+        required: false,
+        include_blank: true,
+        autocomplete_options: {
+          focusDirectly: false,
+          multiple: false,
+          decorated: true,
+          append_to: "#time-entry-dialog"
+        }
+      ) do |select|
         activities.each do |activity|
-          selected = (model.activity_id == activity.id) || (model.activity_id.blank? && activity.is_default?)
-          list.option(value: activity.id, label: activity.name, selected:)
+          select.option(value: activity.id, label: activity.name, selected: (model.activity_id == activity.id))
         end
       end
 
@@ -107,6 +118,19 @@ module TimeEntries
 
     def activities
       TimeEntryActivity.active_in_project(project)
+    end
+
+    def user_autocompleter_filter_options
+      filters = [
+        { name: "type", operator: "=", values: %w[User Group] },
+        { name: "status", operator: "=", values: [Principal.statuses[:active], Principal.statuses[:invited]] }
+      ]
+
+      if model.project_id
+        filters << { name: "member", operator: "=", values: [model.project_id] }
+      end
+
+      filters
     end
   end
 end

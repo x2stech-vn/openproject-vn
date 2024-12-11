@@ -41,7 +41,7 @@ export class PathHelperService {
     return this.appBasePath;
   }
 
-  public attachmentDownloadPath(attachmentIdentifier:string, slug:string|undefined) {
+  public attachmentDownloadPath(attachmentIdentifier:string, slug:string | undefined) {
     const path = `${this.staticBase}/attachments/${attachmentIdentifier}`;
 
     if (slug) {
@@ -50,7 +50,7 @@ export class PathHelperService {
     return path;
   }
 
-  public attachmentContentPath(attachmentIdentifier:number|string) {
+  public attachmentContentPath(attachmentIdentifier:number | string) {
     return `${this.staticBase}/attachments/${attachmentIdentifier}/content`;
   }
 
@@ -66,15 +66,15 @@ export class PathHelperService {
     return `${this.ifcModelsPath(projectIdentifier)}/new`;
   }
 
-  public ifcModelsEditPath(projectIdentifier:string, modelId:number|string) {
+  public ifcModelsEditPath(projectIdentifier:string, modelId:number | string) {
     return `${this.ifcModelsPath(projectIdentifier)}/${modelId}/edit`;
   }
 
-  public ifcModelsDeletePath(projectIdentifier:string, modelId:number|string) {
+  public ifcModelsDeletePath(projectIdentifier:string, modelId:number | string) {
     return `${this.ifcModelsPath(projectIdentifier)}/${modelId}`;
   }
 
-  public bimDetailsPath(projectIdentifier:string, workPackageId:string, viewpoint:number|string|null = null) {
+  public bimDetailsPath(projectIdentifier:string, workPackageId:string, viewpoint:number | string | null = null) {
     let path = `${this.projectPath(projectIdentifier)}/bcf/details/${workPackageId}`;
 
     if (viewpoint !== null) {
@@ -168,7 +168,7 @@ export class PathHelperService {
     return `${this.projectPath(projectId)}/wiki`;
   }
 
-  public projectWorkPackagePath(projectId:string, wpId:string|number) {
+  public projectWorkPackagePath(projectId:string, wpId:string | number) {
     return `${this.projectWorkPackagesPath(projectId)}/${wpId}`;
   }
 
@@ -180,14 +180,14 @@ export class PathHelperService {
     return `${this.projectWorkPackagesPath(projectId)}/new`;
   }
 
-  public boardsPath(projectIdentifier:string|null) {
+  public boardsPath(projectIdentifier:string | null) {
     if (projectIdentifier) {
       return `${this.projectPath(projectIdentifier)}/boards`;
     }
     return `${this.staticBase}/boards`;
   }
 
-  public newBoardsPath(projectIdentifier:string|null) {
+  public newBoardsPath(projectIdentifier:string | null) {
     return `${this.boardsPath(projectIdentifier)}/new`;
   }
 
@@ -195,7 +195,7 @@ export class PathHelperService {
     return `${this.projectPath(projectIdentifier)}/dashboards`;
   }
 
-  public timeEntriesPath(workPackageId:string|number) {
+  public timeEntriesPath(workPackageId:string | number) {
     const suffix = '/time_entries';
 
     if (workPackageId) {
@@ -216,19 +216,19 @@ export class PathHelperService {
     return `${this.staticBase}/placeholder_users`;
   }
 
-  public userPath(id:string|number) {
+  public userPath(id:string | number) {
     return `${this.usersPath()}/${id}`;
   }
 
-  public userHoverCardPath(id:string|number) {
+  public userHoverCardPath(id:string | number) {
     return `${this.usersPath()}/${id}/hover_card`;
   }
 
-  public placeholderUserPath(id:string|number) {
+  public placeholderUserPath(id:string | number) {
     return `${this.placeholderUsersPath()}/${id}`;
   }
 
-  public groupPath(id:string|number) {
+  public groupPath(id:string | number) {
     return `${this.groupsPath()}/${id}`;
   }
 
@@ -236,7 +236,7 @@ export class PathHelperService {
     return `${this.staticBase}/roles`;
   }
 
-  public rolePath(id:string|number) {
+  public rolePath(id:string | number) {
     return `${this.rolesPath()}/${id}`;
   }
 
@@ -244,11 +244,11 @@ export class PathHelperService {
     return `${this.staticBase}/versions`;
   }
 
-  public versionEditPath(id:string|number) {
+  public versionEditPath(id:string | number) {
     return `${this.staticBase}/versions/${id}/edit`;
   }
 
-  public versionShowPath(id:string|number) {
+  public versionShowPath(id:string | number) {
     return `${this.staticBase}/versions/${id}`;
   }
 
@@ -256,19 +256,19 @@ export class PathHelperService {
     return `${this.staticBase}/work_packages`;
   }
 
-  public workPackagePath(id:string|number) {
+  public workPackagePath(id:string | number) {
     return `${this.staticBase}/work_packages/${id}`;
   }
 
-  public workPackageShortPath(id:string|number) {
+  public workPackageShortPath(id:string | number) {
     return `${this.staticBase}/wp/${id}`;
   }
 
-  public workPackageCopyPath(workPackageId:string|number) {
+  public workPackageCopyPath(workPackageId:string | number) {
     return `${this.workPackagePath(workPackageId)}/copy`;
   }
 
-  public workPackageDetailsPath(projectIdentifier:string, workPackageId:string|number, tab?:string) {
+  public workPackageDetailsPath(projectIdentifier:string, workPackageId:string | number, tab?:string) {
     if (tab) {
       return `${this.projectWorkPackagePath(projectIdentifier, workPackageId)}/details/${tab}`;
     }
@@ -276,23 +276,23 @@ export class PathHelperService {
     return `${this.projectWorkPackagesPath(projectIdentifier)}/details/${workPackageId}`;
   }
 
-  public workPackageDetailsCopyPath(projectIdentifier:string, workPackageId:string|number) {
+  public workPackageDetailsCopyPath(projectIdentifier:string, workPackageId:string | number) {
     return this.workPackageDetailsPath(projectIdentifier, workPackageId, 'copy');
   }
 
-  public workPackageReminderModalBodyPath(workPackageId:string|number) {
+  public workPackageReminderModalBodyPath(workPackageId:string | number) {
     return `${this.workPackagePath(workPackageId)}/reminders/modal_body`;
   }
 
-  public workPackageSharePath(workPackageId:string|number) {
+  public workPackageSharePath(workPackageId:string | number) {
     return `${this.workPackagePath(workPackageId)}/shares`;
   }
 
-  public workPackageHoverCardPath(workPackageId:string|number) {
+  public workPackageHoverCardPath(workPackageId:string | number) {
     return `${this.workPackagePath(workPackageId)}/hover_card`;
   }
 
-  public workPackageProgressModalPath(workPackageId:string|number) {
+  public workPackageProgressModalPath(workPackageId:string | number) {
     if (workPackageId === 'new') {
       return `${this.workPackagePath(workPackageId)}/progress/new`;
     }
@@ -300,7 +300,7 @@ export class PathHelperService {
     return `${this.workPackagePath(workPackageId)}/progress/edit`;
   }
 
-  public workPackageUpdateCounterPath(workPackageId:string|number, counter:string) {
+  public workPackageUpdateCounterPath(workPackageId:string | number, counter:string) {
     return `${this.workPackagePath(workPackageId)}/split_view/update_counter?counter=${counter}`;
   }
 
@@ -328,5 +328,21 @@ export class PathHelperService {
 
   public jobStatusModalPath(jobId:string) {
     return `${this.staticBase}/job_statuses/${jobId}/dialog`;
+  }
+
+  public timeEntriesUserTimezoneCaption(userId:string) {
+    return `${this.staticBase}/time_entries/users/${userId}/tz_caption`;
+  }
+
+  public timeEntriesWorkPackageActicity(workPackageId:string) {
+    return `${this.staticBase}/time_entries/work_packages/${workPackageId}/time_entry_activities`;
+  }
+
+  public timeEntryWorkPackageDialog(workPackageId:string) {
+    return `${this.workPackagePath(workPackageId)}/time_entries/dialog`;
+  }
+
+  public timeEntryProjectDialog(projectId:string) {
+    return `${this.projectPath(projectId)}/time_entries/dialog`;
   }
 }
