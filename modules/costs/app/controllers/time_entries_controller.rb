@@ -31,23 +31,30 @@ class TimeEntriesController < ApplicationController
   include OpTurbo::DialogStreamHelper
 
   before_action :require_login
-  before_action :find_project_by_project_id
 
-  authorization_checked! :dialog, :create, :update, :user_caption
+  authorization_checked! :dialog, :create, :update, :user_tz_caption, :time_entry_activities
 
   def dialog
+    if params[:project_id].present?
+      @project = begin
+        Project.visible.find(params[:project_id])
+      rescue ActiveRecord::NotFound
+        nil
+      end
+    end
+    @work_package = WorkPackage.visible.find_by(id: params[:work_package_id]) if params[:work_package_id].present?
     @time_entry = if params[:time_entry_id]
                     # TODO: Properly handle authorization
                     TimeEntry.find_by(id: params[:time_entry_id])
                   else
-                    TimeEntry.new(project: @project, user: User.current)
+                    TimeEntry.new(project: @project, work_package: @work_package, user: User.current)
                   end
   end
 
-  def user_caption
+  def user_tz_caption
     user = User.visible.find_by(id: params[:user_id])
     caption = if user && user.time_zone != User.current.time_zone
-                I18n.t("notice_different_time_zones", tz: user.time_zone.name)
+                I18n.t("notice_different_time_zones", tz: helpers.friendly_timezone_name(user.time_zone))
               else
                 ""
               end
@@ -58,10 +65,14 @@ class TimeEntriesController < ApplicationController
     respond_with_turbo_streams
   end
 
+  def time_entry_activities
+    respond_with_turbo_streams
+  end
+
   def create
     call = TimeEntries::CreateService
       .new(user: current_user)
-      .call(time_entry_params)
+      .call(permitted_params.time_entries)
 
     @time_entry = call.result
 
@@ -80,7 +91,7 @@ class TimeEntriesController < ApplicationController
 
     call = TimeEntries::UpdateService
       .new(user: current_user, model: time_entry)
-      .call(time_entry_params)
+      .call(permitted_params.time_entries)
 
     @time_entry = call.result
 
@@ -92,13 +103,5 @@ class TimeEntriesController < ApplicationController
 
       respond_with_turbo_streams
     end
-  end
-
-  private
-
-  def time_entry_params
-    permitted_params.time_entries.merge(
-      project_id: @project.id
-    )
   end
 end

@@ -29,8 +29,8 @@
 Rails.application.routes.draw do
   resources :time_entries, only: %i[create update] do
     get :dialog, on: :collection
-    get "users/:user_id/tz_caption", action: :user_caption, on: :collection
-    get "work_packages/:work_package_id/time_entry_activities", action: :change_activities_input, on: :collection
+    get "/users/:user_id/tz_caption", action: :user_tz_caption, on: :collection
+    get "/work_packages/:work_package_id/time_entry_activities", action: :change_activities_input, on: :collection
   end
 
   scope "projects/:project_id", as: "projects" do
@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     resources :hourly_rates, only: %i[show edit update] do
       post :set_rate, on: :member
     end
+
+    get "/time_entries/dialog" => "time_entries#dialog"
   end
 
   scope "my" do
@@ -49,8 +51,6 @@ Rails.application.routes.draw do
     namespace "settings" do
       resource :time_entry_activities, only: %i[show update]
     end
-
-    get "/time_entries/dialog" => "time_entries#dialog"
   end
 
   scope "work_packages/:work_package_id", as: "work_packages" do

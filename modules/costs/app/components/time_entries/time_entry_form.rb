@@ -117,10 +117,12 @@ module TimeEntries
     end
 
     def activities
+      return [] if project.blank?
+
       TimeEntryActivity.active_in_project(project)
     end
 
-    def user_autocompleter_filter_options
+    def user_completer_filter_options
       filters = [
         { name: "type", operator: "=", values: %w[User Group] },
         { name: "status", operator: "=", values: [Principal.statuses[:active], Principal.statuses[:invited]] }

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -28,41 +26,11 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-module TimeEntries
-  class TimeEntryFormComponent < ApplicationComponent
-    include OpTurbo::Streamable
-    include OpPrimer::ComponentHelpers
+module TimeEntriesHelper
+  def friendly_timezone_name(time_zone)
+    tz_info = time_zone.tzinfo
+    friendly_name = ActiveSupport::TimeZone::MAPPING.key(tz_info.canonical_zone.name)
 
-    def initialize(time_entry:)
-      super()
-      @time_entry = time_entry
-    end
-
-    private
-
-    attr_reader :time_entry
-
-    delegate :project, :work_package, to: :time_entry
-
-    def form_options
-      base = {
-        model: time_entry,
-        data: { turbo: true },
-        id: "time-entry-form"
-      }
-
-      if time_entry.persisted?
-        base.merge({
-                     url: time_entry_path(time_entry),
-                     method: :patch
-                   })
-      else
-
-        base.merge({
-                     url: time_entries_path,
-                     method: :post
-                   })
-      end
-    end
+    "(UTC#{ActiveSupport::TimeZone.seconds_to_utc_offset(tz_info.base_utc_offset)}) #{friendly_name}"
   end
 end
