@@ -43,12 +43,17 @@ class TimeEntriesController < ApplicationController
       end
     end
     @work_package = WorkPackage.visible.find_by(id: params[:work_package_id]) if params[:work_package_id].present?
+
     @time_entry = if params[:time_entry_id]
                     # TODO: Properly handle authorization
                     TimeEntry.find_by(id: params[:time_entry_id])
                   else
                     TimeEntry.new(project: @project, work_package: @work_package, user: User.current)
                   end
+
+    if params[:date].present?
+      @time_entry.spent_on = params[:date]
+    end
   end
 
   def user_tz_caption
