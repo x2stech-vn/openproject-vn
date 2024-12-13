@@ -66,6 +66,21 @@ class TimeEntriesController < ApplicationController
   end
 
   def time_entry_activities
+    work_package = WorkPackage.visible.find_by(id: params[:work_package_id])
+
+    time_entry = TimeEntry.new(project: work_package.project, work_package: work_package)
+
+    form = Primer::Forms::Builder.new(
+      TimeEntry.model_name.param_key,
+      time_entry,
+      helpers,
+      {}
+    )
+
+    replace_via_turbo_stream(
+      component: TimeEntries::ActivityFormComponent.new(form:)
+    )
+
     respond_with_turbo_streams
   end
 
@@ -76,9 +91,7 @@ class TimeEntriesController < ApplicationController
 
     @time_entry = call.result
 
-    if call.success?
-    # TODO: just close here?
-    else
+    unless call.success?
       form_component = TimeEntries::TimeEntryFormComponent.new(time_entry: @time_entry)
       update_via_turbo_stream(component: form_component, status: :bad_request)
 
@@ -95,9 +108,7 @@ class TimeEntriesController < ApplicationController
 
     @time_entry = call.result
 
-    if call.success?
-    # TODO: just close here?
-    else
+    unless call.success?
       form_component = TimeEntries::TimeEntryFormComponent.new(time_entry: @time_entry)
       update_via_turbo_stream(component: form_component, status: :bad_request)
 

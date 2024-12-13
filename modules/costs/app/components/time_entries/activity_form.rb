@@ -34,12 +34,15 @@ module TimeEntries
       f.autocompleter(
         name: :activity_id,
         label: TimeEntry.human_attribute_name(:activity),
+        visually_hide_label: true,
         required: false,
         include_blank: true,
         autocomplete_options: {
+          placeholder: placeholder_text,
           focusDirectly: false,
           multiple: false,
           decorated: true,
+          disabled: project.blank?,
           append_to: "#time-entry-dialog"
         }
       ) do |select|
@@ -52,6 +55,14 @@ module TimeEntries
     private
 
     delegate :project, to: :model
+
+    def placeholder_text
+      if project.blank?
+        I18n.t("time_entry.activity_select_project_first")
+      else
+        I18n.t("time_entry.activity_select")
+      end
+    end
 
     def activities
       return [] if project.blank?
