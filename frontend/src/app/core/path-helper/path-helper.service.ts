@@ -334,7 +334,7 @@ export class PathHelperService {
     return `${this.staticBase}/time_entries/users/${userId}/tz_caption`;
   }
 
-  public timeEntriesWorkPackageActicity(workPackageId:string) {
+  public timeEntriesWorkPackageActivity(workPackageId:string) {
     return `${this.staticBase}/time_entries/work_packages/${workPackageId}/time_entry_activities`;
   }
 

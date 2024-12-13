@@ -29,7 +29,10 @@
  */
 
 import { Controller } from '@hotwired/stimulus';
-import { parseChronicDuration, outputChronicDuration } from 'core-app/shared/helpers/chronic_duration';
+import {
+  parseChronicDuration,
+  outputChronicDuration,
+} from 'core-app/shared/helpers/chronic_duration';
 import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service';
 import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 
@@ -53,8 +56,18 @@ export default class TimeEntryController extends Controller {
 
   userChanged(event:InputEvent) {
     const userId = (event.currentTarget as HTMLInputElement).value;
+    void this.turboRequests.request(
+      this.pathHelper.timeEntriesUserTimezoneCaption(userId),
+      { method: 'GET' },
+    );
+  }
 
-    void this.turboRequests.request(this.pathHelper.timeEntriesUserTimezoneCaption(userId), { method: 'GET' });
+  workPackageChanged(event:InputEvent) {
+    const workPackageId = (event.currentTarget as HTMLInputElement).value;
+    void this.turboRequests.request(
+      this.pathHelper.timeEntriesWorkPackageActivity(workPackageId),
+      { method: 'GET' },
+    );
   }
 
   timeInputChanged(event:InputEvent) {
@@ -76,9 +89,15 @@ export default class TimeEntryController extends Controller {
     // We calculate the hours field if:
     //  - We have start & end time and no hours
     //  - We have start & end time and we have triggered the change from the end time field
-    if (startTimeInMinutes && endTimeInMinutes && (hoursInMinutes === 0 || initiatedBy === this.endTimeInputTarget)) {
+    if (
+      startTimeInMinutes
+      && endTimeInMinutes
+      && (hoursInMinutes === 0 || initiatedBy === this.endTimeInputTarget)
+    ) {
       hoursInMinutes = endTimeInMinutes - startTimeInMinutes;
-      if (hoursInMinutes <= 0) { hoursInMinutes += 24 * 60; }
+      if (hoursInMinutes <= 0) {
+        hoursInMinutes += 24 * 60;
+      }
 
       const formattedHours = outputChronicDuration(hoursInMinutes * 60, { format: 'hours_only' }) || '';
       this.hoursInputTarget.value = formattedHours;
@@ -97,7 +116,10 @@ export default class TimeEntryController extends Controller {
   hoursChanged() {
     // Parse input through our chronic duration parser and then reformat as hours that can be nicely parsed on the
     // backend
-    const hours = parseChronicDuration(this.hoursInputTarget.value, { defaultUnit: 'hours', ignoreSecondsWhenColonSeperated: true });
+    const hours = parseChronicDuration(this.hoursInputTarget.value, {
+      defaultUnit: 'hours',
+      ignoreSecondsWhenColonSeperated: true,
+    });
     this.hoursInputTarget.value = outputChronicDuration(hours, { format: 'hours_only' }) || '';
 
     this.datesChanged(this.hoursInputTarget);

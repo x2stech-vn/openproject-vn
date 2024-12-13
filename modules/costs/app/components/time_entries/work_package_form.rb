@@ -35,13 +35,23 @@ module TimeEntries
                                    label: TimeEntry.human_attribute_name(:work_package),
                                    required: true,
                                    autocomplete_options: {
+                                     hiddenFieldAction: "change->time-entry#workPackageChanged",
                                      focusDirectly: false,
                                      append_to: "#time-entry-dialog",
+                                     url: work_package_completer_url,
                                      filters: work_package_completer_filters
                                    }
     end
 
     private
+
+    def work_package_completer_url
+      if model.persisted?
+        ::API::V3::Utilities::PathHelper::ApiV3Path.time_entries_available_work_packages_on_edit(model.id)
+      else
+        ::API::V3::Utilities::PathHelper::ApiV3Path.time_entries_available_work_packages_on_create
+      end
+    end
 
     def work_package_completer_filters
       filters = []
