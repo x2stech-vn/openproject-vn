@@ -34,7 +34,6 @@ module TimeEntries
       f.autocompleter(
         name: :activity_id,
         label: TimeEntry.human_attribute_name(:activity),
-        visually_hide_label: true,
         required: false,
         include_blank: true,
         autocomplete_options: {
