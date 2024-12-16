@@ -32,29 +32,15 @@ class TimeEntriesController < ApplicationController
 
   before_action :require_login
 
+  with_options only: [:dialog] do
+    before_action :load_and_authorize_optional_project
+    before_action :load_and_authorize_optional_work_package
+    before_action :load_or_build_and_authorize_time_entry
+  end
+
   authorization_checked! :dialog, :create, :update, :user_tz_caption, :time_entry_activities
 
   def dialog
-    if params[:project_id].present?
-      @project = begin
-        Project.visible.find(params[:project_id])
-      rescue ActiveRecord::NotFound
-        nil
-      end
-    end
-
-    if params[:work_package_id].present?
-      @work_package = WorkPackage.visible.find_by(id: params[:work_package_id])
-      @project = @work_package.project
-    end
-
-    @time_entry = if params[:time_entry_id]
-                    # TODO: Properly handle authorization
-                    TimeEntry.find_by(id: params[:time_entry_id])
-                  else
-                    TimeEntry.new(project: @project, work_package: @work_package, user: User.current)
-                  end
-
     if params[:date].present?
       @time_entry.spent_on = params[:date]
     end
@@ -68,7 +54,7 @@ class TimeEntriesController < ApplicationController
                 ""
               end
 
-    add_caption_to_input_element_via_turbo_stream("input[name=\"time_entry[user_id]\"]",
+    add_caption_to_input_element_via_turbo_stream('input[name="time_entry[user_id]"]',
                                                   caption:,
                                                   clean_other_captions: true)
     respond_with_turbo_streams
@@ -123,5 +109,33 @@ class TimeEntriesController < ApplicationController
 
       respond_with_turbo_streams
     end
+  end
+
+  private
+
+  def load_and_authorize_optional_project
+    if params[:project_id].present?
+      @project = Project.visible.find(params[:project_id])
+      # TODO: Authorize
+    end
+  rescue ActiveRecord::NotFound
+    # noop
+  end
+
+  def load_and_authorize_optional_work_package
+    if params[:work_package_id].present?
+      @work_package = WorkPackage.visible.find_by(id: params[:work_package_id])
+      @project = @work_package.project
+      # TODO: Authorize
+    end
+  end
+
+  def load_or_build_and_authorize_time_entry
+    @time_entry = if params[:time_entry_id]
+                    # TODO: Properly handle authorization
+                    TimeEntry.find_by(id: params[:time_entry_id])
+                  else
+                    TimeEntry.new(project: @project, work_package: @work_package, user: User.current)
+                  end
   end
 end
