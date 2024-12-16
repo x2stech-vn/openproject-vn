@@ -42,7 +42,11 @@ class TimeEntriesController < ApplicationController
         nil
       end
     end
-    @work_package = WorkPackage.visible.find_by(id: params[:work_package_id]) if params[:work_package_id].present?
+
+    if params[:work_package_id].present?
+      @work_package = WorkPackage.visible.find_by(id: params[:work_package_id])
+      @project = @work_package.project
+    end
 
     @time_entry = if params[:time_entry_id]
                     # TODO: Properly handle authorization
