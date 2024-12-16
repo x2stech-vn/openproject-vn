@@ -342,6 +342,10 @@ export class PathHelperService {
     return `${this.staticBase}/time_entries/dialog`;
   }
 
+  public timeEntryEditDialog(timeEntryId:string) {
+    return `${this.timeEntryDialog()}?time_entry_id=${timeEntryId}`;
+  }
+
   public timeEntryWorkPackageDialog(workPackageId:string) {
     return `${this.workPackagePath(workPackageId)}/time_entries/dialog`;
   }

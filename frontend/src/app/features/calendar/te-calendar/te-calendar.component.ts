@@ -35,8 +35,6 @@ import { TimeEntryResource } from 'core-app/features/hal/resources/time-entry-re
 import { CollectionResource } from 'core-app/features/hal/resources/collection-resource';
 import interactionPlugin from '@fullcalendar/interaction';
 import { HalResourceEditingService } from 'core-app/shared/components/fields/edit/services/hal-resource-editing.service';
-import { TimeEntryEditService } from 'core-app/shared/components/time_entries/edit/edit.service';
-import { TimeEntryCreateService } from 'core-app/shared/components/time_entries/create/create.service';
 import { ColorsService } from 'core-app/shared/components/colors/colors.service';
 import { BrowserDetector } from 'core-app/core/browser/browser-detector.service';
 import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
@@ -106,8 +104,6 @@ const ADD_ENTRY_PROHIBITED_CLASS_NAME = '-prohibited';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     OpCalendarService,
-    TimeEntryEditService,
-    TimeEntryCreateService,
     HalResourceEditingService,
     TurboRequestsService,
     PathHelperService,
@@ -214,8 +210,6 @@ export class TimeEntryCalendarComponent {
     private sanitizer:DomSanitizer,
     private configuration:ConfigurationService,
     private timezone:TimezoneService,
-    private timeEntryEdit:TimeEntryEditService,
-    private timeEntryCreate:TimeEntryCreateService,
     private schemaCache:SchemaCacheService,
     private colors:ColorsService,
     private browserDetector:BrowserDetector,
@@ -485,7 +479,7 @@ export class TimeEntryCalendarComponent {
 
   private editEvent(entry:TimeEntryResource):void {
     void this.turboRequests.request(
-      `${this.pathHelper.timeEntryDialog()}?time_entry_id=${entry.id}`,
+      `${this.pathHelper.timeEntryEditDialog(entry.id as string)}`,
       { method: 'GET' },
     );
   }
