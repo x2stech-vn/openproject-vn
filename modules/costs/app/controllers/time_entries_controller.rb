@@ -63,17 +63,24 @@ class TimeEntriesController < ApplicationController
   def time_entry_activities
     work_package = WorkPackage.visible.find_by(id: params[:work_package_id])
 
-    time_entry = TimeEntry.new(project: work_package.project, work_package: work_package)
+    time_entry = TimeEntry.new(project: work_package&.project, work_package: work_package)
 
     form = Primer::Forms::Builder.new(
       TimeEntry.model_name.param_key,
       time_entry,
-      helpers,
-      {}
+      TimeEntries::TimeEntryFormComponent.new(time_entry: time_entry),
+      {
+        allow_method_names_outside_object: true,
+        skip_default_ids: false,
+        data: { turbo: true },
+        id: "time-entry-form",
+        method: :post,
+        builder: Primer::Forms::Builder
+      }
     )
 
     replace_via_turbo_stream(
-      component: TimeEntries::ActivityFormComponent.new(form:)
+      component: TimeEntries::ActivityForm.new(form)
     )
 
     respond_with_turbo_streams
