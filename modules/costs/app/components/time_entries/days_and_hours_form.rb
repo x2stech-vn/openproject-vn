@@ -44,7 +44,7 @@ module TimeEntries
         f.group(layout: :horizontal) do |g|
           g.text_field name: :start_time,
                        type: "time",
-                       required: true,
+                       required: start_and_end_time_required?,
                        label: TimeEntry.human_attribute_name(:start_time),
                        value: model.start_timestamp&.strftime("%H:%M"),
                        data: {
@@ -54,7 +54,7 @@ module TimeEntries
 
           g.text_field name: :end_time,
                        type: "time",
-                       required: true,
+                       required: start_and_end_time_required?,
                        label: TimeEntry.human_attribute_name(:end_time),
                        value: model.end_timestamp&.strftime("%H:%M"),
                        data: {
@@ -76,6 +76,10 @@ module TimeEntries
 
     def show_start_and_end_time_fields?
       TimeEntry.can_track_start_and_end_time?
+    end
+
+    def start_and_end_time_required?
+      TimeEntry.must_track_start_and_end_time?
     end
 
     def hours_value
