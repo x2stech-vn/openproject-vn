@@ -33,7 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         body.with_row(mb: 3) { render(TimeEntries::UserForm.new(form)) }
         body.with_row(mb: 3) { render(TimeEntries::DaysAndHoursForm.new(form)) }
         body.with_row(mb: 3) { render(TimeEntries::WorkPackageForm.new(form)) }
-        body.with_row(mb: 3, id: 'time-entries-activity-form') { render(TimeEntries::ActivityForm.new(form)) }
+        body.with_row(mb: 3) { render(TimeEntries::ActivityForm.new(form)) }
         body.with_row(mb: 3) { render(TimeEntries::CommentsForm.new(form)) }
         body.with_row(mb: 3) { render(TimeEntries::CustomFieldsForm.new(form)) }
       end
