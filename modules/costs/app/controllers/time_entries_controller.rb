@@ -41,6 +41,13 @@ class TimeEntriesController < ApplicationController
   authorization_checked! :dialog, :create, :update, :user_tz_caption, :refresh_form
 
   def dialog
+    @show_work_package = params[:work_package_id].blank?
+    @show_user = if @project
+                   User.current.allowed_in_project?(:log_time, @project)
+                 else
+                   User.current.allowed_in_any_project?(:log_time)
+                 end
+
     if params[:date].present?
       @time_entry.spent_on = params[:date]
     end
@@ -72,7 +79,7 @@ class TimeEntriesController < ApplicationController
     # TODO Some logic to figure out what fields we want to show (user, etc)
 
     replace_via_turbo_stream(
-      component: TimeEntries::TimeEntryFormComponent.new(time_entry: time_entry)
+      component: TimeEntries::TimeEntryFormComponent.new(time_entry: time_entry, **form_config_options)
     )
 
     respond_with_turbo_streams
@@ -86,7 +93,7 @@ class TimeEntriesController < ApplicationController
     @time_entry = call.result
 
     unless call.success?
-      form_component = TimeEntries::TimeEntryFormComponent.new(time_entry: @time_entry)
+      form_component = TimeEntries::TimeEntryFormComponent.new(time_entry: @time_entry, **form_config_options)
       update_via_turbo_stream(component: form_component, status: :bad_request)
 
       respond_with_turbo_streams
@@ -103,7 +110,7 @@ class TimeEntriesController < ApplicationController
     @time_entry = call.result
 
     unless call.success?
-      form_component = TimeEntries::TimeEntryFormComponent.new(time_entry: @time_entry)
+      form_component = TimeEntries::TimeEntryFormComponent.new(time_entry: @time_entry, **form_config_options)
       update_via_turbo_stream(component: form_component, status: :bad_request)
 
       respond_with_turbo_streams
@@ -111,6 +118,13 @@ class TimeEntriesController < ApplicationController
   end
 
   private
+
+  def form_config_options
+    {
+      show_user: params[:time_entry][:show_user] == "true",
+      show_work_package: params[:time_entry][:show_work_package] == "true"
+    }
+  end
 
   def load_and_authorize_optional_project
     if params[:project_id].present?

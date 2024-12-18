@@ -30,7 +30,14 @@
 
 module TimeEntries
   class UserForm < ApplicationForm
+    def initialize(visible: true)
+      super()
+      @visible = visible
+    end
+
     form do |f|
+      f.hidden name: :show_user, value: @visible
+
       if show_user_field?
         f.autocompleter(
           name: :user_id,
@@ -47,8 +54,7 @@ module TimeEntries
             resource: "principals",
             focusDirectly: false,
             multiple: false,
-            appendTo: "#time-entry-dialog",
-            disabled: !show_user_field?
+            appendTo: "#time-entry-dialog"
           }
         )
       end
@@ -59,9 +65,10 @@ module TimeEntries
     delegate :project, to: :model
 
     def show_user_field?
-      # Only allow setting a different user, when the user has the
-      # permission to log time for others in the project
-      User.current.allowed_in_project?(:log_time, project)
+      return false unless @visible
+      return false if project && !User.current.allowed_in_project?(:log_time, project)
+
+      true
     end
 
     def user_completer_filters

@@ -30,9 +30,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   <%= component_wrapper do
     primer_form_with(**form_options) do |form|
       flex_layout do |body|
-        body.with_row(mb: 3) { render(TimeEntries::UserForm.new(form)) }
+        body.with_row(mb: 3) { render(TimeEntries::UserForm.new(form, visible: show_user)) }
         body.with_row(mb: 3) { render(TimeEntries::DaysAndHoursForm.new(form)) }
-        body.with_row(mb: 3) { render(TimeEntries::WorkPackageForm.new(form)) }
+        body.with_row(mb: 3) { render(TimeEntries::WorkPackageForm.new(form, visible: show_work_package)) }
         body.with_row(mb: 3) { render(TimeEntries::ActivityForm.new(form)) }
         body.with_row(mb: 3) { render(TimeEntries::CommentsForm.new(form)) }
         body.with_row(mb: 3) { render(TimeEntries::CustomFieldsForm.new(form)) }

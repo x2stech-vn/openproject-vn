@@ -34,14 +34,15 @@ module TimeEntries
 
     MODAL_ID = "time-entry-dialog"
 
-    def initialize(time_entry:, open: false)
+    def initialize(time_entry:, show_user: true, show_work_package: true)
       super()
       @time_entry = time_entry
-      @open = open
+      @show_user = show_user
+      @show_work_package = show_work_package
     end
 
     private
 
-    attr_reader :time_entry, :open
+    attr_reader :time_entry, :open, :show_user, :show_work_package
   end
 end

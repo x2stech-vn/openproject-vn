@@ -30,20 +30,37 @@
 
 module TimeEntries
   class WorkPackageForm < ApplicationForm
+    def initialize(visible: true)
+      super()
+      @visible = visible
+    end
+
     form do |f|
-      f.work_package_autocompleter name: :work_package_id,
-                                   label: TimeEntry.human_attribute_name(:work_package),
-                                   required: true,
-                                   autocomplete_options: {
-                                     hiddenFieldAction: "change->time-entry#workPackageChanged",
-                                     focusDirectly: false,
-                                     append_to: "#time-entry-dialog",
-                                     url: work_package_completer_url,
-                                     filters: work_package_completer_filters
-                                   }
+      f.hidden name: :show_work_package, value: @visible
+
+      if show_work_package_field?
+        f.work_package_autocompleter name: :work_package_id,
+                                     label: TimeEntry.human_attribute_name(:work_package),
+                                     required: true,
+                                     autocomplete_options: {
+                                       hiddenFieldAction: "change->time-entry#workPackageChanged",
+                                       focusDirectly: false,
+                                       append_to: "#time-entry-dialog",
+                                       url: work_package_completer_url,
+                                       filters: work_package_completer_filters
+                                     }
+      else
+        f.hidden name: :work_package_id, value: model.work_package_id
+      end
     end
 
     private
+
+    def show_work_package_field?
+      return true if model.work_package_id.nil?
+
+      @visible
+    end
 
     def work_package_completer_url
       if model.persisted?

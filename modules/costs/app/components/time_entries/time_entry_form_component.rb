@@ -33,14 +33,16 @@ module TimeEntries
     include OpTurbo::Streamable
     include OpPrimer::ComponentHelpers
 
-    def initialize(time_entry:)
+    def initialize(time_entry:, show_user: true, show_work_package: true)
       super()
       @time_entry = time_entry
+      @show_user = show_user
+      @show_work_package = show_work_package
     end
 
     private
 
-    attr_reader :time_entry
+    attr_reader :time_entry, :show_user, :show_work_package
 
     delegate :project, :work_package, to: :time_entry
 
