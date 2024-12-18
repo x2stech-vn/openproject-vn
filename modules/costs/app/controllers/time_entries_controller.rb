@@ -38,7 +38,7 @@ class TimeEntriesController < ApplicationController
     before_action :load_or_build_and_authorize_time_entry
   end
 
-  authorization_checked! :dialog, :create, :update, :user_tz_caption, :time_entry_activities
+  authorization_checked! :dialog, :create, :update, :user_tz_caption, :refresh_form
 
   def dialog
     if params[:date].present?
@@ -60,27 +60,19 @@ class TimeEntriesController < ApplicationController
     respond_with_turbo_streams
   end
 
-  def time_entry_activities
-    work_package = WorkPackage.visible.find_by(id: params[:work_package_id])
+  def refresh_form
+    call = TimeEntries::SetAttributesService.new(
+      user: current_user,
+      model: TimeEntry.new,
+      contract_class: EmptyContract
+    ).call(permitted_params.time_entries)
 
-    time_entry = TimeEntry.new(project: work_package&.project, work_package: work_package)
+    time_entry = call.result
 
-    form = Primer::Forms::Builder.new(
-      TimeEntry.model_name.param_key,
-      time_entry,
-      TimeEntries::TimeEntryFormComponent.new(time_entry: time_entry),
-      {
-        allow_method_names_outside_object: true,
-        skip_default_ids: false,
-        data: { turbo: true },
-        id: "time-entry-form",
-        method: :post,
-        builder: Primer::Forms::Builder
-      }
-    )
+    # TODO Some logic to figure out what fields we want to show (user, etc)
 
     replace_via_turbo_stream(
-      component: TimeEntries::ActivityForm.new(form)
+      component: TimeEntries::TimeEntryFormComponent.new(time_entry: time_entry)
     )
 
     respond_with_turbo_streams

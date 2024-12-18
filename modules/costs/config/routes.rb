@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   resources :time_entries, only: %i[create update] do
     get :dialog, on: :collection
     get "/users/:user_id/tz_caption", action: :user_tz_caption, on: :collection
-    get "/work_packages/:work_package_id/time_entry_activities", action: :time_entry_activities, on: :collection
+    post :refresh_form, on: :collection
   end
 
   scope "projects/:project_id", as: "projects" do

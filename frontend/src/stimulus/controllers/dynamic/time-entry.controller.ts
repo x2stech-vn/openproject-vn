@@ -37,8 +37,9 @@ import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service
 import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 
 export default class TimeEntryController extends Controller {
-  static targets = ['startTimeInput', 'endTimeInput', 'hoursInput'];
+  static targets = ['startTimeInput', 'endTimeInput', 'hoursInput', 'form'];
 
+  declare readonly formTarget:HTMLFormElement;
   declare readonly startTimeInputTarget:HTMLInputElement;
   declare readonly hasStartTimeInputTarget:boolean;
   declare readonly endTimeInputTarget:HTMLInputElement;
@@ -62,12 +63,16 @@ export default class TimeEntryController extends Controller {
     );
   }
 
-  workPackageChanged(event:InputEvent) {
-    const workPackageId = (event.currentTarget as HTMLInputElement).value;
-    void this.turboRequests.request(
-      this.pathHelper.timeEntriesWorkPackageActivity(workPackageId),
-      { method: 'GET' },
-    );
+  workPackageChanged() {
+    const url = this.formTarget.dataset.refreshFormUrl as string;
+    const csrfToken = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content || '';
+    void this.turboRequests.request(url, {
+      method: 'post',
+      body: new FormData(this.formTarget),
+      headers: {
+        'X-CSRF-Token': csrfToken,
+      },
+    });
   }
 
   timeInputChanged(event:InputEvent) {
@@ -89,11 +94,7 @@ export default class TimeEntryController extends Controller {
     // We calculate the hours field if:
     //  - We have start & end time and no hours
     //  - We have start & end time and we have triggered the change from the end time field
-    if (
-      startTimeInMinutes
-      && endTimeInMinutes
-      && (hoursInMinutes === 0 || initiatedBy === this.endTimeInputTarget)
-    ) {
+    if (startTimeInMinutes && endTimeInMinutes && (hoursInMinutes === 0 || initiatedBy === this.endTimeInputTarget)) {
       hoursInMinutes = endTimeInMinutes - startTimeInMinutes;
       if (hoursInMinutes <= 0) {
         hoursInMinutes += 24 * 60;

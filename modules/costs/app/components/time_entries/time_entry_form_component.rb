@@ -47,7 +47,11 @@ module TimeEntries
     def form_options
       base = {
         model: time_entry,
-        data: { turbo: true },
+        data: {
+          turbo: true,
+          "time-entry-target" => "form",
+          refresh_form_url: refresh_form_time_entries_path
+        },
         id: "time-entry-form"
       }
 
