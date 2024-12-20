@@ -59,7 +59,12 @@ export class TriggerActionsEntryComponent {
 
   editTimeEntry() {
     void this.loadEntry().subscribe((entry:TimeEntryResource) => {
-      // TODO: We need to reload here when the dialog is submitted ... How should we do this?
+      document.addEventListener('dialog:close', (event:CustomEvent) => {
+        const { detail: { dialog } } = event as { detail:{ dialog:HTMLDialogElement } };
+        if (dialog.id === 'time-entry-dialog') {
+          window.location.reload();
+        }
+      });
       void this.turboRequestService.request(
         this.pathHelper.timeEntryEditDialog(entry.id as string),
         { method: 'GET' },

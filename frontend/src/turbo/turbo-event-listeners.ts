@@ -15,11 +15,11 @@ export function addTurboEventListeners() {
       const dialog = target.closest('dialog') as HTMLDialogElement;
 
       if (dialog) {
-        document.dispatchEvent(new CustomEvent('dialog:close', { detail: { dialog } }));
-
         if (dialog.dataset.keepOpenOnSubmit !== 'true') {
           dialog.close();
         }
+
+        document.dispatchEvent(new CustomEvent('dialog:close', { detail: { dialog } }));
       }
     }
   });
