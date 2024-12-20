@@ -45,6 +45,7 @@ export default class TimeEntryController extends Controller {
   declare readonly endTimeInputTarget:HTMLInputElement;
   declare readonly hasEndTimeInputTarget:boolean;
   declare readonly hoursInputTarget:HTMLInputElement;
+  declare oldWorkPackageId:string;
 
   private turboRequests:TurboRequestsService;
   private pathHelper:PathHelperService;
@@ -53,6 +54,11 @@ export default class TimeEntryController extends Controller {
     const context = await window.OpenProject.getPluginContext();
     this.turboRequests = context.services.turboRequests;
     this.pathHelper = context.services.pathHelperService;
+
+    const workPackageAutocompleter = document.querySelector('opce-autocompleter[data-input-name*="time_entry[work_package_id]"]');
+    if (workPackageAutocompleter) {
+      this.oldWorkPackageId = (workPackageAutocompleter as HTMLElement).dataset.inputValue || '';
+    }
   }
 
   userChanged(event:InputEvent) {
@@ -63,16 +69,25 @@ export default class TimeEntryController extends Controller {
     );
   }
 
-  workPackageChanged() {
-    const url = this.formTarget.dataset.refreshFormUrl as string;
-    const csrfToken = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content || '';
-    void this.turboRequests.request(url, {
-      method: 'post',
-      body: new FormData(this.formTarget),
-      headers: {
-        'X-CSRF-Token': csrfToken,
-      },
-    });
+  workPackageChanged(event:InputEvent) {
+    const target = event.currentTarget as HTMLInputElement;
+    const newValue = target.value;
+
+    if (this.oldWorkPackageId !== newValue) {
+      this.oldWorkPackageId = newValue;
+
+      const url = this.formTarget.dataset.refreshFormUrl as string;
+      const csrfToken = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content || '';
+      const formData = new FormData(this.formTarget);
+      formData.delete('_method'); // remove the override method as this will submit to the wrong action
+      void this.turboRequests.request(url, {
+        method: 'post',
+        body: formData,
+        headers: {
+          'X-CSRF-Token': csrfToken,
+        },
+      });
+    }
   }
 
   timeInputChanged(event:InputEvent) {
