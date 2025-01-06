@@ -195,6 +195,7 @@ jobs:
           target: ${{ matrix.target }}
           build-args: |
             BIM_SUPPORT=${{ matrix.bim_support }}
+            BUILDKIT_PROGRESS=plain
           pull: true
           load: true
           tags: ${{ steps.meta.outputs.tags }}
