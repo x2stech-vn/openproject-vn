@@ -41,7 +41,7 @@ module TimeEntries
           focusDirectly: false,
           multiple: false,
           decorated: true,
-          disabled: project.blank?,
+          disabled: !project_or_work_package_selected?,
           append_to: "#time-entry-dialog"
         }
       ) do |select|
@@ -53,14 +53,14 @@ module TimeEntries
 
     private
 
-    delegate :project, to: :model
+    delegate :project, :work_package, to: :model
+
+    def project_or_work_package_selected?
+      work_package.present? || project.present?
+    end
 
     def placeholder_text
-      if project.blank?
-        I18n.t("time_entry.activity_select_project_first")
-      else
-        I18n.t("time_entry.activity_select")
-      end
+      I18n.t("placeholder_activity_select_work_package_first") unless project_or_work_package_selected?
     end
 
     def activities

@@ -146,6 +146,8 @@ en:
   label_valid_from: "Valid from"
   label_yes: "Yes"
 
+  placeholder_activity_select_work_package_first: Work package selection is required first
+
   notice_something_wrong: "Something went wrong. Please try again."
   notice_successful_restore: "Successful restore."
   notice_successful_lock: "Locked successfully."

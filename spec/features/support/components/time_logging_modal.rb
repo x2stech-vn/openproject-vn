@@ -40,12 +40,12 @@ module Components
                 :user_field
 
     def initialize
-      @activity_field = EditField.new(page, "activity")
-      @comment_field = EditField.new(page, "comment")
-      @hours_field = EditField.new(page, "hours")
-      @spent_on_field = EditField.new(page, "spentOn")
-      @work_package_field = EditField.new(page, "workPackage")
-      @user_field = EditField.new(page, "user")
+      @activity_field = EditField.new(page, "time_entry[activity_id]")
+      @comment_field = EditField.new(page, "time_entry[comment]")
+      @hours_field = EditField.new(page, "time_entry[hours]")
+      @spent_on_field = EditField.new(page, "time_entry[spent_on]")
+      @work_package_field = EditField.new(page, "time_entry[work_package_id]")
+      @user_field = EditField.new(page, "time_entry[user_id]")
     end
 
     def is_visible(visible)
@@ -55,7 +55,7 @@ module Components
             .to have_text(I18n.t("js.button_log_time"))
         end
       else
-        expect(page).to have_no_css ".spot-modal"
+        expect(page).to have_no_css "dialog#time-entry-dialog"
       end
     end
 
@@ -138,7 +138,7 @@ module Components
     end
 
     def modal_container
-      page.find(".spot-modal")
+      page.find("dialog#time-entry-dialog")
     end
   end
 end
