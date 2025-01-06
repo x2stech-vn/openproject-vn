@@ -1,10 +1,12 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
   Injector,
   Input,
+  OnDestroy,
   Output,
   SecurityContext,
   ViewChild,
@@ -109,7 +111,7 @@ const ADD_ENTRY_PROHIBITED_CLASS_NAME = '-prohibited';
     PathHelperService,
   ],
 })
-export class TimeEntryCalendarComponent {
+export class TimeEntryCalendarComponent implements AfterViewInit, OnDestroy {
   @ViewChild(FullCalendarComponent) ucCalendar:FullCalendarComponent;
 
   @Input() projectIdentifier:string;
@@ -147,6 +149,8 @@ export class TimeEntryCalendarComponent {
   calendarOptions$ = new Subject<CalendarOptions>();
 
   public nonWorkingDays:IDay[] = [];
+
+  private closeDialogHandler:EventListener = this.handleDialogClose.bind(this);
 
   public additionalOptions:CalendarOptionsWithDayGrid = {
     editable: false,
@@ -219,6 +223,14 @@ export class TimeEntryCalendarComponent {
     readonly turboRequests:TurboRequestsService,
     readonly pathHelper:PathHelperService,
   ) { }
+
+  ngAfterViewInit():void {
+    document.addEventListener('dialog:close', this.closeDialogHandler);
+  }
+
+  ngOnDestroy():void {
+    document.removeEventListener('dialog:close', this.closeDialogHandler);
+  }
 
   async requireNonWorkingDays(start:Date | string, end:Date | string) {
     this.nonWorkingDays = await firstValueFrom(this.dayService.requireNonWorkingYears$(start, end));
@@ -746,5 +758,16 @@ export class TimeEntryCalendarComponent {
       }
       return null;
     }).filter((value) => value !== null) as number[];
+  }
+
+  private handleDialogClose(event:CustomEvent):void {
+    const { detail: { dialog } } = event as { detail:{ dialog:HTMLDialogElement } };
+    if (dialog.id === 'time-entry-dialog') {
+      void this.fetchTimeEntries(this.memoizedTimeEntries.start, this.memoizedTimeEntries.end)
+        .then(async (collection) => {
+          this.entries.emit(collection);
+          this.ucCalendar.getApi().refetchEvents();
+        });
+    }
   }
 }
