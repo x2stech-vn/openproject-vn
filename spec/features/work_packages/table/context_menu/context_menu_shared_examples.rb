@@ -23,7 +23,7 @@ RSpec.shared_examples_for "provides a single WP context menu" do
     open_context_menu.call
     menu.choose("Log time")
     time_logging_modal.is_visible true
-    time_logging_modal.work_package_is_missing false
+    time_logging_modal.activity_input_disabled_because_work_package_missing? false
     time_logging_modal.perform_action "Cancel"
 
     # Open Move

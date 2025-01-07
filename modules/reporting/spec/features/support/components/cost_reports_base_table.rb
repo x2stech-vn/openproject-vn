@@ -64,7 +64,7 @@ module Components
 
       time_logging_modal.is_visible true
       time_logging_modal.change_hours(hours)
-      # time_logging_modal.work_package_is_missing false
+      # time_logging_modal.activity_input_disabled_because_work_package_missing? false
 
       time_logging_modal.submit
       SeleniumHubWaiter.wait

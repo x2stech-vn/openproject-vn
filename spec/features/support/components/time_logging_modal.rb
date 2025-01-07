@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -112,24 +114,13 @@ module Components
       end
     end
 
-    def work_package_is_missing(missing)
+    def activity_input_disabled_because_work_package_missing?(missing)
       if missing
-        expect(page)
-          .to have_content(I18n.t("js.time_entry.work_package_required"))
+        expect(page).to have_field "input#time_entry_activity_id:disabled"
+        expect(page).to have_content(I18n.t("placeholder_activity_select_work_package_first"))
       else
-        expect(page)
-          .to have_no_content(I18n.t("js.time_entry.work_package_required"))
-      end
-    end
-
-    def field_identifier(field_name)
-      case field_name
-      when "spent_on"
-        "wp-new-inline-edit--field-spentOn"
-      when "work_package"
-        "wp-new-inline-edit--field-workPackage"
-      when "user"
-        "wp-new-inline-edit--field-user"
+        expect(page).to have_field "input#time_entry_activity_id:enabled"
+        expect(page).to have_no_content(I18n.t("placeholder_activity_select_work_package_first"))
       end
     end
 

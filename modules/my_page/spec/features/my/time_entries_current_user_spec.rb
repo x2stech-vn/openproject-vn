@@ -193,7 +193,7 @@ RSpec.describe "My page time entries current user widget spec", :js, :selenium d
 
     time_logging_modal.is_visible true
 
-    time_logging_modal.work_package_is_missing true
+    time_logging_modal.activity_input_disabled_because_work_package_missing? true
 
     time_logging_modal.has_field_with_value "spentOn", (Date.current.beginning_of_week(:sunday) + 3.days).strftime
 
@@ -210,7 +210,7 @@ RSpec.describe "My page time entries current user widget spec", :js, :selenium d
 
     time_logging_modal.update_work_package_field other_work_package.subject
 
-    time_logging_modal.work_package_is_missing false
+    time_logging_modal.activity_input_disabled_because_work_package_missing? false
 
     time_logging_modal.update_field "comment", "Comment for new entry"
 

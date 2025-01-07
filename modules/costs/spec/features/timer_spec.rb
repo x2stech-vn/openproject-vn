@@ -67,7 +67,7 @@ RSpec.describe "Work Package timer", :js do
 
       time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
-      time_logging_modal.work_package_is_missing false
+      time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
       time_logging_modal.expect_work_package(work_package_a.subject)
 
@@ -105,7 +105,7 @@ RSpec.describe "Work Package timer", :js do
       time_logging_modal.is_visible true
       time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
-      time_logging_modal.work_package_is_missing false
+      time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
       time_logging_modal.expect_work_package(work_package_a.subject)
 
@@ -170,7 +170,7 @@ RSpec.describe "Work Package timer", :js do
       time_logging_modal.is_visible true
       time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
-      time_logging_modal.work_package_is_missing false
+      time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
       time_logging_modal.expect_work_package(work_package_a.subject)
 
@@ -183,7 +183,7 @@ RSpec.describe "Work Package timer", :js do
       time_logging_modal.is_visible true
       time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
-      time_logging_modal.work_package_is_missing false
+      time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
       time_logging_modal.expect_work_package(work_package_a.subject)
 
