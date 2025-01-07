@@ -31,37 +31,39 @@ module Components
     include Capybara::DSL
     include Capybara::RSpecMatchers
     include RSpec::Matchers
-
-    attr_reader :activity_field,
-                :comment_field,
-                :hours_field,
-                :spent_on_field,
-                :work_package_field,
-                :user_field
-
-    def initialize
-      @activity_field = EditField.new(page, "time_entry[activity_id]")
-      @comment_field = EditField.new(page, "time_entry[comment]")
-      @hours_field = EditField.new(page, "time_entry[hours]")
-      @spent_on_field = EditField.new(page, "time_entry[spent_on]")
-      @work_package_field = EditField.new(page, "time_entry[work_package_id]")
-      @user_field = EditField.new(page, "time_entry[user_id]")
-    end
+    include ::Components::Autocompleter::AutocompleteHelpers
 
     def is_visible(visible)
       if visible
         within modal_container do
-          expect(page)
-            .to have_text(I18n.t("js.button_log_time"))
+          expect(page).to have_text(I18n.t("button_log_time"))
         end
       else
         expect(page).to have_no_css "dialog#time-entry-dialog"
       end
     end
 
+    def change_hours(value)
+      within modal_container do
+        fill_in "time_entry_hours", with: value
+      end
+    end
+
+    def submit
+      within modal_container do
+        click_on I18n.t("button_log_time")
+      end
+    end
+
+    def cancel
+      within modal_container do
+        click_on I18n.t("button_cancel")
+      end
+    end
+
     def has_field_with_value(field, value)
       within modal_container do
-        expect(page).to have_field field_identifier(field), with: value, visible: :all
+        expect(page).to have_field "#time_entry_#{field}", with: value, visible: :all
       end
     end
 
@@ -132,10 +134,6 @@ module Components
     end
 
     private
-
-    def field_object(field_name)
-      send(:"#{field_name}_field")
-    end
 
     def modal_container
       page.find("dialog#time-entry-dialog")
