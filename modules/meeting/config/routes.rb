@@ -60,6 +60,7 @@ Rails.application.routes.draw do
     member do
       get :details_dialog
       get :download_ics
+      get :delete_dialog
       post :init
       post :delete_scheduled
       post :template_completed
