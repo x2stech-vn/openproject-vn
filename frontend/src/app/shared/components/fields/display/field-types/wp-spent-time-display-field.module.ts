@@ -35,6 +35,7 @@ import { WorkPackageResource } from 'core-app/features/hal/resources/work-packag
 import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
 import { WorkDisplayField } from 'core-app/shared/components/fields/display/field-types/work-display-field.module';
 import * as moment from 'moment-timezone';
+import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service';
 
 export class WorkPackageSpentTimeDisplayField extends WorkDisplayField {
   public text = {
@@ -47,6 +48,8 @@ export class WorkPackageSpentTimeDisplayField extends WorkDisplayField {
   @InjectField(TimeEntryCreateService, null) timeEntryCreateService:TimeEntryCreateService;
 
   @InjectField() apiV3Service:ApiV3Service;
+
+  @InjectField() TurboRequests:TurboRequestsService;
 
   public render(element:HTMLElement, displayText:string):void {
     if (!this.value) {
@@ -100,10 +103,9 @@ export class WorkPackageSpentTimeDisplayField extends WorkDisplayField {
   }
 
   private showTimelogWidget(wp:WorkPackageResource) {
-    this.timeEntryCreateService
-      .create(moment(new Date()), wp, { showWorkPackageField: false })
-      .catch(() => {
-        // do nothing, the user closed without changes
-      });
+    void this.TurboRequests.request(
+      `${this.PathHelper.timeEntryWorkPackageDialog(wp.id as string)}?date=${moment().format('YYYY-MM-DD')}`,
+      { method: 'GET' },
+    );
   }
 }
