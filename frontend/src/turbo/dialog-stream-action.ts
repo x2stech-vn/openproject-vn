@@ -17,6 +17,10 @@ export function registerDialogStreamAction() {
       } else {
         dialog.remove();
       }
+
+      if (dialog.returnValue !== 'close-event-already-dispatched') {
+        document.dispatchEvent(new CustomEvent('dialog:close', { detail: { dialog, submitted: false } }));
+      }
     });
 
     // Hack to fix the width calculation of nested elements

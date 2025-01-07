@@ -16,10 +16,10 @@ export function addTurboEventListeners() {
 
       if (dialog) {
         if (dialog.dataset.keepOpenOnSubmit !== 'true') {
-          dialog.close();
+          dialog.close('close-event-already-dispatched');
         }
 
-        document.dispatchEvent(new CustomEvent('dialog:close', { detail: { dialog } }));
+        document.dispatchEvent(new CustomEvent('dialog:close', { detail: { dialog, submitted: true } }));
       }
     }
   });

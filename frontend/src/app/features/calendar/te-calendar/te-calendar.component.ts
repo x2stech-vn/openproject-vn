@@ -761,8 +761,8 @@ export class TimeEntryCalendarComponent implements AfterViewInit, OnDestroy {
   }
 
   private handleDialogClose(event:CustomEvent):void {
-    const { detail: { dialog } } = event as { detail:{ dialog:HTMLDialogElement } };
-    if (dialog.id === 'time-entry-dialog') {
+    const { detail: { dialog, submitted } } = event as { detail:{ dialog:HTMLDialogElement, submitted:boolean } };
+    if (dialog.id === 'time-entry-dialog' && submitted) {
       void this.fetchTimeEntries(this.memoizedTimeEntries.start, this.memoizedTimeEntries.end)
         .then(async (collection) => {
           this.entries.emit(collection);

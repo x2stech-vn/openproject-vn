@@ -30,7 +30,6 @@ import { PathHelperService } from 'core-app/core/path-helper/path-helper.service
 import { ProjectResource } from 'core-app/features/hal/resources/project-resource';
 import { InjectField } from 'core-app/shared/helpers/angular/inject-field.decorator';
 import * as URI from 'urijs';
-import { TimeEntryCreateService } from 'core-app/shared/components/time_entries/create/create.service';
 import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
 import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
 import { WorkDisplayField } from 'core-app/shared/components/fields/display/field-types/work-display-field.module';
@@ -45,11 +44,11 @@ export class WorkPackageSpentTimeDisplayField extends WorkDisplayField {
 
   @InjectField() PathHelper:PathHelperService;
 
-  @InjectField(TimeEntryCreateService, null) timeEntryCreateService:TimeEntryCreateService;
-
   @InjectField() apiV3Service:ApiV3Service;
 
   @InjectField() TurboRequests:TurboRequestsService;
+
+  private closeDialogHandler:EventListener = this.handleDialogClose.bind(this);
 
   public render(element:HTMLElement, displayText:string):void {
     if (!this.value) {
@@ -90,7 +89,7 @@ export class WorkPackageSpentTimeDisplayField extends WorkDisplayField {
   }
 
   private appendTimelogLink(element:HTMLElement) {
-    if (this.timeEntryCreateService && this.resource.logTime) {
+    if (this.resource.logTime) {
       const timelogElement = document.createElement('a');
       timelogElement.setAttribute('class', 'icon icon-time');
       timelogElement.setAttribute('href', '');
@@ -103,9 +102,23 @@ export class WorkPackageSpentTimeDisplayField extends WorkDisplayField {
   }
 
   private showTimelogWidget(wp:WorkPackageResource) {
+    document.addEventListener('dialog:close', this.closeDialogHandler);
+
     void this.TurboRequests.request(
       `${this.PathHelper.timeEntryWorkPackageDialog(wp.id as string)}?date=${moment().format('YYYY-MM-DD')}`,
       { method: 'GET' },
     );
+  }
+
+  private handleDialogClose(event:CustomEvent):void {
+    document.removeEventListener('dialog:close', this.closeDialogHandler);
+
+    const { detail: { dialog, submitted } } = event as { detail:{ dialog:HTMLDialogElement, submitted:boolean } };
+    if (dialog.id === 'time-entry-dialog' && submitted) {
+      void this.apiV3Service
+        .work_packages
+        .id(this.resource.id!)
+        .refresh();
+    }
   }
 }
