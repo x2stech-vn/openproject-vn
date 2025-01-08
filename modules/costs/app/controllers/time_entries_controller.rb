@@ -50,9 +50,7 @@ class TimeEntriesController < ApplicationController
                    User.current.allowed_in_any_project?(:log_time)
                  end
 
-    if params[:date].present?
-      @time_entry.spent_on = params[:date]
-    end
+    @time_entry.spent_on = (params[:date].presence || Time.zone.today)
   end
 
   def user_tz_caption

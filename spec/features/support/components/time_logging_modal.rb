@@ -64,8 +64,9 @@ module Components
     end
 
     def has_field_with_value(field, value)
+      puts "*" * 100, modal_container.native["innerHTML"], "*" * 100
       within modal_container do
-        expect(page).to have_field "#time_entry_#{field}", with: value, visible: :all
+        expect(page).to have_field "input#time_entry_#{field}", with: value, visible: :all
       end
     end
 
@@ -116,12 +117,17 @@ module Components
 
     def activity_input_disabled_because_work_package_missing?(missing)
       if missing
-        expect(page).to have_field "input#time_entry_activity_id:disabled"
-        expect(page).to have_content(I18n.t("placeholder_activity_select_work_package_first"))
+        expect(modal_container).to have_field "input#time_entry_activity_id:disabled",
+                                              with: I18n.t("placeholder_activity_select_work_package_first")
       else
-        expect(page).to have_field "input#time_entry_activity_id:enabled"
-        expect(page).to have_no_content(I18n.t("placeholder_activity_select_work_package_first"))
+        expect(modal_container).to have_field "input#time_entry_activity_id:enabled", visible: :all
       end
+    end
+
+    def has_hidden_work_package_field_for(work_package)
+      expect(modal_container).to have_field "input#time_entry_work_package_id",
+                                            with: work_package.id,
+                                            type: :hidden
     end
 
     private
