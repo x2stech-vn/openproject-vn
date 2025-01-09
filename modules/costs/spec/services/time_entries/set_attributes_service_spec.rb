@@ -159,6 +159,49 @@ RSpec.describe TimeEntries::SetAttributesService, type: :model do
     end
   end
 
+  context "with an ongoing time entry" do
+    let(:params) do
+      {
+        spent_on: Time.zone.today,
+        ongoing: true,
+        user_id: user.id,
+        work_package_id: work_package.id,
+        activity_id: activity.id
+      }
+    end
+
+    before do
+      user.pref[:time_zone] = "America/Los_Angeles"
+    end
+
+    context "when start_time is allowed" do
+      before do
+        allow(TimeEntry).to receive(:can_track_start_and_end_time?).and_return(true)
+      end
+
+      it "sets the start_time to the users current time" do
+        Timecop.freeze do
+          subject
+
+          current_time = ActiveSupport::TimeZone[user.time_zone].now
+
+          expect(time_entry_instance.start_time).to eq((current_time.hour * 60) + current_time.min)
+        end
+      end
+    end
+
+    context "when start_time is not allowed" do
+      before do
+        allow(TimeEntry).to receive(:can_track_start_and_end_time?).and_return(false)
+      end
+
+      it "does not set the start_time" do
+        subject
+        expect(time_entry_instance.start_time).to be_nil
+      end
+    end
+  end
+
   context "with hours == 0" do
     let(:params) do
       {

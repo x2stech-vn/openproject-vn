@@ -45,11 +45,19 @@ class TimeEntry < ApplicationRecord
 
   acts_as_journalized
 
-  validates_presence_of :user_id, :project_id, :spent_on
-  validates_presence_of :hours, if: -> { !ongoing? }
-  validates_numericality_of :hours, allow_nil: true, message: :invalid
+  validates :user_id, :project_id, :spent_on,
+            presence: true
+  validates :hours,
+            presence: true,
+            if: -> { !ongoing? }
 
-  validates :start_time, :hours,
+  validates :hours,
+            numericality: {
+              message: :invalid
+            },
+            allow_nil: true
+
+  validates :start_time,
             presence: true,
             if: -> { TimeEntry.must_track_start_and_end_time? }
 
