@@ -58,12 +58,11 @@ class WorkPackageChildrenController < ApplicationController
       component = WorkPackageRelationsTab::IndexComponent.new(
         work_package: @work_package,
         relations: @relations,
-        children: @children
+        children: @children,
+        scroll_to_id: target_work_package_id
       )
       replace_via_turbo_stream(component:)
-      update_flash_message_via_turbo_stream(
-        message: I18n.t(:notice_successful_update), scheme: :success
-      )
+      render_success_flash_message_via_turbo_stream(message: I18n.t(:notice_successful_update))
       respond_with_turbo_streams
     end
   end
@@ -80,9 +79,7 @@ class WorkPackageChildrenController < ApplicationController
         children: @children
       )
       replace_via_turbo_stream(component:)
-      update_flash_message_via_turbo_stream(
-        message: I18n.t(:notice_successful_update), scheme: :success
-      )
+      render_success_flash_message_via_turbo_stream(message: I18n.t(:notice_successful_update))
 
       respond_with_turbo_streams
     end

@@ -60,7 +60,7 @@ zh-CN:
         invalid_time_format: "不是有效时间。所需格式：HH:MM"
     models:
       recurring_meeting: "定期会议"
-      structured_meeting: "一次性会议"
+      structured_meeting: "动态会议"
       meeting_agenda_item: "议程项目"
       meeting_agenda: "议程"
       meeting_minutes: "会议记录"
@@ -94,7 +94,7 @@ zh-CN:
   label_meeting: "会议"
   label_meeting_plural: "会议"
   label_meeting_new: "新增会议"
-  label_meeting_new_dynamic: "新的一次性会议"
+  label_meeting_new_dynamic: "新的动态会议"
   label_meeting_new_recurring: "新的定期会议"
   label_meeting_create: "创建会议"
   label_meeting_copy: "复制会议"
@@ -184,7 +184,8 @@ zh-CN:
     types:
       classic: "经典"
       classic_text: "将您的会议组织成一个单一格式的文本议程和协议。"
-      structured: "一次性"
+      structured: "结构化"
+      one_time: "动态"
       recurring: "定期"
       recurring_text: "为每次事件创建带有动态模板的会议系列。"
       structured_text: "将您的会议组织成一个动态的议程项目列表，并可选地将它们链接到一个工作包。"

@@ -343,6 +343,9 @@ ko:
         text: "이 작업을 수행해도 목록에 포함된 프로젝트는 삭제되지 않습니다. 이 프로젝트 목록을 삭제하시겠습니까?"
     settings:
       change_identifier: 식별자 변경
+      actions:
+        label_enable_all: "Enable all"
+        label_disable_all: "Disable all"
       activities:
         no_results_title_text: 가능한 활동이 없습니다.
       forums:
@@ -353,18 +356,26 @@ ko:
         no_results_content_text: 새 작업 패키지 구분 생성
       custom_fields:
         no_results_title_text: 사용 가능한 사용자 필드가 없습니다.
+      life_cycle:
+        header:
+          title: "Project lifecycle"
+          description_html: 'These project stages and gates in the project lifecycle will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> and are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. You can enable or disable individual attributes.'
+        non_defined: "Neither stages nor gates are currently defined."
+        section_header: "Stages and gates"
+        step:
+          use_in_project: "Use %{step} in this project"
+        filter:
+          label: "Search project stage or gate"
       project_custom_fields:
         header:
           title: "프로젝트 특성"
-          description: '이러한 프로젝트 특성은 해당 섹션 아래의 <a href=%{overview_url} target="_blank">프로젝트 개요 페이지</a>에 표시됩니다. 개별 특성을 활성화하거나 비활성화할 수 있습니다. 프로젝트 특성 및 섹션은 인스턴스 관리자가 <a href=%{admin_settings_url} target="_blank">관리 설정</a>에서 정의합니다. '
+          description_html: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
         filter:
           label: "프로젝트 특성 검색"
         actions:
           label_enable_single: "이 프로젝트에서 활성화되어 있습니다. 비활성화하려면 클릭하세요."
           label_disable_single: "이 프로젝트에서 비활성화되어 있습니다. 활성화하려면 클릭하세요."
           remove_from_project: "프로젝트에서 제거"
-          label_enable_all: "모두 활성화"
-          label_disable_all: "모두 비활성화"
         is_required_blank_slate:
           heading: 모든 프로젝트에서 필수
           description: '"모든 프로젝트에서 필수" 옵션이 선택되어 있으므로 모든 프로젝트에서 이 프로젝트 특성이 활성화됩니다. 개별 프로젝트에 대해 비활성화할 수 없습니다.'
@@ -377,6 +388,9 @@ ko:
         no_results_content_text: 새 버전 생성
       storage:
         no_results_title_text: 이 프로젝트에서 사용하는 추가 기록 디스크 공간이 없습니다.
+  project_stage:
+    working_days_count:
+      other: "Duration: %{count} working days"
   lists:
     create:
       success: "수정된 목록이 새 목록으로 저장되었습니다"
@@ -565,18 +579,27 @@ ko:
       no_results_title_text: 타입이 없습니다.
       no_results_content_text: 새 타입 생성
     edit:
-      settings: "설정"
-      form_configuration: "양식 구성"
+      form_configuration:
+        tab: "Form configuration"
       more_info_text_html: >
         Enterprise Edition에서는 다음과 같은 기타 추가 기능으로 양식 구성을 사용자 지정할 수 있습니다: <br> <ul class="%{list_styling_class}"> <li><b>새로운 특성 그룹 추가</b></li> <li><b>특성 그룹 이름 바꾸기</b></li> <li><b>관련 작업 패키지 테이블 추가</b></li> </ul>
-      projects: "프로젝트"
-      enabled_projects: "활성화 된 프로젝트"
-      edit_query: "테이블 편집"
-      query_group_placeholder: "테이블에 이름 지정"
-      reset: "기본값으로 초기화"
-      type_color_text: |
-        선택한 색상은 Gantt 차트 또는 작업 패키지 테이블에서
-        다양한 유형을 구분합니다. 따라서 진한 색상을 사용하는 것이 좋습니다.
+      projects:
+        tab: "Projects"
+        enabled_projects: "Enabled projects"
+      settings:
+        tab: "Settings"
+        type_color_text: The selected color distinguishes different types in Gantt charts or work packages tables. It is therefore recommended to use a strong color.
+      subject_configuration:
+        tab: "Subject configuration"
+        manually_editable_subjects:
+          label: "Manually editable subjects"
+          caption: "Users can manually enter and edit work package subjects without restrictions."
+        automatically_generated_subjects:
+          label: "Automatically generated subjects"
+          caption: "Define a pattern using referenced attributes and text to automatically generate work package subjects. Users will not be able to manually edit subjects."
+        pattern:
+          label: "Subject pattern"
+          caption: "Search for an attribute or add text. To create a space between elements add it as a text."
   versions:
     overview:
       work_packages_in_archived_projects: "해당 버전은 이 버전에 할당된 작업 패키지가 아직 있는 보관된 프로젝트와 공유됩니다. 이러한 버전은 카운트되지만, 링크된 보기에 나타나지는 않습니다."
@@ -757,6 +780,7 @@ ko:
         is_required: "필수"
         max_length: "최대 길이"
         min_length: "최소 길이"
+        content_right_to_left: "Right-to-Left content"
         multi_value: "다중 선택 허용"
         possible_values: "가능한 값"
         regexp: "정규 표현식"
@@ -792,6 +816,8 @@ ko:
         attr_lastname: "성 특성"
         attr_login: "사용자 이름 특성"
         attr_mail: "이메일 특성"
+        filter_string: "Filter string"
+        admin: "Administrator"
         base_dn: "기본 DN"
         host: "호스트"
         onthefly: "자동 사용자 생성"
@@ -835,6 +861,9 @@ ko:
       project_custom_field:
         is_required: "모든 프로젝트에 필수"
         custom_field_section: 섹션
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Color"
       query:
         column_names: "컬럼"
         relations_to_type_column: "%{type}에 대한 관계"
@@ -1098,16 +1127,38 @@ ko:
           attributes:
             type:
               must_be_a_stage_or_gate: "- Project::StageDefinition 또는 Project::GateDefinition여야(이어야) 합니다"
+              type_and_class_name_mismatch: "must match the instantiated class name"
+        project/gate_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::GateDefinition"
+        project/stage_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::StageDefinition"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: "- Project::Stage 또는 Project::Gate여야(이어야) 합니다"
               must_be_a_stage: "- Project::Stage여야(이어야) 합니다"
               must_be_a_gate: "- Project::Gate여야(이어야) 합니다"
+              type_and_class_name_mismatch: "must match the instantiated class name"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "Project::Gate에 `end_date`을(를) 할당할 수 없습니다"
+              end_date_not_allowed: "Cannot assign end date to a Project::Gate"
+            type:
+              type_and_class_name_mismatch: "must be a Project::Gate"
+            date:
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+        project/stage:
+          attributes:
+            date_range:
+              start_date_must_be_before_end_date: "start date must be before the end date."
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+              incomplete: "is incomplete."
+            type:
+              type_and_class_name_mismatch: "must be a Project::Stage"
         query:
           attributes:
             project:
@@ -1321,6 +1372,8 @@ ko:
         other: "알림"
       placeholder_user: "플레이스홀더 사용자"
       project: "프로젝트"
+      project/gate_definition: "Gate"
+      project/stage_definition: "Stage"
       project_query:
         other: "프로젝트 목록"
       query: "사용자 지정 쿼리"
@@ -1715,6 +1768,8 @@ ko:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      customize_life_cycle:
+        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:
         description: "다음과 같은 기타 추가 기능으로 양식 구성을 사용자 지정하세요."
         add_groups: "새로운 특성 그룹 추가"
@@ -2437,6 +2492,7 @@ ko:
   label_none_parentheses: "(없음)"
   label_not_contains: "포함하지 않음"
   label_not_equals: "일치하지 않음"
+  label_life_cycle_step_plural: "Project lifecycle"
   label_on: "에"
   label_operator_all: "비어 있지 않음"
   label_operator_none: "비어 있음"
@@ -2498,6 +2554,7 @@ ko:
   label_project_new: "새 프로젝트"
   label_project_plural: "프로젝트"
   label_project_list_plural: "프로젝트 목록"
+  label_project_lifecycle: "Project lifecycle"
   label_project_attributes_plural: "프로젝트 특성"
   label_project_custom_field_plural: "프로젝트 특성"
   label_project_settings: "프로젝트 설정"
@@ -2774,8 +2831,13 @@ ko:
         prefix: "수신 이유는 다음 알림 설정입니다: %{reason}"
         date_alert_start_date: "날짜 경보"
         date_alert_due_date: "날짜 경보"
+        reminder: "Reminder"
       see_all: "모두 보기"
       updated_at: "%{timestamp}, %{user} 님이 업데이트함"
+    reminder_notifications:
+      subject: "Reminder: %{note}"
+      heading: "You have a new reminder"
+      note: "Note: “%{note}”"
     sharing:
       work_packages:
         allowed_actions: "이 작업 패키지를 %{allowed_actions}할 수 있습니다. 이는 프로젝트 역할 및 권한에 따라 변경될 수 있습니다."
@@ -2934,6 +2996,7 @@ ko:
   notice_bad_request: "잘못된 요청입니다."
   notice_not_authorized: "이 페이지에 액세스할 권한이 없습니다."
   notice_not_authorized_archived_project: "액세스하려는 프로젝트는 이미 보관되어 있습니다."
+  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
   notice_password_confirmation_failed: "암호가 올바르지 않습니다. 계속할 수 없습니다."
   notice_principals_found_multiple: "%{number} 개의 결과가 발견되었습니다.\n첫번째 결과를 보려면 탭 해주세요."
   notice_principals_found_single: "한 개의 결과가 있습니다.\n보려면 탭 해주세요."
@@ -3018,6 +3081,7 @@ ko:
   permission_edit_own_time_entries: "내 시간 로그 편집"
   permission_edit_project: "프로젝트 편집"
   permission_edit_project_attributes: "프로젝트 특성 편집"
+  permission_edit_project_stages_and_gates: "Edit project stages and gates"
   permission_edit_reportings: "보고 편집"
   permission_edit_time_entries: "다른 사용자의 시간 로그 편집"
   permission_edit_timelines: "타임라인 편집"
@@ -3047,6 +3111,8 @@ ko:
   permission_search_project: "프로젝트 검색"
   permission_select_custom_fields: "사용자 지정 필드 선택"
   permission_select_project_custom_fields: "프로젝트 특성 선택"
+  permission_select_project_life_cycle: "Select project stages and gates"
+  permission_select_project_life_cycle_explanation: "Activate/Deactivate the stages and gates in a project. Enables the user to select the lifecycle appropriate for the project as inactive stages and gates will not be visible in the project overview page nor the project list."
   permission_select_project_modules: "프로젝트 모듈 선택"
   permission_share_work_packages: "작업 패키지 공유"
   permission_manage_types: "유형 선택"
@@ -3071,6 +3137,7 @@ ko:
   permission_work_package_assigned_explanation: "작업 패키지는 각각의 프로젝트에서 이 역할을 가진 사용자와 그룹에 할당될 수 있습니다."
   permission_view_project_activity: "프로젝트 활동 보기"
   permission_view_project_attributes: "프로젝트 특성 보기"
+  permission_view_project_stages_and_gates: "View project stages and gates"
   permission_save_bcf_queries: "BCF 쿼리 저장"
   permission_manage_public_bcf_queries: "공용 BCF 쿼리 관리"
   permission_edit_attribute_help_texts: "특성 도움말 텍스트 편집"
@@ -3102,9 +3169,9 @@ ko:
       are_you_sure: "프로젝트 '%{name}'을(를) 보관하시겠습니까?"
       archived: "보관됨"
     count:
-      zero: "0개 프로젝트"
-      one: "1개 프로젝트"
-      other: "%{count}개 프로젝트"
+      zero: "0 projects"
+      one: "1 project"
+      other: "%{count} projects"
   project_module_activity: "활동"
   project_module_forums: "포럼"
   project_module_work_package_tracking: "작업 패키지"
@@ -3236,6 +3303,7 @@ ko:
     activated: "활성화됨"
     deactivated: "비활성화됨"
   search_input_placeholder: "검색..."
+  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "CORS 사용"
   setting_apiv3_cors_origins: "API V3 CORS(크로스-원본 리소스 공유) 허용 원본"
   setting_apiv3_cors_origins_text_html: >
@@ -3461,6 +3529,27 @@ ko:
       new:
         heading: "새로운 특성"
         description: "이 프로젝트 특성에 대한 변경 사항은 이 특성이 활성화된 모든 프로젝트에 반영됩니다. 필수 특성은 프로젝트별로 비활성화할 수 없습니다."
+    project_life_cycle_step_definitions:
+      heading: "Project lifecycle"
+      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
+      label_add: "Add"
+      label_add_description: "Add lifecycle definition"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Search project stage or gate"
+      section_header: "Stages and gates"
+      non_defined: "Neither stages nor gates are currently defined."
+      new:
+        description: "Changes to this project step will be reflected in all projects where it is enabled."
+      new_stage:
+        heading: "New stage"
+      new_gate:
+        heading: "New gate"
+      edit_stage:
+        heading: "Edit stage"
+      edit_gate:
+        heading: "Edit gate"
     projects:
       missing_dependencies: "%{dependencies}에 의존하는 프로젝트 모듈 %{module}이(가) 확인되었습니다. 이러한 종속성도 확인해야 합니다."
       section_new_projects: "새 프로젝트의 설정"
@@ -3494,6 +3583,7 @@ ko:
   text_are_you_sure_continue: "계속하시겠습니까?"
   text_are_you_sure_with_children: "작업 패키지 및 모든 자식 작업 패키지를 삭제하시겠습니까?"
   text_are_you_sure_with_project_custom_fields: "이 특성을 삭제하면 모든 프로젝트에서 해당 값도 삭제됩니다. 계속하시겠습니까?"
+  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
   text_assign_to_project: "프로젝트에 할당"
   text_form_configuration: >
     작업 패키지 양식으로 표시할 필드를 사용자 지정할 수 있습니다. 해당 도메인의 요구 사항을 반영하도록 필드를 자유롭게 그룹화할 수 있습니다.
@@ -3940,6 +4030,8 @@ ko:
       builtin: 기본 제공 인스턴스 애플리케이션
       confidential: 기밀
       singular: "OAuth 애플리케이션"
+      scopes: "Scopes"
+      client_credentials: "Client credentials"
       plural: "OAuth 애플리케이션"
       named: "OAuth 애플리케이션 '%{name}'"
       new: "새로운 OAuth 애플리케이션"

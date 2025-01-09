@@ -745,6 +745,7 @@ be:
         immediate:
           title: "Send me an email reminder"
           mentioned: "Immediately when someone @mentions me"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Email alerts for other items (that are not work packages)"
           explanation: >
@@ -776,10 +777,6 @@ be:
         upgrade_to_ee_text: "Нічога сабе! Калі вам патрэбны гэты дадатак, вы вялікі прафесіянал! Ці будзеце вы ветлівы падтрымаць нас, OpenSource распрацоўшчыкаў, пераўтварыўшыся ў карыстальніка Enterprise edition?"
         more_information: "Дадатковыя звесткі"
         nevermind: "Nevermind"
-      edit:
-        form_configuration: "Form Configuration"
-        projects: "Projects"
-        settings: "Settings"
     time_entry:
       work_package_required: "Requires selecting a work package first."
       title: "Log time"

@@ -744,6 +744,7 @@ sl:
         immediate:
           title: "Send me an email reminder"
           mentioned: "Immediately when someone @mentions me"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Email alerts for other items (that are not work packages)"
           explanation: >
@@ -775,10 +776,6 @@ sl:
         upgrade_to_ee_text: "Wow! If you need this add-on you are a super pro! Would you mind supporting us OpenSource developers by becoming an Enterprise edition client?"
         more_information: "Več informacij"
         nevermind: "Pozabi"
-      edit:
-        form_configuration: "Konfiguracija forme"
-        projects: "Projekti"
-        settings: "Nastavitve"
     time_entry:
       work_package_required: "Najprej izberite opravilo"
       title: "Beleži čas"

@@ -742,6 +742,7 @@ vi:
         immediate:
           title: "Gửi cho tôi nhắc nhở email"
           mentioned: "Ngay lập tức khi ai đó nhắc đến tôi"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Cảnh báo email cho các mục khác (không phải gói công việc)"
           explanation: >
@@ -773,10 +774,6 @@ vi:
         upgrade_to_ee_text: "Wow! Nếu bạn cần tiện ích bổ sung này, bạn là một chuyên gia tuyệt vời! Bạn có thể hỗ trợ chúng tôi, các nhà phát triển OpenSource, bằng cách trở thành khách hàng của phiên bản Enterprise không?"
         more_information: "Thông tin thêm"
         nevermind: "Không sao"
-      edit:
-        form_configuration: "Cấu hình Biểu mẫu"
-        projects: "Dự án"
-        settings: "Cài đặt"
     time_entry:
       work_package_required: "Yêu cầu chọn một gói công việc trước."
       title: "Ghi thời gian"

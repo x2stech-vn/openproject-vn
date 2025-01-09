@@ -745,6 +745,7 @@ uk:
         immediate:
           title: "Надсилати мені нагадування електронною поштою"
           mentioned: "Негайно, коли хтось згадує @мене"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Сповіщення електронною поштою для інших елементів (які не є пакетами робіт)"
           explanation: >
@@ -776,10 +777,6 @@ uk:
         upgrade_to_ee_text: "Оце так! Якщо вам потрібне це доповнення, ви справжній профі! Підтримайте розробників OpenSource, перейшовши на версію Enterprise!"
         more_information: "Більше інформації"
         nevermind: "Nevermind"
-      edit:
-        form_configuration: "З конфігурації"
-        projects: "Проекти"
-        settings: "Налаштування"
     time_entry:
       work_package_required: "Спочатку потрібно вибрати пакет робіт."
       title: "Час журналу"

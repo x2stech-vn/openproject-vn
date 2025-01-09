@@ -3,6 +3,8 @@ bg:
     attributes:
       storages/file_link:
         origin_id: Origin Id
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Създател
         drive: Drive ID

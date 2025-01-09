@@ -33,6 +33,7 @@ fa:
       cost_type:
         unit: "نام واحد"
         unit_plural: "نام واحد پولی"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "واحد هزینه‌کرد"
         labor_costs: "هزینه های نیروی کار"

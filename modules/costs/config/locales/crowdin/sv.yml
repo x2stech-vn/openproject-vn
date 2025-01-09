@@ -33,6 +33,7 @@ sv:
       cost_type:
         unit: "Enhetsnamn"
         unit_plural: "Enhetsnamn plural"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Bokade enheter"
         labor_costs: "Personalkostnader"

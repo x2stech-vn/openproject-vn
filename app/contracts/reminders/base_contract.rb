@@ -28,7 +28,7 @@
 
 module Reminders
   class BaseContract < ::ModelContract
-    MAX_NOTE_CHARS_LENGTH = 80
+    MAX_NOTE_CHARS_LENGTH = 128
 
     attribute :creator_id
     attribute :remindable_id

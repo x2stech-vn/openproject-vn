@@ -18,9 +18,8 @@ module Primer
 
             def to_h
               {
-                label:,
-                value:,
-                selected:
+                id: value,
+                name: label
               }
             end
           end

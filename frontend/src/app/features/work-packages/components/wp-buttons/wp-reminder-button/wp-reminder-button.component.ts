@@ -26,21 +26,22 @@
 // See COPYRIGHT and LICENSE files for more details.
 //++
 
-import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
 import { I18nService } from 'core-app/core/i18n/i18n.service';
-import { UntilDestroyedMixin } from 'core-app/shared/helpers/angular/until-destroyed.mixin';
-import { OpModalService } from 'core-app/shared/components/modal/modal.service';
+import { ActionsService } from 'core-app/core/state/actions/actions.service';
+import { notificationCountChanged } from 'core-app/core/state/in-app-notifications/in-app-notifications.actions';
+import { CollectionResource } from 'core-app/features/hal/resources/collection-resource';
+import { WorkPackageResource } from 'core-app/features/hal/resources/work-package-resource';
+import { IanBellService } from 'core-app/features/in-app-notifications/bell/state/ian-bell.service';
+import { reminderModalUpdated } from 'core-app/features/work-packages/components/wp-reminder-modal/reminder.actions';
 import {
   WorkPackageReminderModalComponent,
 } from 'core-app/features/work-packages/components/wp-reminder-modal/wp-reminder.modal';
-import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
-import { filter, map, startWith, switchMap } from 'rxjs/operators';
+import { OpModalService } from 'core-app/shared/components/modal/modal.service';
+import { UntilDestroyedMixin } from 'core-app/shared/helpers/angular/until-destroyed.mixin';
 import { merge, Observable } from 'rxjs';
-import { ActionsService } from 'core-app/core/state/actions/actions.service';
-import { reminderModalUpdated } from 'core-app/features/work-packages/components/wp-reminder-modal/reminder.actions';
-import { CollectionResource } from 'core-app/features/hal/resources/collection-resource';
-import { IanBellService } from 'core-app/features/in-app-notifications/bell/state/ian-bell.service';
+import { filter, map, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -51,7 +52,7 @@ import { IanBellService } from 'core-app/features/in-app-notifications/bell/stat
 export class WorkPackageReminderButtonComponent extends UntilDestroyedMixin implements OnInit {
   @Input() public workPackage:WorkPackageResource;
 
-  reminderCount$:Observable<number>;
+  hasReminder$:Observable<boolean>;
 
   public buttonTitle = this.I18n.t('js.work_packages.reminders.button_label');
 
@@ -67,21 +68,27 @@ export class WorkPackageReminderButtonComponent extends UntilDestroyedMixin impl
   }
 
   ngOnInit() {
-    this.reminderCount$ = merge(
-      this
-        .actions$
-        .ofType(reminderModalUpdated)
-        .pipe(
-          map((action) => action.workPackageId),
-          filter((id) => id === this.workPackage.id?.toString()),
-          startWith(null),
-          switchMap(() => this.countReminders()),
-        ),
-      this.storeService.unread$
-        .pipe(
-          startWith(0),
-          switchMap(() => this.countReminders()),
-        ),
+    const reminderModalUpdated$ = this
+      .actions$
+      .ofType(reminderModalUpdated)
+      .pipe(
+        map((action) => action.workPackageId),
+        filter((id) => id === this.workPackage.id?.toString()),
+        startWith(null),
+      );
+    const notificationCountChanged$ = this
+      .actions$
+      .ofType(notificationCountChanged)
+      .pipe(
+        map((action) => action.count),
+      );
+
+    this.hasReminder$ = merge(
+      notificationCountChanged$,
+      reminderModalUpdated$,
+    ).pipe(
+      switchMap(() => this.countReminders()),
+      map((count) => count > 0),
     );
   }
 

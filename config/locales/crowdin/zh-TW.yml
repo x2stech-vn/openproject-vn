@@ -342,6 +342,9 @@ zh-TW:
         text: "此動作不會刪除清單中包含的任何專案。您確定要刪除此專案清單？"
     settings:
       change_identifier: 變更識別碼
+      actions:
+        label_enable_all: "全部啟用"
+        label_disable_all: "全部停用"
       activities:
         no_results_title_text: 目前沒有可用的活動
       forums:
@@ -352,18 +355,26 @@ zh-TW:
         no_results_content_text: 建立一個新工作項目類別
       custom_fields:
         no_results_title_text: 目前沒有客製欄位可用。
+      life_cycle:
+        header:
+          title: "專案生命週期"
+          description_html: '專案生命週期中的這些專案階段和關卡將顯示在您的 <a href=%{overview_url} target="_blank「> 專案總覽頁面</a> 中，並由實例的管理員在 <a href=%{admin_settings_url} target=」_blank"> 管理設定</a> 中定義。您可以啟用或停用個別屬性。'
+        non_defined: "目前階段和閘門都未定義。"
+        section_header: "階段與關卡"
+        step:
+          use_in_project: "在本專案中使用 %{step}"
+        filter:
+          label: "搜尋專案階段或關卡"
       project_custom_fields:
         header:
           title: "專案屬性"
-          description: '這些專案屬性將顯示在您各自的<a href=%{overview_url} target="_blank">專案總覽頁面</a>中。您可以啟用或停用單一屬性。專案屬性由管理員在<a href=%{admin_settings_url} target="_blank">管理設定</a>中定義。'
+          description_html: '這些專案屬性會顯示在您的 <a href=%{overview_url} target="_blank"> 專案總覽頁面</a> 中各自的區段之下。您可以啟用或停用個別屬性。專案屬性和區段由實例的管理員在 <a href=%{admin_settings_url} target="_blank"> 管理設定</a> 中定義。 '
         filter:
           label: "搜尋專案屬性"
         actions:
           label_enable_single: "於此專案使用，請按一下停用"
           label_disable_single: "於此專案未使用，請按一下啟用"
           remove_from_project: "從專案移除"
-          label_enable_all: "全部啟用"
-          label_disable_all: "全部停用"
         is_required_blank_slate:
           heading: 所有專案都需要
           description: 由於已勾選「所有專案都需要」選項，因此所有專案都會啟用此專案屬性。個別專案無法停用。
@@ -376,6 +387,9 @@ zh-TW:
         no_results_content_text: 建立一個新版本
       storage:
         no_results_title_text: 該專案沒有額外消耗磁碟空間。
+  project_stage:
+    working_days_count:
+      other: "時間： %{count} 工作天"
   lists:
     create:
       success: "修改後的清單已儲存為新清單"
@@ -564,17 +578,27 @@ zh-TW:
       no_results_title_text: 目前沒有類型
       no_results_content_text: 新增一個類型
     edit:
-      settings: "設定"
-      form_configuration: "表單設置"
+      form_configuration:
+        tab: "表單設置"
       more_info_text_html: >
         企業版允許您使用以下附加組件自定義表單設定：<br> <ul class="%{list_styling_class}"> <li><b>添加新屬性組</b></li> <li><b>重命名屬性組</b></li> <li><b>添加相關工作項目表</b></li> </ul>
-      projects: "專案"
-      enabled_projects: "已啟用的專案"
-      edit_query: "編輯表格"
-      query_group_placeholder: "給表格命名"
-      reset: "重設為預設值"
-      type_color_text: |
-        所選顏色區分甘特圖或工作項目中的不同類型。因此建議使用濃烈的顏色。
+      projects:
+        tab: "專案"
+        enabled_projects: "已啟用專案"
+      settings:
+        tab: "設定"
+        type_color_text: 選取的顏色可區分甘特圖或工作包表格中的不同類型。因此建議使用強烈的顏色。
+      subject_configuration:
+        tab: "主題設定"
+        manually_editable_subjects:
+          label: "可手動編輯的主題"
+          caption: "使用者可以不受限制地手動輸入和編輯工作項目主題。"
+        automatically_generated_subjects:
+          label: "自動產生的主題"
+          caption: "使用參考屬性和文字定義模式，以自動產生工作項目主題。使用者將無法手動編輯主題。"
+        pattern:
+          label: "主題模板"
+          caption: "搜尋屬性或新增文字。若要在元素之間建立空格，請將其建立為文字。"
   versions:
     overview:
       work_packages_in_archived_projects: "該版本與歸檔項目共用，這些專案仍然有分配給此版本的工作項目。雖然這些工作項目被計算在內，但不會顯示在視圖中。"
@@ -755,6 +779,7 @@ zh-TW:
         is_required: "必填"
         max_length: "最大長度"
         min_length: "最小長度"
+        content_right_to_left: "從右至左的內容"
         multi_value: "允許多選"
         possible_values: "可選擇內容"
         regexp: "正規表示式"
@@ -790,6 +815,8 @@ zh-TW:
         attr_lastname: "姓"
         attr_login: "使用者名稱屬性。"
         attr_mail: "Email"
+        filter_string: "過濾字串"
+        admin: "管理員"
         base_dn: "Base DN"
         host: "主機"
         onthefly: "自動新增用戶"
@@ -833,6 +860,9 @@ zh-TW:
       project_custom_field:
         is_required: "所有專案都需要"
         custom_field_section: 區段
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Color"
       query:
         column_names: "欄"
         relations_to_type_column: "與 %{type} 的關連"
@@ -905,7 +935,7 @@ zh-TW:
         derived_remaining_hours: "剩餘時數"
         derived_remaining_time: "剩餘時數"
         done_ratio: "完成度(%)"
-        duration: "天數"
+        duration: "時長"
         end_insertion: "結束插入"
         end_deletion: "結束刪除"
         ignore_non_working_days: "忽略非工作日"
@@ -1096,16 +1126,38 @@ zh-TW:
           attributes:
             type:
               must_be_a_stage_or_gate: ""
+              type_and_class_name_mismatch: "必須與實體化的類別名稱相符"
+        project/gate_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "必須是 Project::GateDefinition"
+        project/stage_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "必須是 Project::StageDefinition"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: ""
               must_be_a_stage: ""
               must_be_a_gate: "必須是 Project::Gate"
+              type_and_class_name_mismatch: "必須與實體化的類別名稱相符"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "無法指定 `end_date` 到 Project::Gate"
+              end_date_not_allowed: "無法為 Project::Gate 指定結束日期"
+            type:
+              type_and_class_name_mismatch: "必須是 Project::Gate"
+            date:
+              non_continuous_dates: "不能早於前一個 %{step}的結束日期。"
+        project/stage:
+          attributes:
+            date_range:
+              start_date_must_be_before_end_date: "開始日期必須在結束日期之前。"
+              non_continuous_dates: "不能早於前一個 %{step}的結束日期。"
+              incomplete: "未完成。"
+            type:
+              type_and_class_name_mismatch: "必須是 Project::Stage"
         query:
           attributes:
             project:
@@ -1319,6 +1371,8 @@ zh-TW:
         other: "通知"
       placeholder_user: "虛擬群組"
       project: "專案"
+      project/gate_definition: "關卡"
+      project/stage_definition: "階段"
       project_query:
         other: "專案列表"
       query: "自訂查詢"
@@ -1713,6 +1767,8 @@ zh-TW:
     upsale:
       title: "企業版附加元件"
       link_title: "更多資訊"
+      customize_life_cycle:
+        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:
         description: "使用以下附加組件自定義表單配置："
         add_groups: "增加新的屬性群組"
@@ -2435,6 +2491,7 @@ zh-TW:
   label_none_parentheses: "（無）"
   label_not_contains: "不包含"
   label_not_equals: "不是"
+  label_life_cycle_step_plural: "專案生命週期"
   label_on: "開啟"
   label_operator_all: "全部"
   label_operator_none: "無"
@@ -2496,6 +2553,7 @@ zh-TW:
   label_project_new: "新增專案"
   label_project_plural: "專案"
   label_project_list_plural: "專案列表"
+  label_project_lifecycle: "Project lifecycle"
   label_project_attributes_plural: "專案屬性"
   label_project_custom_field_plural: "專案屬性"
   label_project_settings: "專案設定"
@@ -2772,8 +2830,13 @@ zh-TW:
         prefix: "因為通知設定而收到：%{reason}"
         date_alert_start_date: "日期提醒"
         date_alert_due_date: "到期提醒"
+        reminder: "提醒"
       see_all: "全部顯示"
       updated_at: "%{user} 在 %{timestamp} 更新"
+    reminder_notifications:
+      subject: "提醒： %{note}"
+      heading: "您有新的提醒"
+      note: "備註： \"%{note}\""
     sharing:
       work_packages:
         allowed_actions: "您擁有這個工作項目的 %{allowed_actions} 權限. 這些權限將隨著您的角色不同而更改."
@@ -2931,6 +2994,7 @@ zh-TW:
   notice_bad_request: "錯誤的請求"
   notice_not_authorized: "你沒有存取此頁面的權限"
   notice_not_authorized_archived_project: "你欲存取的專案已被封存"
+  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
   notice_password_confirmation_failed: "您的密碼不正確。無法繼續。"
   notice_principals_found_multiple: "找到 %{number} 條結果。\n Tab鍵以轉到第一條結果。"
   notice_principals_found_single: "有一個結果。 \n Tab鍵轉到該結果。"
@@ -3015,6 +3079,7 @@ zh-TW:
   permission_edit_own_time_entries: "編輯自己的時間日誌"
   permission_edit_project: "編輯專案"
   permission_edit_project_attributes: "編輯項目屬性"
+  permission_edit_project_stages_and_gates: "檢視專案階段與關卡"
   permission_edit_reportings: "編輯報表"
   permission_edit_time_entries: "編輯他人耗時"
   permission_edit_timelines: "編輯時間軸"
@@ -3044,6 +3109,8 @@ zh-TW:
   permission_search_project: "搜尋專案"
   permission_select_custom_fields: "選擇客製欄位"
   permission_select_project_custom_fields: "選擇專案屬性"
+  permission_select_project_life_cycle: "選擇專案階段與關卡"
+  permission_select_project_life_cycle_explanation: "啟動/停用專案中的階段和關卡。使用者可以選擇適合專案的生命週期，因為非活躍階段和關卡不會在專案總覽頁面或專案清單中顯示。"
   permission_select_project_modules: "選擇專案的模組"
   permission_share_work_packages: "參與工作項目"
   permission_manage_types: "選擇類型"
@@ -3068,6 +3135,7 @@ zh-TW:
   permission_work_package_assigned_explanation: "可以將工作項目分配給在相應專案中擁有此角色的使用者和群組"
   permission_view_project_activity: "查看專案活動"
   permission_view_project_attributes: "查看專案屬性"
+  permission_view_project_stages_and_gates: "檢視專案階段與關卡"
   permission_save_bcf_queries: "保存 BCF 查詢"
   permission_manage_public_bcf_queries: "管理公開的 BCF 查詢"
   permission_edit_attribute_help_texts: "編輯屬性說明文字"
@@ -3099,9 +3167,9 @@ zh-TW:
       are_you_sure: "是否確定要封存專案 '%{name}'？"
       archived: "封存"
     count:
-      zero: "0 個專案"
-      one: "1 個專案"
-      other: "%{count} 專案"
+      zero: "0 projects"
+      one: "1 project"
+      other: "%{count} projects"
   project_module_activity: "活動"
   project_module_forums: "討論區"
   project_module_work_package_tracking: "工作項目"
@@ -3235,6 +3303,7 @@ zh-TW:
     activated: "已啟用"
     deactivated: "已停用"
   search_input_placeholder: "搜尋 ..."
+  setting_apiv3_cors_title: "跨原始來源資源共用 (CORS, Cross-Origin Resource Sharing)"
   setting_apiv3_cors_enabled: "啟用 CORS"
   setting_apiv3_cors_origins: "CROSS-ORIGIN RESOURCE SHARING (CORS)"
   setting_apiv3_cors_origins_text_html: >
@@ -3460,6 +3529,27 @@ zh-TW:
       new:
         heading: "新屬性"
         description: "專案屬性的變更將套用在已啟用該屬性專案中。 若為必要屬性，無法個別專案停用。"
+    project_life_cycle_step_definitions:
+      heading: "Project lifecycle"
+      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
+      label_add: "Add"
+      label_add_description: "Add lifecycle definition"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Search project stage or gate"
+      section_header: "Stages and gates"
+      non_defined: "Neither stages nor gates are currently defined."
+      new:
+        description: "Changes to this project step will be reflected in all projects where it is enabled."
+      new_stage:
+        heading: "New stage"
+      new_gate:
+        heading: "New gate"
+      edit_stage:
+        heading: "Edit stage"
+      edit_gate:
+        heading: "Edit gate"
     projects:
       missing_dependencies: "已檢查依賴於 %{dependencies} 的項目模塊 %{module}。您也需要檢查這些依賴項。"
       section_new_projects: "新專案的設置"
@@ -3493,6 +3583,7 @@ zh-TW:
   text_are_you_sure_continue: "你要繼續嗎?"
   text_are_you_sure_with_children: "刪除工作項目以及所有子工作項目?"
   text_are_you_sure_with_project_custom_fields: "刪除該屬性也會刪除其在所有項目中的值。您確定要這樣做嗎？"
+  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
   text_assign_to_project: "分配給專案"
   text_form_configuration: >
     您可以自訂哪些欄位將會顯示在工作項目表單中。您可以自由的群組化這些欄位來符合您的需求。
@@ -3939,6 +4030,8 @@ zh-TW:
       builtin: 內建範例
       confidential: 機密
       singular: "Oauth 應用程式"
+      scopes: "範圍"
+      client_credentials: "客戶憑證"
       plural: "Oauth 應用程式"
       named: "OAuth 應用程式 '%{name}'"
       new: "新增 OAuth 應用程式"

@@ -33,6 +33,7 @@ fil:
       cost_type:
         unit: "Pangalan ng yunit"
         unit_plural: "Pinaraming pangalan ng yunit"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Ginugol na yunit"
         labor_costs: "Gastos sa Paggawa"

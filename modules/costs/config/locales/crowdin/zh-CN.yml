@@ -33,6 +33,7 @@ zh-CN:
       cost_type:
         unit: "单位名称"
         unit_plural: "单位名称（复数）"
+        default: "默认成本类型"
       work_package:
         costs_by_type: "支出单位"
         labor_costs: "人工成本"

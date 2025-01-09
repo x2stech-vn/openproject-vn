@@ -33,6 +33,7 @@ ru:
       cost_type:
         unit: "Наименование количественного показателя"
         unit_plural: "Множественное наименование количественного показателя"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Затраченное количество"
         labor_costs: "Трудовые расходы"

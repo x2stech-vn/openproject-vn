@@ -185,7 +185,8 @@ de:
     types:
       classic: "Klassisch"
       classic_text: "Organisieren Sie Ihre Besprechung und zugehöriges Protokoll in einem einzelnen Notizblock."
-      structured: "Einmalig"
+      structured: "Strukturiert"
+      one_time: "Einmalig"
       recurring: "Terminserie"
       recurring_text: "Erstellen Sie eine Terminserie mit einer dynamischen Vorlage und wiederkehrenden Besprechungen."
       structured_text: "Organisieren Sie Ihr Meeting als strukturierte Liste von Einträgen und verknüpfen Sie diese optional mit einem Arbeitspaket."

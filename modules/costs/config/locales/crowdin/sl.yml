@@ -33,6 +33,7 @@ sl:
       cost_type:
         unit: "Ime enote"
         unit_plural: "Pluralizirano ime enote"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Porabljene enote"
         labor_costs: "Stroški dela"

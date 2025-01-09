@@ -13,12 +13,11 @@ Release date: 2024-05-22
 We released [OpenProject 13.4.2](https://community.openproject.org/versions/2058).
 The release contains several bug fixes and we recommend updating to the newest version.
 
-### Fixes a stored XSS vulnerability in the cost report functionality (CVE-2024-135224)
+## Fixes a stored XSS vulnerability in the cost report functionality (CVE-2024-135224)
+
 OpenProject Cost Report functionality uses improper sanitization of user input. This can lead to Stored XSS via the header values of the report table. This attack requires the permissions "Edit work packages" as well as "Add attachments".
 
 For more information, [please see our security advisory](https://github.com/opf/openproject/security/advisories/GHSA-h26c-j8wg-frjc).
-
-<!--more-->
 
 ## Bug fixes and changes
 

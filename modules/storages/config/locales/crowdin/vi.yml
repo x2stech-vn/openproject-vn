@@ -3,6 +3,8 @@ vi:
     attributes:
       storages/file_link:
         origin_id: ID Nguồn
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Người tạo
         drive: ID Ổ đĩa

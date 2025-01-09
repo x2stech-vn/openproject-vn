@@ -740,6 +740,7 @@ zh-TW:
         immediate:
           title: "寄發提醒郵件給我"
           mentioned: "當有人使用「@帳號」提到我，系統立即發信通知我"
+          personal_reminder: "當我收到個人提醒時立即通知"
         alerts:
           title: "其他非工作項目之提醒"
           explanation: >
@@ -771,10 +772,6 @@ zh-TW:
         upgrade_to_ee_text: "哇！如果您需要使用此功能，說明您非常專業！您是否願意成為企業版客戶來支持 OpenSource 開發人員？"
         more_information: "更多資訊"
         nevermind: "無視"
-      edit:
-        form_configuration: "表單設定"
-        projects: "專案"
-        settings: "設定"
     time_entry:
       work_package_required: "需要先選擇一個工作項目。"
       title: "日誌的時間"
@@ -803,8 +800,8 @@ zh-TW:
       duplicated: "重複於"
       blocks: "攔阻"
       blocked: "被阻擋"
-      precedes: "後置項目"
-      follows: "前置項目"
+      precedes: "優先"
+      follows: "次の項目に後続"
       includes: "包括"
       partof: "一部分"
       requires: "需要"
@@ -978,7 +975,7 @@ zh-TW:
         percentComplete: "完成度(%)"
         percentCompleteAlternative: "進度"
         dueDate: "完成日期"
-        duration: "天數"
+        duration: "時長"
         spentTime: "耗時"
         category: "類別"
         percentageDone: "完成百分比"

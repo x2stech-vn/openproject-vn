@@ -8,6 +8,7 @@ ja:
         url: 'ペイロード URL'
         secret: '署名シークレット'
         events: 'イベント'
+        enabled: 'Enabled'
         projects: '有効なプロジェクト'
       webhooks/log:
         event_name: 'イベント名'

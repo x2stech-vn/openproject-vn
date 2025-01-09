@@ -343,6 +343,9 @@ fr:
         text: "Cette action ne supprimera aucun projet contenu dans la liste. Voulez-vous vraiment supprimer cette liste de projets ?"
     settings:
       change_identifier: Changer l'identifiant
+      actions:
+        label_enable_all: "Enable all"
+        label_disable_all: "Disable all"
       activities:
         no_results_title_text: Aucune activité disponible pour le moment.
       forums:
@@ -353,18 +356,26 @@ fr:
         no_results_content_text: Créer une nouvelle catégorie de lots de travaux
       custom_fields:
         no_results_title_text: Il n'y a actuellement aucun champ personnalisé disponible.
+      life_cycle:
+        header:
+          title: "Project lifecycle"
+          description_html: 'These project stages and gates in the project lifecycle will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> and are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. You can enable or disable individual attributes.'
+        non_defined: "Neither stages nor gates are currently defined."
+        section_header: "Stages and gates"
+        step:
+          use_in_project: "Use %{step} in this project"
+        filter:
+          label: "Search project stage or gate"
       project_custom_fields:
         header:
           title: "Attributs du projet"
-          description: 'Ces attributs de projet seront affichés dans votre <a href=%{overview_url} target="_blank">page d''aperçu du projet</a> sous leurs sections respectives. Vous pouvez activer ou désactiver des attributs individuels. Les attributs et les sections du projet sont définis dans les <a href=%{admin_settings_url} target="_blank">paramètres d''administration</a> par l''administrateur de l''instance. '
+          description_html: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
         filter:
           label: "Rechercher un attribut de projet"
         actions:
           label_enable_single: "Actif dans ce projet, cliquez pour le désactiver"
           label_disable_single: "Inactif dans ce projet, cliquez pour l'activer"
           remove_from_project: "Supprimer du projet"
-          label_enable_all: "Activer tout"
-          label_disable_all: "Désactiver tout"
         is_required_blank_slate:
           heading: Requis dans tous les projets
           description: Cet attribut de projet est activé dans tous les projets, car l'option « Requis dans tous les projets » est cochée. Il ne peut pas être désactivé pour des projets individuels.
@@ -377,6 +388,10 @@ fr:
         no_results_content_text: Créer une nouvelle version
       storage:
         no_results_title_text: Il n'y a pas d'espace disque supplémentaire utilisé par ce projet.
+  project_stage:
+    working_days_count:
+      one: "Duration: %{count} working day"
+      other: "Duration: %{count} working days"
   lists:
     create:
       success: "La liste modifiée a été enregistrée en tant que nouvelle liste"
@@ -571,18 +586,27 @@ fr:
       no_results_title_text: Il n'y a actuellement aucun type.
       no_results_content_text: Créer un nouveau type
     edit:
-      settings: "Paramètres"
-      form_configuration: "Configuration du formulaire"
+      form_configuration:
+        tab: "Form configuration"
       more_info_text_html: >
         L'édition Entreprise vous permet de personnaliser la configuration du formulaire avec ces add-ons supplémentaires : <br> <ul class="%{list_styling_class}"> <li><b>Ajouter de nouveaux groupes d'attributs</b></li> <li><b>Renommer les groupes d'attributs</b></li> <li><b>Ajouter une table des lots de travaux connexes</b></li> </ul>
-      projects: "Projets"
-      enabled_projects: "Projets activés"
-      edit_query: "Modifier le tableau"
-      query_group_placeholder: "Donner un nom au tableau"
-      reset: "Rétablir les valeurs par défaut"
-      type_color_text: |
-        La couleur sélectionnée distingue différents types
-        dans les graphiques de Gantt ou les tables des lots de travaux. Il est donc recommandé d'utiliser une couleur forte.
+      projects:
+        tab: "Projects"
+        enabled_projects: "Enabled projects"
+      settings:
+        tab: "Settings"
+        type_color_text: The selected color distinguishes different types in Gantt charts or work packages tables. It is therefore recommended to use a strong color.
+      subject_configuration:
+        tab: "Subject configuration"
+        manually_editable_subjects:
+          label: "Manually editable subjects"
+          caption: "Users can manually enter and edit work package subjects without restrictions."
+        automatically_generated_subjects:
+          label: "Automatically generated subjects"
+          caption: "Define a pattern using referenced attributes and text to automatically generate work package subjects. Users will not be able to manually edit subjects."
+        pattern:
+          label: "Subject pattern"
+          caption: "Search for an attribute or add text. To create a space between elements add it as a text."
   versions:
     overview:
       work_packages_in_archived_projects: "La version est partagée avec les projets archivés qui ont encore des lots de travaux assignés à cette version. Ils sont comptés, mais n'apparaîtront pas dans les vues liées."
@@ -764,6 +788,7 @@ fr:
         is_required: "Obligatoire"
         max_length: "Longueur maximale"
         min_length: "Longueur minimale"
+        content_right_to_left: "Right-to-Left content"
         multi_value: "Autoriser la sélection multiple"
         possible_values: "Valeurs possibles"
         regexp: "Expression régulière"
@@ -799,6 +824,8 @@ fr:
         attr_lastname: "Attribut Nom"
         attr_login: "Attribut Nom d'utilisateur"
         attr_mail: "Attribut Adresse électronique"
+        filter_string: "Filter string"
+        admin: "Administrator"
         base_dn: "DN de base"
         host: "Hôte"
         onthefly: "Création automatique des utilisateurs"
@@ -842,6 +869,9 @@ fr:
       project_custom_field:
         is_required: "Requis pour tous les projets"
         custom_field_section: Section
+      project/life_cycle_step_definition:
+        name: "Name"
+        color: "Color"
       query:
         column_names: "Colonnes"
         relations_to_type_column: "Relations avec %{type}"
@@ -1105,16 +1135,38 @@ fr:
           attributes:
             type:
               must_be_a_stage_or_gate: "doit être soit Project::StageDefinition soit Project::GateDefinition"
+              type_and_class_name_mismatch: "must match the instantiated class name"
+        project/gate_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::GateDefinition"
+        project/stage_definition:
+          attributes:
+            type:
+              type_and_class_name_mismatch: "must be a Project::StageDefinition"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: "doit être soit Project::Stage soit Project::Gate"
               must_be_a_stage: "doit être un Project::Stage"
               must_be_a_gate: "doit être un Project::Gate"
+              type_and_class_name_mismatch: "must match the instantiated class name"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "Impossible d'affecter `end_date` à un Project::Gate"
+              end_date_not_allowed: "Cannot assign end date to a Project::Gate"
+            type:
+              type_and_class_name_mismatch: "must be a Project::Gate"
+            date:
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+        project/stage:
+          attributes:
+            date_range:
+              start_date_must_be_before_end_date: "start date must be before the end date."
+              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+              incomplete: "is incomplete."
+            type:
+              type_and_class_name_mismatch: "must be a Project::Stage"
         query:
           attributes:
             project:
@@ -1331,6 +1383,8 @@ fr:
         other: "Notifications"
       placeholder_user: "Utilisateur de remplacement"
       project: "Projet"
+      project/gate_definition: "Gate"
+      project/stage_definition: "Stage"
       project_query:
         one: "Liste de projets"
         other: "Listes de projets"
@@ -1750,6 +1804,8 @@ fr:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      customize_life_cycle:
+        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:
         description: "Personnaliser la configuration du formulaire avec ces add-ons supplémentaires :"
         add_groups: "Ajouter de nouveaux groupes d’attributs"
@@ -2472,6 +2528,7 @@ fr:
   label_none_parentheses: "(none)"
   label_not_contains: "ne contient pas"
   label_not_equals: "n'est pas"
+  label_life_cycle_step_plural: "Project lifecycle"
   label_on: "le"
   label_operator_all: "n'est pas vide"
   label_operator_none: "est vide"
@@ -2533,6 +2590,7 @@ fr:
   label_project_new: "Nouveau projet"
   label_project_plural: "Projets"
   label_project_list_plural: "Listes de projets"
+  label_project_lifecycle: "Project lifecycle"
   label_project_attributes_plural: "Attributs du projet"
   label_project_custom_field_plural: "Attributs du projet"
   label_project_settings: "Paramètres du projet"
@@ -2810,8 +2868,13 @@ fr:
         prefix: "Reçu en raison du paramètre de notification : %{reason}"
         date_alert_start_date: "Alarmes"
         date_alert_due_date: "Alarmes"
+        reminder: "Reminder"
       see_all: "Voir tout"
       updated_at: "Mis à jour le %{timestamp} par %{user}"
+    reminder_notifications:
+      subject: "Reminder: %{note}"
+      heading: "You have a new reminder"
+      note: "Note: “%{note}”"
     sharing:
       work_packages:
         allowed_actions: "Vous pouvez %{allowed_actions} ce lot de travaux. Cela peut changer en fonction de votre rôle dans le projet et de vos droits."
@@ -2970,6 +3033,7 @@ fr:
   notice_bad_request: "Mauvaise requête."
   notice_not_authorized: "Vous n'êtes pas autorisé à accéder à cette page."
   notice_not_authorized_archived_project: "Le projet auquel vous essayer d'accéder a été archivé."
+  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
   notice_password_confirmation_failed: "Votre mot de passe est incorrect. Impossible de continuer."
   notice_principals_found_multiple: "Il y a %{number} résultats trouvés. Tabulation pour sélectionner le premier résultat."
   notice_principals_found_single: "Il y a un seul résultat. Tabulation pour le sélectionner."
@@ -3056,6 +3120,7 @@ fr:
   permission_edit_own_time_entries: "Éditer mes propres enregistrements de temps"
   permission_edit_project: "Éditer le projet"
   permission_edit_project_attributes: "Modifier les attributs du projet"
+  permission_edit_project_stages_and_gates: "Edit project stages and gates"
   permission_edit_reportings: "Éditer rapports"
   permission_edit_time_entries: "Modifier les journaux de temps pour les autres utilisateurs"
   permission_edit_timelines: "Éditer les lignes du temps"
@@ -3085,6 +3150,8 @@ fr:
   permission_search_project: "Rechercher un projet"
   permission_select_custom_fields: "Sélectionner les champs personnalisés"
   permission_select_project_custom_fields: "Sélectionner les attributs du projet"
+  permission_select_project_life_cycle: "Select project stages and gates"
+  permission_select_project_life_cycle_explanation: "Activate/Deactivate the stages and gates in a project. Enables the user to select the lifecycle appropriate for the project as inactive stages and gates will not be visible in the project overview page nor the project list."
   permission_select_project_modules: "Sélectionner modules de projet"
   permission_share_work_packages: "Partager des lots de travaux"
   permission_manage_types: "Sélectionner types"
@@ -3109,6 +3176,7 @@ fr:
   permission_work_package_assigned_explanation: "Des lots de travaux peuvent être assignés à des utilisateurs et des groupes possédant ce rôle dans le projet respectif"
   permission_view_project_activity: "Visualisation de l'activité du projet"
   permission_view_project_attributes: "Voir les attributs du projet"
+  permission_view_project_stages_and_gates: "View project stages and gates"
   permission_save_bcf_queries: "Enregistrer les requêtes BCF"
   permission_manage_public_bcf_queries: "Gérer les requêtes publiques BCF"
   permission_edit_attribute_help_texts: "Modifier les textes d'aide des attributs"
@@ -3140,9 +3208,9 @@ fr:
       are_you_sure: "Êtes-vous sûr de vouloir archiver le projet '%{name}%' ?"
       archived: "Archivé"
     count:
-      zero: "0 projet"
-      one: "1 projet"
-      other: "%{count} projets"
+      zero: "0 projects"
+      one: "1 project"
+      other: "%{count} projects"
   project_module_activity: "Activité"
   project_module_forums: "Forums"
   project_module_work_package_tracking: "Lots de travaux"
@@ -3276,6 +3344,7 @@ fr:
     activated: "activé"
     deactivated: "désactivé"
   search_input_placeholder: "Rechercher…"
+  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_enabled: "Activer CORS"
   setting_apiv3_cors_origins: "Origines autorisées de l'API V3 Cross-Origin Resource Sharing (CORS)"
   setting_apiv3_cors_origins_text_html: >
@@ -3501,6 +3570,27 @@ fr:
       new:
         heading: "Nouvel attribut"
         description: "Les modifications apportées à cet attribut de projet seront répercutées dans tous les projets où il est activé. Les attributs obligatoires ne peuvent pas être désactivés par projet."
+    project_life_cycle_step_definitions:
+      heading: "Project lifecycle"
+      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
+      label_add: "Add"
+      label_add_description: "Add lifecycle definition"
+      label_add_stage: "Stage"
+      label_add_gate: "Gate"
+      filter:
+        label: "Search project stage or gate"
+      section_header: "Stages and gates"
+      non_defined: "Neither stages nor gates are currently defined."
+      new:
+        description: "Changes to this project step will be reflected in all projects where it is enabled."
+      new_stage:
+        heading: "New stage"
+      new_gate:
+        heading: "New gate"
+      edit_stage:
+        heading: "Edit stage"
+      edit_gate:
+        heading: "Edit gate"
     projects:
       missing_dependencies: "Le module de projet %{module} a été vérifié et dépend de %{dependencies}. Vous devez également vérifier ces dépendances."
       section_new_projects: "Paramètres pour les nouveaux projets"
@@ -3534,6 +3624,7 @@ fr:
   text_are_you_sure_continue: "Voulez-vous vraiment continuer ?"
   text_are_you_sure_with_children: "Supprimer le lot de travaux et tous les lots de travaux enfants ?"
   text_are_you_sure_with_project_custom_fields: "Supprimer cet attribut supprimera également ses valeurs dans tous les projets. Voulez-vous vraiment continuer ?"
+  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
   text_assign_to_project: "Assigner le projet"
   text_form_configuration: >
     Vous pouvez personnaliser comment les champs seront affichés sur le plan de travail. Vous pouvez librement regrouper les champs pour refléter les besoins pour votre domaine.
@@ -3980,6 +4071,8 @@ fr:
       builtin: Application d'instance intégrée
       confidential: Confidentiel
       singular: "Application OAuth"
+      scopes: "Scopes"
+      client_credentials: "Client credentials"
       plural: "Applications OAuth"
       named: "Application OAuth '%{name}'"
       new: "Nouvelle application Oauth"

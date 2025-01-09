@@ -742,6 +742,7 @@ tr:
         immediate:
           title: "Bana email hatırlatıcısı gönder"
           mentioned: "Birisi benden @bahsettiğinde hemen"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Diğer öğeler için e-posta uyarıları (iş paketleri olmayanlar)"
           explanation: >
@@ -773,10 +774,6 @@ tr:
         upgrade_to_ee_text: "Vay! Bu eklentiye ihtiyacınız varsa, siz bir süper profesyonelsiniz! Enterprise sürümü müşterisi olarak biz OpenSource geliştiricilerini destekler misiniz?"
         more_information: "Daha fazla bilgi"
         nevermind: "Boşver"
-      edit:
-        form_configuration: "Form Yapılandırması"
-        projects: "Projeler"
-        settings: "Ayarlar"
     time_entry:
       work_package_required: "Önce bir iş paketi seçilmesini gerektirir."
       title: "Zaman kaydet"

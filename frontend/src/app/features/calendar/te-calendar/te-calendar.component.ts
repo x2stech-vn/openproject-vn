@@ -181,8 +181,9 @@ export class TimeEntryCalendarComponent {
     void this.weekdayService.loadWeekdays()
       .toPromise()
       .then(async () => {
-        const date = moment(new Date()).toString();
-        await this.requireNonWorkingDays(date);
+        const startOfWeek = moment().startOf('week').format('YYYY-MM-DD');
+        const endOfWeek = moment().endOf('week').format('YYYY-MM-DD');
+        await this.requireNonWorkingDays(startOfWeek, endOfWeek);
         this.additionalOptions.hiddenDays = this.setHiddenDays(displayedDayss);
         this.calendarOptions$.next(
           this.additionalOptions,
@@ -211,8 +212,8 @@ export class TimeEntryCalendarComponent {
     readonly dayService:DayResourceService,
   ) {}
 
-  async requireNonWorkingDays(date:Date|string) {
-    this.nonWorkingDays = await firstValueFrom(this.dayService.requireNonWorkingYear$(date));
+  async requireNonWorkingDays(start:Date|string, end:Date|string) {
+    this.nonWorkingDays = await firstValueFrom(this.dayService.requireNonWorkingYears$(start, end));
   }
 
   public calendarEventsFunction(
@@ -255,8 +256,7 @@ export class TimeEntryCalendarComponent {
 
   private async buildEntries(entries:TimeEntryResource[], fetchInfo:{ start:Date, end:Date }):Promise<EventInput[]> {
     this.setRatio(entries);
-    await this.requireNonWorkingDays(fetchInfo.start);
-    await this.requireNonWorkingDays(fetchInfo.end);
+    await this.requireNonWorkingDays(fetchInfo.start, fetchInfo.end);
     return this.buildTimeEntryEntries(entries)
       .concat(this.buildAuxEntries(entries, fetchInfo));
   }

@@ -33,6 +33,7 @@ ca:
       cost_type:
         unit: "Nom d'unitat"
         unit_plural: "Noms d'unitat pluralitzats"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Unitats gastades"
         labor_costs: "Costs de treball"

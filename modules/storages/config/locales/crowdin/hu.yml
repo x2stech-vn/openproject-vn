@@ -3,6 +3,8 @@ hu:
     attributes:
       storages/file_link:
         origin_id: Origin Id
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Készítő
         drive: Drive ID

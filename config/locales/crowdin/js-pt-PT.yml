@@ -743,6 +743,7 @@ pt-PT:
         immediate:
           title: "Enviar-me um lembrete por e-mail"
           mentioned: "Imediatamente quando alguém me @mencionar"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Alertas de e-mail para outros itens (que não são pacotes de trabalho)"
           explanation: >
@@ -774,10 +775,6 @@ pt-PT:
         upgrade_to_ee_text: "Uau! Se precisa deste complemento é porque faz parte dos utilizadores especializados! Gostaria de apoiar os desenvolvedores de OpenSource tornando-se cliente da edição Enterprise?"
         more_information: "Mais informação"
         nevermind: "Não, obrigado"
-      edit:
-        form_configuration: "Configuração do formulário"
-        projects: "Projetos"
-        settings: "Definições"
     time_entry:
       work_package_required: "Requer que selecione um pacote de trabalho primeiro."
       title: "Tempo de registro"

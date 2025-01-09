@@ -3,6 +3,8 @@ zh-CN:
     attributes:
       storages/file_link:
         origin_id: 来源 ID
+      storages/project_storage:
+        storage: 存储
       storages/storage:
         creator: 创建者
         drive: 驱动器 ID

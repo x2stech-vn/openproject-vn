@@ -42,23 +42,24 @@ module OpTurbo
 
     alias_method :respond_with_turbo_streams, :respond_to_with_turbo_streams
 
-    def update_via_turbo_stream(component:, status: :ok)
-      modify_via_turbo_stream(component:, action: :update, status:)
+    def update_via_turbo_stream(component:, status: :ok, method: nil)
+      modify_via_turbo_stream(component:, action: :update, status:, method:)
     end
 
-    def replace_via_turbo_stream(component:, status: :ok)
-      modify_via_turbo_stream(component:, action: :replace, status:)
+    def replace_via_turbo_stream(component:, status: :ok, method: nil)
+      modify_via_turbo_stream(component:, action: :replace, status:, method:)
     end
 
     def remove_via_turbo_stream(component:, status: :ok)
       modify_via_turbo_stream(component:, action: :remove, status:)
     end
 
-    def modify_via_turbo_stream(component:, action:, status:)
+    def modify_via_turbo_stream(component:, action:, status:, method: nil)
       @turbo_status = status
       turbo_streams << component.render_as_turbo_stream(
         view_context:,
-        action:
+        action:,
+        method:
       )
     end
 
@@ -74,11 +75,15 @@ module OpTurbo
       turbo_streams << target_component.insert_as_turbo_stream(component:, view_context:, action: :before)
     end
 
-    def render_error_flash_message_via_turbo_stream(**)
-      update_flash_message_via_turbo_stream(**, scheme: :danger, icon: :stop)
+    def render_success_flash_message_via_turbo_stream(**)
+      render_flash_message_via_turbo_stream(**, scheme: :success)
     end
 
-    def update_flash_message_via_turbo_stream(message:, component: OpPrimer::FlashComponent, **)
+    def render_error_flash_message_via_turbo_stream(**)
+      render_flash_message_via_turbo_stream(**, scheme: :danger, icon: :stop)
+    end
+
+    def render_flash_message_via_turbo_stream(message:, component: OpPrimer::FlashComponent, **)
       instance = component.new(**).with_content(message)
       turbo_streams << instance.render_as_turbo_stream(view_context:, action: :flash)
     end

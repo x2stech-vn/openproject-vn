@@ -334,7 +334,7 @@ class CustomField < ApplicationRecord
               end
 
       scope
-        .select(*(User::USER_FORMATS_STRUCTURE[Setting.user_format].map(&:to_s) << "id"))
+        .select(*User::USER_FORMATS_STRUCTURE[Setting.user_format].map(&:to_s), "id", "type")
     end
   end
 

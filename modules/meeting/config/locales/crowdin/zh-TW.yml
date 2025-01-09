@@ -30,7 +30,7 @@ zh-TW:
       meeting:
         type: "會議類型"
         location: "地點"
-        duration: "天數"
+        duration: "時長"
         notes: "備註"
         participants: "參加人員"
         participant:
@@ -184,7 +184,8 @@ zh-TW:
     types:
       classic: "經典"
       classic_text: "將會議組織為單一可格式化的文字議程和規程。"
-      structured: "一次性"
+      structured: "結構化"
+      one_time: "一次性"
       recurring: "重覆"
       recurring_text: "為每次發生的事件建立具有動態範本的會議系列。"
       structured_text: "將會議組織為動態的議程項目清單，可選擇將其連結到工作項目。"
@@ -248,7 +249,7 @@ zh-TW:
   permission_send_meeting_agendas_icalendar: "將議題大綱傳至行事曆"
   project_module_meetings: "會議"
   text_duration_in_hours: "持續時間 (小時)"
-  text_in_hours: "在一小時內"
+  text_in_hours: "小時數"
   text_meeting_agenda_for_meeting: '%{meeting} 的會議大綱'
   text_meeting_closing_are_you_sure: "確實要關閉議程嗎？"
   text_meeting_agenda_open_are_you_sure: "將會覆蓋所有會議紀錄中的變動！您希望繼續嗎？"

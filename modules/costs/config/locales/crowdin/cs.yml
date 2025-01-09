@@ -33,6 +33,7 @@ cs:
       cost_type:
         unit: "Název jednotky"
         unit_plural: "Název Pluralizované jednotky"
+        default: "Typ nákladů ve výchozím nastavení"
       work_package:
         costs_by_type: "Strávené jednotky"
         labor_costs: "Náklady práce"
@@ -136,8 +137,8 @@ cs:
   permission_view_own_time_entries: "Zobrazit vlastní strávený čas"
   project_module_costs: "Čas a náklady"
   setting_allow_tracking_start_and_end_times: "Allow users to track start and end time on time records"
-  setting_costs_currency: "Currency"
-  setting_costs_currency_format: "Format of currency"
+  setting_costs_currency: "Měna"
+  setting_costs_currency_format: "Formát měny"
   setting_enforce_tracking_start_and_end_times: "Force users to set start and end time on time records"
   text_assign_time_and_cost_entries_to_project: "Přiřadit nahlášené hodiny a náklady projektu"
   text_destroy_cost_entries_question: "%{cost_entries} byl nahlášen k pracovním balíčkům, které se chystáte odstranit. Co chcete udělat?"

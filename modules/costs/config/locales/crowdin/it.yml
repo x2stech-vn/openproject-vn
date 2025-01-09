@@ -33,6 +33,7 @@ it:
       cost_type:
         unit: "Nome dell'unità"
         unit_plural: "Nome unità pluralizzato"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Unità spese"
         labor_costs: "Costi della manodopera"

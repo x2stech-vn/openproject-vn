@@ -33,6 +33,7 @@
       cost_type:
         unit: "Enhetsnavn"
         unit_plural: "Flertallsnavn på enhet"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Brukte enheter"
         labor_costs: "Arbeidskostnad"

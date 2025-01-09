@@ -211,10 +211,11 @@ codeblock:
   margin-bottom: 2mm
 
 image:
-  max-width: 50mm
-  margin: 2mm
   margin-bottom: 3mm
   align: "center"
+  caption:
+    size: 8
+    align: "center"
 
 image-classes:
   small:

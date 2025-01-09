@@ -104,6 +104,23 @@ module Pages
     end
 
     def drag_and_drop_list(from:, to:, elements:, handler:)
+      if using_cuprite?
+        drag_and_drop_list_cuprite(from:, to:, elements:, handler:)
+      else
+        drag_and_drop_list_selenium(from:, to:, elements:, handler:)
+      end
+    end
+
+    def drag_and_drop_list_cuprite(from:, to:, elements:, handler:)
+      list = page.all(elements)
+      source_handler = list[from].find(handler)
+      target_handler = list[to].find(handler)
+
+      # doesn't scroll
+      source_handler.native.drag_to(target_handler.native, delay: 0.1)
+    end
+
+    def drag_and_drop_list_selenium(from:, to:, elements:, handler:)
       # Wait a bit because drag & drop in selenium is easily offended
       sleep 1
 

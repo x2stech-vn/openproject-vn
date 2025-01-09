@@ -36,7 +36,7 @@ ruby File.read(File.expand_path(".ruby-version", __dir__)).strip
 
 gem "actionpack-xml_parser", "~> 2.0.0"
 gem "activemodel-serializers-xml", "~> 1.0.1"
-gem "activerecord-import", "~> 1.8.0"
+gem "activerecord-import", "~> 2.0.0"
 gem "activerecord-session_store", "~> 2.1.0"
 gem "ox"
 gem "rails", "~> 7.1.3"
@@ -95,7 +95,7 @@ gem "escape_utils", "~> 1.3"
 # Syntax highlighting used in html-pipeline with rouge
 gem "rouge", "~> 4.5.1"
 # HTML sanitization used for html-pipeline
-gem "sanitize", "~> 6.1.0"
+gem "sanitize", "~> 7.0.0"
 # HTML autolinking for mails and urls (replaces autolink)
 gem "rinku", "~> 2.0.4", require: %w[rinku rails_rinku]
 # Version parsing with semver
@@ -126,7 +126,7 @@ gem "multi_json", "~> 1.15.0"
 gem "oj", "~> 3.16.0"
 
 gem "daemons"
-gem "good_job", "= 3.26.2" # update should be done manually in sync with saas-openproject version.
+gem "good_job", "= 3.99.1" # update should be done manually in sync with saas-openproject version.
 
 gem "rack-protection", "~> 3.2.0"
 
@@ -137,10 +137,10 @@ gem "rack-protection", "~> 3.2.0"
 gem "rack-attack", "~> 6.7.0"
 
 # CSP headers
-gem "secure_headers", "~> 7.0.0"
+gem "secure_headers", "~> 7.1.0"
 
 # Browser detection for incompatibility checks
-gem "browser", "~> 6.1.0"
+gem "browser", "~> 6.2.0"
 
 # Providing health checks
 gem "okcomputer", "~> 1.18.1"
@@ -191,7 +191,7 @@ gem "puma", "~> 6.5"
 gem "puma-plugin-statsd", "~> 2.0"
 gem "rack-timeout", "~> 0.7.0", require: "rack/timeout/base"
 
-gem "nokogiri", "~> 1.16.0"
+gem "nokogiri", "~> 1.18.1"
 
 gem "carrierwave", "~> 1.3.4"
 gem "carrierwave_direct", "~> 2.1.0"
@@ -218,7 +218,7 @@ gem "dry-monads"
 gem "dry-validation"
 
 # ActiveRecord extension which adds typecasting to store accessors
-gem "store_attribute", "~> 1.0"
+gem "store_attribute", "~> 2.0"
 
 # Appsignal integration
 gem "appsignal", "~> 3.10.0", require: false
@@ -232,14 +232,17 @@ gem "factory_bot", "~> 6.5.0", require: false
 # require factory_bot_rails for convenience in core development
 gem "factory_bot_rails", "~> 6.4.4", require: false
 
-gem "turbo_power", "~> 0.6.2"
+gem "turbo_power", "~> 0.7.0"
 gem "turbo-rails", "~> 2.0.0"
 
 gem "httpx"
 
+# Brings actual deep freezing to most ruby objects
+gem "ice_nine"
+
 group :test do
   gem "launchy", "~> 3.0.0"
-  gem "rack-test", "~> 2.1.0"
+  gem "rack-test", "~> 2.2.0"
   gem "shoulda-context", "~> 2.0"
 
   # Test prof provides factories from code
@@ -272,9 +275,10 @@ group :test do
   gem "rails-controller-testing", "~> 1.0.2"
 
   gem "capybara", "~> 3.40.0"
-  gem "capybara_accessible_selectors", git: "https://github.com/citizensadvice/capybara_accessible_selectors", branch: "main"
+  gem "capybara_accessible_selectors", git: "https://github.com/citizensadvice/capybara_accessible_selectors", tag: "v0.12.0"
   gem "capybara-screenshot", "~> 1.0.17"
   gem "cuprite", "~> 0.15.0"
+  gem "ferrum", github: "toy/ferrum", ref: "mouse-events-buttons-property-0.15"
   gem "rspec-wait"
   gem "selenium-devtools"
   gem "selenium-webdriver", "~> 4.20"
@@ -330,8 +334,9 @@ group :development, :test do
   # Output a stack trace anytime, useful when a process is stuck
   gem "rbtrace"
 
-  # REPL with debug commands
-  gem "debug"
+  # REPL with debug commands, Debug changed to byebug due to the issue below
+  # https://github.com/puma/puma/issues/2835#issuecomment-2302133927
+  gem "byebug"
 
   gem "pry-byebug", "~> 3.10.0", platforms: [:mri]
   gem "pry-doc"
@@ -353,7 +358,7 @@ group :development, :test do
   gem "erblint-github", require: false
 
   # Brakeman scanner
-  gem "brakeman", "~> 6.2.0"
+  gem "brakeman", "~> 7.0.0"
 
   # i18n-tasks helps find and manage missing and unused translations.
   gem "i18n-tasks", "~> 1.0.13", require: false
@@ -382,7 +387,7 @@ platforms :mri, :mingw, :x64_mingw do
   end
 
   # Support application loading when no database exists yet.
-  gem "activerecord-nulldb-adapter", "~> 1.0.0"
+  gem "activerecord-nulldb-adapter", "~> 1.1.0"
 
   # Have application level locks on the database to have a mutex shared between workers/hosts.
   # We e.g. employ this to safeguard the creation of journals.
@@ -401,6 +406,6 @@ gemfiles.each do |file|
   send(:eval_gemfile, file) if File.readable?(file)
 end
 
-gem "openproject-octicons", "~>19.19.0"
-gem "openproject-octicons_helper", "~>19.19.0"
-gem "openproject-primer_view_components", "~>0.50.1"
+gem "openproject-octicons", "~>19.20.0 "
+gem "openproject-octicons_helper", "~>19.20.0 "
+gem "openproject-primer_view_components", "~>0.51.0"

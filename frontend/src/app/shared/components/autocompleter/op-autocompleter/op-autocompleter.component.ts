@@ -24,7 +24,7 @@ import {
 } from '@angular/core';
 import { DropdownPosition, NgSelectComponent } from '@ng-select/ng-select';
 import { BehaviorSubject, merge, NEVER, Observable, of, Subject, timer } from 'rxjs';
-import { debounce, distinctUntilChanged, filter, switchMap, tap, map } from 'rxjs/operators';
+import { debounce, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { AddTagFn, GroupValueFn } from '@ng-select/ng-select/lib/ng-select.component';
 
 import { HalResource } from 'core-app/features/hal/resources/hal-resource';
@@ -53,6 +53,11 @@ import { HalResourceService } from 'core-app/features/hal/services/hal-resource.
 import { CollectionResource } from 'core-app/features/hal/resources/collection-resource';
 import { ApiV3FilterBuilder } from 'core-app/shared/helpers/api-v3/api-v3-filter-builder';
 import { addFiltersToPath } from 'core-app/core/apiv3/helpers/add-filters-to-path';
+import {
+  IAPIFilter,
+  IOPAutocompleterOption,
+  TOpAutocompleterResource,
+} from 'core-app/shared/components/autocompleter/op-autocompleter/typings';
 
 export interface IAutocompleteItem {
   id:ID;
@@ -141,7 +146,7 @@ export class OpAutocompleterComponent<T extends IAutocompleteItem = IAutocomplet
 
   @Input() public items?:IOPAutocompleterOption[]|HalResource[];
 
-  private items$ = new BehaviorSubject(null);
+  private items$ = new BehaviorSubject<IOPAutocompleterOption[]|null>(null);
 
   @Input() public clearSearchOnAdd?:boolean = true;
 
@@ -309,7 +314,11 @@ export class OpAutocompleterComponent<T extends IAutocompleteItem = IAutocomplet
       this.typeahead = new BehaviorSubject<string>('');
     }
 
-    if (this.inputValue && !this.model) {
+    if (this.items) {
+      this.items$.next(this.items as IOPAutocompleterOption[]);
+    }
+
+    if (this.inputValue && this.resource && !this.model) {
       this
         .opAutocompleterService
         .loadValue(this.inputValue, this.resource, this.multiple)
@@ -323,8 +332,7 @@ export class OpAutocompleterComponent<T extends IAutocompleteItem = IAutocomplet
 
   ngOnChanges(changes:SimpleChanges):void {
     if (changes.items) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      this.items$.next(changes.items.currentValue);
+      this.items$.next(changes.items.currentValue as IOPAutocompleterOption[]);
     }
   }
 

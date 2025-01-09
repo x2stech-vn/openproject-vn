@@ -3,6 +3,8 @@ ko:
     attributes:
       storages/file_link:
         origin_id: 원본 ID
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: 생성자
         drive: 드라이브 ID

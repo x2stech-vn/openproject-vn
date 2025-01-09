@@ -60,15 +60,15 @@ module Pages
       expect(page).to have_test_selector("op-wp-reminder-button")
     end
 
-    def expect_reminder_button_with_count(count)
+    def expect_reminder_button_alarm_set_icon
       page.within_test_selector("op-wp-reminder-button") do
-        expect(page).to have_css(".badge", text: count, wait: 10)
+        expect(page).to have_css("svg[op-alarm-set-icon]", wait: 10)
       end
     end
 
-    def expect_reminder_button_without_count
+    def expect_reminder_button_alarm_not_set_icon
       expect(page).to have_test_selector("op-wp-reminder-button")
-      expect(page).to have_no_css(".badge")
+      expect(page).to have_css("svg[op-alarm-icon]", wait: 10)
     end
 
     def expect_no_reminder_button

@@ -33,6 +33,7 @@ uk:
       cost_type:
         unit: "Назва одиниці"
         unit_plural: "Назва плуралізованої одиниці"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Витрачені одиниці"
         labor_costs: "Витрати на оплату праці"

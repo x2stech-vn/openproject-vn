@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -43,6 +45,13 @@ class WorkPackages::SetAttributesService < BaseServices::SetAttributes
     end
 
     set_custom_attributes(attributes)
+    mark_templated_subject
+  end
+
+  def mark_templated_subject
+    if work_package.type&.replacement_pattern_defined_for?(:subject)
+      work_package.subject = "Templated by #{work_package.type.name}"
+    end
   end
 
   def set_static_attributes(attributes)
@@ -315,15 +324,14 @@ class WorkPackages::SetAttributesService < BaseServices::SetAttributes
 
   def set_version_to_nil
     if work_package.version &&
-      work_package.project &&
-      work_package.project.shared_versions.exclude?(work_package.version)
+       work_package.project&.shared_versions&.exclude?(work_package.version)
       work_package.version = nil
     end
   end
 
   def set_parent_to_nil
     if !Setting.cross_project_work_package_relations? &&
-      !work_package.parent_changed?
+       !work_package.parent_changed?
 
       work_package.parent = nil
     end
@@ -386,7 +394,7 @@ class WorkPackages::SetAttributesService < BaseServices::SetAttributes
 
   def new_start_date_from_parent
     return unless work_package.parent_id_changed? &&
-      work_package.parent
+                  work_package.parent
 
     work_package.parent.soonest_start
   end

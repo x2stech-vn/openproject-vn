@@ -75,7 +75,7 @@ module CustomField::OrderStatements
   # Returns the expression to use in SELECT clause if it differs from one used
   # to group by
   def group_by_select_statement
-    return unless field_format == "list"
+    return unless field_format == "list" || field_format == "hierarchy"
 
     # MIN needed to not add this column to group by, ANY_VALUE can be used when
     # minimum required PostgreSQL becomes 16
@@ -171,7 +171,11 @@ module CustomField::OrderStatements
   end
 
   def join_for_order_by_hierarchy_sql
-    table_name = CustomField::Hierarchy::Item.quoted_table_name
-    join_for_order_sql(value: "item.label", join: "INNER JOIN #{table_name} item ON item.id = cv.value::bigint")
+    join_for_order_sql(
+      value: multi_value? ? "ARRAY_AGG(item.position_cache ORDER BY item.position_cache)" : "item.position_cache",
+      add_select: "#{multi_value? ? "ARRAY_TO_STRING(ARRAY_AGG(cv.value ORDER BY item.position_cache), '.')" : 'cv.value'} ids",
+      join: "INNER JOIN #{CustomField::Hierarchy::Item.quoted_table_name} item ON item.id = cv.value::bigint",
+      multi_value:
+    )
   end
 end

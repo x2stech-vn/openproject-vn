@@ -35,6 +35,7 @@ class Authorization::EnterpriseService
     conditional_highlighting
     custom_actions
     custom_field_hierarchies
+    customize_life_cycle
     date_alerts
     define_custom_style
     edit_attribute_groups

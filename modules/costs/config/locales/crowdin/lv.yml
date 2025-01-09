@@ -33,6 +33,7 @@ lv:
       cost_type:
         unit: "Vienības nosaukums"
         unit_plural: "Pluralized unit name"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Izlietotās vienības"
         labor_costs: "Darba izmaksas"

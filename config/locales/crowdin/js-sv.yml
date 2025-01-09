@@ -742,6 +742,7 @@ sv:
         immediate:
           title: "Send me an email reminder"
           mentioned: "Immediately when someone @mentions me"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Email alerts for other items (that are not work packages)"
           explanation: >
@@ -773,10 +774,6 @@ sv:
         upgrade_to_ee_text: "Wow! If you need this add-on you are a super pro! Would you mind supporting us OpenSource developers by becoming an Enterprise edition client?"
         more_information: "Mer information"
         nevermind: "Det var inget"
-      edit:
-        form_configuration: "Ställ in formulär"
-        projects: "Projekt"
-        settings: "Inställningar"
     time_entry:
       work_package_required: "Requires selecting a work package first."
       title: "Logga tid"

@@ -3,6 +3,8 @@ tr:
     attributes:
       storages/file_link:
         origin_id: Kaynak kimliği
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Oluşturan
         drive: Drive ID

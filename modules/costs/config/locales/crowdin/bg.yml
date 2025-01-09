@@ -33,6 +33,7 @@ bg:
       cost_type:
         unit: "Име на единица"
         unit_plural: "Плурализирано име на единица"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Изразходвани единици"
         labor_costs: "Разходи за труд"

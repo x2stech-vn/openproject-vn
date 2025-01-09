@@ -744,6 +744,7 @@ ru:
         immediate:
           title: "Отправить мне напоминание по электронной почте"
           mentioned: "Сразу же когда кто-то @упоминает меня"
+          personal_reminder: "Immediately when I receive a personal reminder"
         alerts:
           title: "Уведомления по электронной почте для других элементов (которые не являются пакетами работ)"
           explanation: >
@@ -775,10 +776,6 @@ ru:
         upgrade_to_ee_text: "Уууууууууу! Если вам нужен этот дополнение, то вы бы хотели поддержать нас разработчиков OpenSource, став клиентом корпоративной версии?"
         more_information: "Больше информации"
         nevermind: "Неважно"
-      edit:
-        form_configuration: "Конфигурация формы"
-        projects: "Проекты"
-        settings: "Параметры"
     time_entry:
       work_package_required: "Сначала необходимо выбрать пакет работ."
       title: "Журналировать время"

@@ -33,6 +33,7 @@ hu:
       cost_type:
         unit: "Egység neve"
         unit_plural: "Többes számú egység neve"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Elhasznált egységek"
         labor_costs: "Munkaerő költségek"

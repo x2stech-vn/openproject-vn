@@ -3,6 +3,8 @@
     attributes:
       storages/file_link:
         origin_id: Opprinnelses ID
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Skaper
         drive: Stasjon ID

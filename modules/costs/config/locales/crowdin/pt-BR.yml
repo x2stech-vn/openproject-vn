@@ -33,6 +33,7 @@ pt-BR:
       cost_type:
         unit: "Nome da unidade"
         unit_plural: "Plural do nome da unidade"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Unidades gastas"
         labor_costs: "Custos de trabalho"

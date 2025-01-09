@@ -3,6 +3,8 @@ nl:
     attributes:
       storages/file_link:
         origin_id: Oorsprong ID
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Maker
         drive: Drive ID

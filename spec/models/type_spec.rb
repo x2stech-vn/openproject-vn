@@ -140,7 +140,7 @@ RSpec.describe Type do
                       subject: { blueprint: "{{work_package:custom_field_123}} - {{project:custom_field_321}}", enabled: true }
                     })
 
-      expect(type.patterns).to be_a(Types::PatternCollection)
+      expect(type.patterns).to be_a(Types::Patterns::Collection)
       expect(type.patterns[:subject])
         .to eq(Types::Pattern.new("{{work_package:custom_field_123}} - {{project:custom_field_321}}", true))
     end
@@ -161,7 +161,7 @@ RSpec.describe Type do
     it "converts the incoming hash into a PatternCollection" do
       type.patterns = { subject: { blueprint: "some_string", enabled: false } }
 
-      expect(type.patterns).to be_a(Types::PatternCollection)
+      expect(type.patterns).to be_a(Types::Patterns::Collection)
       expect(type.patterns[:subject]).to be_a(Types::Pattern)
 
       expect { type.save! }.not_to raise_error

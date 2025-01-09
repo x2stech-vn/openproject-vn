@@ -33,6 +33,7 @@ el:
       cost_type:
         unit: "Όνομα μονάδας"
         unit_plural: "Πληθυντικός ονόματος μονάδας"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Δαπανημένες μονάδες"
         labor_costs: "Κόστος εργασίας"

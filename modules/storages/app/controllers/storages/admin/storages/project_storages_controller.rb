@@ -128,9 +128,7 @@ class Storages::Admin::Storages::ProjectStoragesController < ApplicationControll
       .call
 
     delete_service.on_success do
-      update_flash_message_via_turbo_stream(
-        message: I18n.t(:notice_successful_delete), scheme: :success
-      )
+      render_success_flash_message_via_turbo_stream(message: I18n.t(:notice_successful_delete))
       update_project_list_via_turbo_stream(url_for_action: :index)
     end
 

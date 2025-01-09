@@ -33,6 +33,7 @@ zh-TW:
       cost_type:
         unit: "單位名稱"
         unit_plural: "單位名稱(複數)"
+        default: "預設成本類型"
       work_package:
         costs_by_type: "支出單位"
         labor_costs: "工資"

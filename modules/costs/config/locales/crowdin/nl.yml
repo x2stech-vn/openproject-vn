@@ -33,6 +33,7 @@ nl:
       cost_type:
         unit: "Naam eenheid"
         unit_plural: "Vermeerderde eenheid naam"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Eenheden uitgegeven"
         labor_costs: "Arbeidskosten"

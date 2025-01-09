@@ -3,6 +3,8 @@ id:
     attributes:
       storages/file_link:
         origin_id: Identifikasi Asli
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Pembuat
         drive: Drive ID

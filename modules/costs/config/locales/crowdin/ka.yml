@@ -33,6 +33,7 @@ ka:
       cost_type:
         unit: "ერთეულის სახელი"
         unit_plural: "ერთეულის სახელი მრავლობითში"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "დახარჯული ერთეული"
         labor_costs: "მუშაობის ფასი"

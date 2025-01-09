@@ -30,9 +30,10 @@
 
 module Types
   Pattern = Data.define(:blueprint, :enabled) do
-    def call(object)
-      # calculate string using object
-      blueprint.to_s + object.to_s
+    def enabled? = !!enabled
+
+    def resolve(work_package)
+      PatternResolver.new(blueprint).resolve(work_package)
     end
 
     def to_h

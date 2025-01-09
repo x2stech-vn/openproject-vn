@@ -33,6 +33,7 @@ ja:
       cost_type:
         unit: "単位名"
         unit_plural: "単位名"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "使用済単価"
         labor_costs: "作業員コスト"

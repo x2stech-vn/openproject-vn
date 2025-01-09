@@ -3,6 +3,8 @@ zh-TW:
     attributes:
       storages/file_link:
         origin_id: 來源 ID
+      storages/project_storage:
+        storage: 儲存空間
       storages/storage:
         creator: 建立者
         drive: Drive ID

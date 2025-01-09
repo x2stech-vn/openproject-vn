@@ -33,6 +33,7 @@ fi:
       cost_type:
         unit: "Yksikön nimi"
         unit_plural: "Yksikön nimi monikossa"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Käytetyt yksiköt"
         labor_costs: "Työvoimakustannukset"

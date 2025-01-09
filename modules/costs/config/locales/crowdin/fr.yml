@@ -33,6 +33,7 @@ fr:
       cost_type:
         unit: "Nom de l'unité"
         unit_plural: "Nom pluriel de l'unité"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Unités consommées"
         labor_costs: "Coûts de main d'œuvre"

@@ -27,6 +27,7 @@ class RecurringMeeting < ApplicationRecord
 
   after_initialize :set_defaults
   after_save :unset_schedule
+  before_destroy :remove_jobs
 
   enum frequency: {
     daily: 0,
@@ -207,5 +208,9 @@ class RecurringMeeting < ApplicationRecord
 
   def set_defaults
     self.end_date ||= 1.year.from_now
+  end
+
+  def remove_jobs
+    RecurringMeetings::InitNextOccurrenceJob.delete_jobs(self)
   end
 end

@@ -88,7 +88,7 @@ RSpec.describe "Work package reminder modal",
 
       work_package_page.expect_and_dismiss_flash(type: :success,
                                                  message: I18n.t("work_package.reminders.success_creation_message"))
-      work_package_page.expect_reminder_button_with_count(1)
+      work_package_page.expect_reminder_button_alarm_set_icon
 
       expect(Reminder.last)
       .to have_attributes(
@@ -133,7 +133,7 @@ RSpec.describe "Work package reminder modal",
 
       work_package_page.expect_and_dismiss_flash(type: :success,
                                                  message: I18n.t("work_package.reminders.success_deletion_message"))
-      work_package_page.expect_reminder_button_without_count
+      work_package_page.expect_reminder_button_alarm_not_set_icon
       expect(Reminder.upcoming_and_visible_to(user_with_permissions).count).to eq(0)
     end
 
@@ -148,7 +148,7 @@ RSpec.describe "Work package reminder modal",
       )
 
       work_package_page.visit!
-      work_package_page.expect_reminder_button_with_count(1)
+      work_package_page.expect_reminder_button_alarm_set_icon
       work_package_page.click_reminder_button
       wait_for_network_idle
 
@@ -177,7 +177,7 @@ RSpec.describe "Work package reminder modal",
       end
 
       work_package_page.dismiss_flash!
-      work_package_page.expect_reminder_button_without_count
+      work_package_page.expect_reminder_button_alarm_not_set_icon
       work_package_page.click_reminder_button
       wait_for_network_idle
 
@@ -240,7 +240,7 @@ RSpec.describe "Work package reminder modal",
 
         work_package_page.expect_and_dismiss_flash(type: :success,
                                                    message: I18n.t("work_package.reminders.success_creation_message"))
-        work_package_page.expect_reminder_button_with_count(1)
+        work_package_page.expect_reminder_button_alarm_set_icon
       end
 
       it "renders a required error on the date or time field when either isn't set" do
@@ -294,13 +294,13 @@ RSpec.describe "Work package reminder modal",
         )
 
         work_package_page.visit!
-        work_package_page.expect_reminder_button_with_count(1)
+        work_package_page.expect_reminder_button_alarm_set_icon
         center.expect_bell_count(0)
 
         perform_enqueued_jobs
 
         center.expect_bell_count(1)
-        work_package_page.expect_reminder_button_without_count
+        work_package_page.expect_reminder_button_alarm_not_set_icon
       end
     end
 
@@ -314,7 +314,7 @@ RSpec.describe "Work package reminder modal",
       it "renders the reminder button with the correct count" do
         work_package_page.visit!
         work_package_page.expect_reminder_button
-        work_package_page.expect_reminder_button_with_count(1)
+        work_package_page.expect_reminder_button_alarm_set_icon
       end
 
       specify "clicking on the reminder button opens the edit reminder modal" do
@@ -339,7 +339,7 @@ RSpec.describe "Work package reminder modal",
       it "renders the reminder button without a count" do
         work_package_page.visit!
         work_package_page.expect_reminder_button
-        work_package_page.expect_reminder_button_without_count
+        work_package_page.expect_reminder_button_alarm_not_set_icon
       end
 
       specify "clicking on the reminder button opens the create reminder modal" do

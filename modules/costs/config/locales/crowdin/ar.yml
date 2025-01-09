@@ -33,6 +33,7 @@ ar:
       cost_type:
         unit: "اسم الوحدة"
         unit_plural: "اسم الوحدة متعددة الأقطاب"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "الوحدات المستهلكة"
         labor_costs: "تكاليف العمل"

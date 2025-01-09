@@ -33,28 +33,31 @@ require "spec_helper"
 RSpec.describe CustomField::OrderStatements do
   # integration tests at spec/models/query/results_cf_sorting_integration_spec.rb
   context "when hierarchy" do
+    let(:service) { CustomFields::Hierarchy::HierarchicalItemService.new }
+    let(:item) { service.generate_root(custom_field).value! }
+
     subject(:custom_field) { create(:hierarchy_wp_custom_field) }
+
+    before do
+      service.insert_item(parent: item, label: "Test")
+    end
 
     describe "#order_statement" do
       it { expect(subject.order_statement).to eq("cf_order_#{custom_field.id}.value") }
     end
 
     describe "#order_join_statement" do
-      it do
-        expect(custom_field.order_join_statement).to eq(
-          <<-SQL.squish
-            LEFT OUTER JOIN (
-              SELECT DISTINCT ON (cv.customized_id) cv.customized_id , item.label "value"
-              FROM "custom_values" cv
-              INNER JOIN "hierarchical_items" item ON item.id = cv.value::bigint
-              WHERE cv.customized_type = 'WorkPackage'
-              AND cv.custom_field_id = #{custom_field.id}
-              AND cv.value IS NOT NULL
-              AND cv.value != ''
-              ORDER BY cv.customized_id, cv.id
-            ) cf_order_#{custom_field.id} ON cf_order_#{custom_field.id}.customized_id = "work_packages".id
-          SQL
-        )
+      it "must be equal" do
+        expect(custom_field.order_join_statement).to eq(<<-SQL.squish)
+          LEFT OUTER JOIN (
+            SELECT DISTINCT ON (cv.customized_id) cv.customized_id
+                 , item.position_cache "value"
+                 , cv.value ids
+            FROM "custom_values" cv INNER JOIN "hierarchical_items" item ON item.id = cv.value::bigint
+            WHERE cv.customized_type = 'WorkPackage' AND cv.custom_field_id = #{custom_field.id}
+                  AND cv.value IS NOT NULL AND cv.value != '' ORDER BY cv.customized_id, cv.id
+          ) cf_order_#{custom_field.id} ON cf_order_#{custom_field.id}.customized_id = "work_packages".id
+        SQL
       end
     end
   end

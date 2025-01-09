@@ -3,6 +3,8 @@ be:
     attributes:
       storages/file_link:
         origin_id: Origin id
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Стваральнік
         drive: Drive ID

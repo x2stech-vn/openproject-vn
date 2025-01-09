@@ -3,6 +3,8 @@ ka:
     attributes:
       storages/file_link:
         origin_id: საწყისის id
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: შემქმნელი
         drive: Drive ID

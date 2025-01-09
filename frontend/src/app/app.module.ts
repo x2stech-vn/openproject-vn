@@ -124,9 +124,6 @@ import {
   ProjectAutocompleterComponent,
 } from 'core-app/shared/components/autocompleter/project-autocompleter/project-autocompleter.component';
 import {
-  AutocompleteSelectDecorationComponent,
-} from 'core-app/shared/components/autocompleter/autocomplete-select-decoration/autocomplete-select-decoration.component';
-import {
   MembersAutocompleterComponent,
 } from 'core-app/shared/components/autocompleter/members-autocompleter/members-autocompleter.component';
 import {
@@ -426,7 +423,6 @@ export class OpenProjectModule implements DoBootstrap {
     registerCustomElement('opce-global-search', GlobalSearchInputComponent, { injector });
     registerCustomElement('opce-autocompleter', OpAutocompleterComponent, { injector });
     registerCustomElement('opce-project-autocompleter', ProjectAutocompleterComponent, { injector });
-    registerCustomElement('opce-select-decoration', AutocompleteSelectDecorationComponent, { injector });
     registerCustomElement('opce-members-autocompleter', MembersAutocompleterComponent, { injector });
     registerCustomElement('opce-user-autocompleter', UserAutocompleterComponent, { injector });
     registerCustomElement('opce-macro-attribute-value', AttributeValueMacroComponent, { injector });

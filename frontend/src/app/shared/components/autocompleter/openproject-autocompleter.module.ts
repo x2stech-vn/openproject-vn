@@ -19,9 +19,6 @@ import {
   TimeEntryWorkPackageAutocompleterComponent,
 } from 'core-app/shared/components/autocompleter/te-work-package-autocompleter/te-work-package-autocompleter.component';
 import {
-  AutocompleteSelectDecorationComponent,
-} from 'core-app/shared/components/autocompleter/autocomplete-select-decoration/autocomplete-select-decoration.component';
-import {
   VersionAutocompleterComponent,
 } from 'core-app/shared/components/autocompleter/version-autocompleter/version-autocompleter.component';
 import {
@@ -67,7 +64,6 @@ export const OPENPROJECT_AUTOCOMPLETE_COMPONENTS = [
   ProjectAutocompleterComponent,
   ProjectAutocompleterTemplateComponent,
   ColorsAutocompleterComponent,
-  AutocompleteSelectDecorationComponent,
   OpAutocompleterComponent,
   OpAutocompleterOptionTemplateDirective,
   OpAutocompleterLabelTemplateDirective,

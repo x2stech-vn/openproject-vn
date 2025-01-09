@@ -3,6 +3,8 @@ ro:
     attributes:
       storages/file_link:
         origin_id: Id de origine
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Creator
         drive: Drive ID

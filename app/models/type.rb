@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -34,9 +36,11 @@ class Type < ApplicationRecord
 
   include ::Scopes::Scoped
 
-  attribute :patterns, Types::PatternCollectionType.new
+  attribute :patterns, Types::Patterns::CollectionType.new
 
   before_destroy :check_integrity
+
+  belongs_to :color, optional: true, class_name: "Color"
 
   has_many :work_packages
   has_many :workflows, dependent: :delete_all do
@@ -52,12 +56,9 @@ class Type < ApplicationRecord
                           join_table: "#{table_name_prefix}custom_fields_types#{table_name_suffix}",
                           association_foreign_key: "custom_field_id"
 
-  belongs_to :color, optional: true, class_name: "Color"
-
   acts_as_list
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }, length: { maximum: 255 }
-
   validates :is_default, :is_milestone, inclusion: { in: [true, false] }
 
   scopes :milestone
@@ -65,8 +66,9 @@ class Type < ApplicationRecord
   default_scope { order("position ASC") }
 
   scope :without_standard, -> { where(is_standard: false).order(:position) }
+  scope :default, -> { where(is_default: true) }
 
-  def to_s; name end
+  delegate :to_s, to: :name
 
   def <=>(other)
     name <=> other.name
@@ -81,26 +83,20 @@ class Type < ApplicationRecord
   end
 
   def self.standard_type
-    ::Type.where(is_standard: true).first
-  end
-
-  def self.default
-    ::Type.where(is_default: true)
+    where(is_standard: true).first
   end
 
   def self.enabled_in(project)
-    ::Type.includes(:projects).where(projects: { id: project })
+    includes(:projects).where(projects: { id: project })
   end
 
   def statuses(include_default: false)
     if new_record?
       Status.none
     elsif include_default
-      ::Type
-        .statuses([id])
-        .or(Status.where_default)
+      self.class.statuses([id]).or(Status.where_default)
     else
-      ::Type.statuses([id])
+      self.class.statuses([id])
     end
   end
 
@@ -108,9 +104,22 @@ class Type < ApplicationRecord
     object.types.include?(self)
   end
 
+  def replacement_pattern_defined_for?(attribute)
+    enabled_patterns.key?(attribute)
+  end
+
+  def enabled_patterns
+    return {} if patterns.blank?
+
+    patterns.all_enabled
+  end
+
   private
 
   def check_integrity
-    raise "Can't delete type" if WorkPackage.where(type_id: id).any?
+    throw :abort if is_standard?
+    throw :abort if WorkPackage.exists?(type_id: id)
+
+    true
   end
 end

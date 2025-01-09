@@ -33,6 +33,7 @@ hr:
       cost_type:
         unit: "Naziv jedinice"
         unit_plural: "Višestruki nazivi jedinica"
+        default: "Cost type by default"
       work_package:
         costs_by_type: "Potrošene jedinice"
         labor_costs: "Troškovi rada"

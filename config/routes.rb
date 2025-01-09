@@ -514,6 +514,19 @@ Rails.application.routes.draw do
       resource :progress_tracking, controller: "/admin/settings/progress_tracking", only: %i[show update]
       resource :projects, controller: "/admin/settings/projects_settings", only: %i[show update]
       resource :new_project, controller: "/admin/settings/new_project_settings", only: %i[show update]
+      resources :project_life_cycle_step_definitions,
+                path: "project_life_cycle",
+                controller: "/admin/settings/project_life_cycle_step_definitions",
+                only: %i[index create edit update destroy] do
+        collection do
+          get :new_stage
+          get :new_gate
+        end
+        member do
+          patch :move
+          put :drop # should be patch, but requires passing method to generic-drag-and-drop controller
+        end
+      end
       resources :project_custom_fields, controller: "/admin/settings/project_custom_fields" do
         member do
           delete "options/:option_id", action: "delete_option", as: :delete_option_of
@@ -527,9 +540,6 @@ Rails.application.routes.draw do
           delete :unlink
         end
       end
-      # TODO: This is for now only added to be able to create a link
-      # There is no controller behind this.
-      resources :project_life_cycle_step_definitions, path: "project_life_cycles", only: %i[index]
       resources :project_custom_field_sections, controller: "/admin/settings/project_custom_field_sections",
                                                 only: %i[create update destroy] do
         member do

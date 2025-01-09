@@ -3,6 +3,8 @@ pt-PT:
     attributes:
       storages/file_link:
         origin_id: ID de Origem
+      storages/project_storage:
+        storage: Storage
       storages/storage:
         creator: Criador
         drive: ID da unidade
