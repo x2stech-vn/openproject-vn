@@ -64,13 +64,15 @@ module Components
 
       time_logging_modal.is_visible true
       time_logging_modal.change_hours(hours)
-      # time_logging_modal.activity_input_disabled_because_work_package_missing? false
+      time_logging_modal.activity_input_disabled_because_work_package_missing? false
 
       time_logging_modal.submit
-      SeleniumHubWaiter.wait
 
-      # TODO: ensure page reload ... should happen automatically and does so in the browser
-      page.refresh
+      if using_cuprite?
+        wait_for_reload
+      else
+        sleep 1
+      end
 
       expect_action_icon "edit", row
       expect_value l_hours(hours), row
@@ -90,9 +92,13 @@ module Components
 
     def delete_entry(row)
       SeleniumHubWaiter.wait
-      page.find("#{row_selector(row)} .icon-delete").click
 
-      page.driver.browser.switch_to.alert.accept
+      if using_cuprite?
+        accept_confirm { page.find("#{row_selector(row)} .icon-delete").click }
+      else
+        page.find("#{row_selector(row)} .icon-delete").click
+        page.driver.browser.switch_to.alert.accept
+      end
     end
 
     private
