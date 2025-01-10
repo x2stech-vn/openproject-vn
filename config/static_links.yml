@@ -91,7 +91,7 @@ roadmap:
   href: https://community.openproject.org/projects/openproject/roadmap
   label: :label_development_roadmap
 crowdin:
-  href: https://www.openproject.org/docs/development/translate-openproject/
+  href: https://www.openproject.org/docs/contributions-guide/translate-openproject/
   label: :label_add_edit_translations
 api_docs:
   href: https://www.openproject.org/docs/api/
@@ -154,8 +154,6 @@ sysadmin_docs:
   oidc_acr_values:
     href: https://www.openproject.org/docs/installation-and-operations/misc/custom-openid-connect-providers/#non-essential-claims
 storage_docs:
-  setup:
-    href: https://www.openproject.org/docs/system-admin-guide/integrations/storage/
   nextcloud_setup:
     href: https://www.openproject.org/docs/system-admin-guide/integrations/nextcloud/
   one_drive_setup:
