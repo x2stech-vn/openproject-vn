@@ -84,6 +84,7 @@ Rails.application.routes.draw do
       put :change_state
       post :notify
       get :history
+      get :delete_dialog
     end
     resources :agenda_items, controller: "meeting_agenda_items" do
       collection do

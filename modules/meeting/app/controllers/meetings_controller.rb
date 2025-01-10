@@ -178,6 +178,13 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def delete_dialog
+    respond_with_dialog Meetings::DeleteDialogComponent.new(
+      meeting: @meeting,
+      project: @project
+    )
+  end
+
   def destroy # rubocop:disable Metrics/AbcSize
     recurring = @meeting.recurring_meeting
 
