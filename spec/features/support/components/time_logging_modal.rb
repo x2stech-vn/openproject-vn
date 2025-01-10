@@ -78,21 +78,23 @@ module Components
     def shows_field(field, visible)
       within modal_container do
         if visible
-          expect(page).to have_css "##{field_identifier(field)}"
+          expect(page).to have_field "time_entry_#{field}"
         else
-          expect(page).to have_no_css "##{field_identifier(field)}"
+          expect(page).to have_no_field "time_entry_#{field}"
         end
       end
     end
 
     def update_field(field_name, value)
-      field = field_object field_name
-      if field_name == "user"
-        field.unset_value
-        field.autocomplete value
+      if field_name.in?(["work_package_id", "user_id", "activity_id"])
+        select_autocomplete modal_container.find("#time_entry_#{field_name}"),
+                            query: value,
+                            select_text: value,
+                            results_selector: "#time-entry-dialog"
       else
-        field.input_element.click
-        field.set_value value
+        within modal_container do
+          fill_in "time_entry_#{field_name}", with: value
+        end
       end
     end
 
@@ -117,9 +119,10 @@ module Components
     def activity_input_disabled_because_work_package_missing?(missing)
       if missing
         expect(modal_container).to have_field "time_entry_activity_id",
-                                              with: I18n.t("placeholder_activity_select_work_package_first"),
                                               visible: :all,
                                               disabled: true
+
+        expect(modal_container).to have_css(".ng-placeholder", text: I18n.t("placeholder_activity_select_work_package_first"))
       else
         expect(modal_container).to have_field "time_entry_activity_id",
                                               visible: :all,

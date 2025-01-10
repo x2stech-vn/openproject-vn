@@ -40,7 +40,7 @@ class TimeEntriesController < ApplicationController
     before_action :load_or_build_and_authorize_time_entry
   end
 
-  authorization_checked! :dialog, :create, :update, :user_tz_caption, :refresh_form
+  authorization_checked! :dialog, :create, :update, :user_tz_caption, :refresh_form, :destroy
 
   def dialog
     @show_work_package = params[:work_package_id].blank?
@@ -106,6 +106,21 @@ class TimeEntriesController < ApplicationController
     call = TimeEntries::UpdateService
       .new(user: current_user, model: time_entry)
       .call(permitted_params.time_entries)
+
+    @time_entry = call.result
+
+    unless call.success?
+      form_component = TimeEntries::TimeEntryFormComponent.new(time_entry: @time_entry, **form_config_options)
+      update_via_turbo_stream(component: form_component, status: :bad_request)
+
+      respond_with_turbo_streams
+    end
+  end
+
+  def destroy
+    time_entry = TimeEntry.find_by(id: params[:id])
+
+    call = TimeEntries::DestroyService.new(user: current_user, model: time_entry).call
 
     @time_entry = call.result
 

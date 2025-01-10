@@ -65,13 +65,13 @@ RSpec.describe "Work Package timer", :js do
 
       time_logging_modal.is_visible true
 
-      time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
+      time_logging_modal.has_field_with_value "spent_on", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
       time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
       time_logging_modal.expect_work_package(work_package_a.subject)
 
-      time_logging_modal.perform_action "Save"
+      time_logging_modal.submit
       time_logging_modal.is_visible false
 
       wp_view_a.expect_and_dismiss_toaster message: I18n.t(:notice_successful_update)
@@ -103,13 +103,13 @@ RSpec.describe "Work Package timer", :js do
 
       page.within(".spot-modal") { click_button "Stop current timer" }
       time_logging_modal.is_visible true
-      time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
+      time_logging_modal.has_field_with_value "spent_on", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
       time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
       time_logging_modal.expect_work_package(work_package_a.subject)
 
-      time_logging_modal.perform_action "Save"
+      time_logging_modal.submit
 
       # Closing the modal starts the next timer
       wp_view_b.expect_and_dismiss_toaster message: I18n.t(:notice_successful_update)
@@ -168,26 +168,26 @@ RSpec.describe "Work Package timer", :js do
 
       page.within(".spot-modal") { click_button "Stop current timer" }
       time_logging_modal.is_visible true
-      time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
+      time_logging_modal.has_field_with_value "spent_on", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
       time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
       time_logging_modal.expect_work_package(work_package_a.subject)
 
-      time_logging_modal.perform_action "Save"
+      time_logging_modal.submit
       wp_view_b.expect_and_dismiss_toaster message: I18n.t(:notice_successful_update)
       time_logging_modal.is_visible false
       timer_button.expect_active
 
       timer_button.stop
       time_logging_modal.is_visible true
-      time_logging_modal.has_field_with_value "spentOn", Date.current.strftime
+      time_logging_modal.has_field_with_value "spent_on", Date.current.strftime
       time_logging_modal.has_field_with_value "hours", /(\d\.)?\d+/
       time_logging_modal.activity_input_disabled_because_work_package_missing? false
       # wait for available_work_packages query to finish before saving
       time_logging_modal.expect_work_package(work_package_a.subject)
 
-      time_logging_modal.perform_action "Save"
+      time_logging_modal.submit
       wp_view_b.expect_and_dismiss_toaster message: I18n.t(:notice_successful_update)
       time_logging_modal.is_visible false
       timer_button.expect_inactive

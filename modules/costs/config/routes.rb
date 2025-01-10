@@ -29,7 +29,7 @@
 #++
 
 Rails.application.routes.draw do
-  resources :time_entries, only: %i[create update] do
+  resources :time_entries, only: %i[create update destroy] do
     get :dialog, on: :collection
     get "/users/:user_id/tz_caption", action: :user_tz_caption, on: :collection
     post :refresh_form, on: :collection

@@ -47,16 +47,12 @@ RSpec.describe "Logging time within the work package view", :js do
 
     # the fields are visible
     time_logging_modal.has_field_with_value "spent_on", Time.zone.today.strftime("%Y-%m-%d")
-    time_logging_modal.shows_field "work_package", false
-    time_logging_modal.shows_field "user", user_field_visible
+    time_logging_modal.shows_field "work_package_id", false
+    time_logging_modal.shows_field "user_id", user_field_visible
 
     # Update the fields
-    time_logging_modal.update_field "activity", activity.name
-
-    Components::BasicDatepicker.update_field(
-      "##{time_logging_modal.field_identifier('spent_on')}",
-      date.strftime("%Y-%m-%d")
-    )
+    time_logging_modal.update_field "activity_id", activity.name
+    time_logging_modal.update_field "spent_on", date.strftime("%Y-%m-%d")
 
     if log_for_user
       time_logging_modal.update_field "user", log_for_user.name
