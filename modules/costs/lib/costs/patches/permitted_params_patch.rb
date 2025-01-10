@@ -77,7 +77,8 @@ module Costs::Patches::PermittedParamsPatch
           :activity_id,
           :project_id,
           :issue_id,
-          :user_id
+          :user_id,
+          :ongoing
         )
         .merge(custom_field_values(:time_entry))
     end

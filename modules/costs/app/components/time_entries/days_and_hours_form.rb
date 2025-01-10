@@ -33,6 +33,9 @@ module TimeEntries
     delegate :project, to: :model
 
     form do |f|
+      # force the form to submit the ongoing flag as false to stop active timers
+      f.hidden name: :ongoing, value: false
+
       f.single_date_picker name: :spent_on,
                            type: "date",
                            required: true,
@@ -83,7 +86,9 @@ module TimeEntries
     end
 
     def hours_value
-      if model.hours.present?
+      if model.ongoing?
+        ChronicDuration.output(model.ongoing_hours * 3600, format: :hours_only)
+      elsif model.hours.present?
         ChronicDuration.output(model.hours * 3600, format: :hours_only)
       else
         ""

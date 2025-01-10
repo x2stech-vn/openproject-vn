@@ -40,6 +40,7 @@ class TimeEntry < ApplicationRecord
 
   MIN_TIME = 0 # => 00:00
   MAX_TIME = (60 * 24) - 1 # => 23:59
+  SECONDS_PER_HOUR = 3600.0
 
   acts_as_customizable
 
@@ -107,6 +108,12 @@ class TimeEntry < ApplicationRecord
     write_attribute :hours, (value.is_a?(String) ? (value.to_hours || value) : value)
   end
 
+  def ongoing_hours
+    return nil unless ongoing?
+
+    (Time.zone.now.to_i - created_at.to_i) / SECONDS_PER_HOUR
+  end
+
   def start_time=(value)
     if value.is_a?(String) && value =~ /\A(\d{1,2}):(\d{2})\z/
       super(($1.to_i * 60) + $2.to_i)
@@ -146,10 +153,13 @@ class TimeEntry < ApplicationRecord
   def end_timestamp
     return nil if start_time.blank?
     return nil if time_zone.blank?
-    return nil if hours.blank?
     return nil if spent_on.blank?
 
-    start_timestamp + hours.hours
+    if ongoing?
+      start_timestamp + ongoing_hours.hours
+    else
+      start_timestamp + hours.hours
+    end
   end
 
   class << self
