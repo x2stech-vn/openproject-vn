@@ -28,22 +28,29 @@
  * ++
  */
 
-import { Controller } from '@hotwired/stimulus';
+import { ApplicationController } from 'stimulus-use';
 
-export default class ProjectLifeCyclesFormController extends Controller {
-  handleChange(event:Event) {
-    const target = event.target as HTMLElement;
-    if (this.datePickerVisible(target)) {
-      return; // flatpickr is still open, do not submit yet.
+export default class FormPreviewController extends ApplicationController {
+  static values = { url: String };
+
+  declare readonly formTarget:HTMLFormElement;
+  declare urlValue:string;
+
+  connect() {
+    // Ensure this.element is a form element
+    if (!(this.element instanceof HTMLFormElement)) {
+      throw new Error('The controller must be bound to a <form> element');
     }
-
-    this.dispatch('triggerFormPreview');
   }
 
-  datePickerVisible(element:HTMLElement) {
-    const nextElement = element.nextElementSibling;
-    return nextElement
-           && nextElement.classList.contains('flatpickr-calendar')
-           && nextElement.classList.contains('open');
+  async submit():Promise<void> {
+    if (!this.urlValue) {
+      return;
+    }
+
+    const form = this.element as HTMLFormElement;
+    form.action = this.urlValue;
+
+    form.requestSubmit();
   }
 }

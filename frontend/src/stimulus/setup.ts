@@ -5,6 +5,7 @@ import MainMenuController from './controllers/dynamic/menus/main.controller';
 import OpDisableWhenCheckedController from './controllers/disable-when-checked.controller';
 import PrintController from './controllers/print.controller';
 import RefreshOnFormChangesController from './controllers/refresh-on-form-changes.controller';
+import FormPreviewController from './controllers/form-preview.controller';
 import AsyncDialogController from './controllers/async-dialog.controller';
 import PollForChangesController from './controllers/poll-for-changes.controller';
 import TableHighlightingController from './controllers/table-highlighting.controller';
@@ -37,6 +38,7 @@ instance.register('password-confirmation-dialog', PasswordConfirmationDialogCont
 instance.register('poll-for-changes', PollForChangesController);
 instance.register('print', PrintController);
 instance.register('refresh-on-form-changes', RefreshOnFormChangesController);
+instance.register('form-preview', FormPreviewController);
 instance.register('show-when-checked', OpShowWhenCheckedController);
 instance.register('show-when-value-selected', OpShowWhenValueSelectedController);
 instance.register('table-highlighting', TableHighlightingController);
