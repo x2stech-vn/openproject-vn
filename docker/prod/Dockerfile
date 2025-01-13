@@ -58,8 +58,6 @@ COPY vendor ./vendor
 # Add lib in case a plugin tries to load VERSION file under lib
 COPY lib ./lib
 
-RUN echo "g++ version: $(g++ --version)" && echo "Exiting early" && exit 1
-
 RUN \
   bundle config set --local path 'vendor/bundle' && \
   bundle config set --local without 'test development' && \
