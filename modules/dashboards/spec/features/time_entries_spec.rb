@@ -30,7 +30,7 @@ require "spec_helper"
 
 require_relative "../support/pages/dashboard"
 
-RSpec.describe "Time entries widget on dashboard", :js do
+RSpec.describe "Time entries widget on dashboard", :js, :with_cuprite do
   let!(:type) { create(:type) }
   let!(:project) { create(:project, types: [type]) }
   let!(:other_project) { create(:project, types: [type]) }
@@ -102,30 +102,19 @@ RSpec.describe "Time entries widget on dashboard", :js do
     spent_time_widget = Components::Grids::GridArea.new(".grid--area.-widgeted:nth-of-type(1)")
 
     within spent_time_widget.area do
-      expect(page)
-        .to have_content "Total: 11 h"
+      expect(page).to have_content "Total: 11 h"
 
-      expect(page)
-        .to have_content Date.today.strftime("%m/%d/%Y")
-      expect(page)
-        .to have_css(".activity", text: visible_time_entry.activity.name)
-      expect(page)
-        .to have_css(".subject", text: "#{project.name} - ##{work_package.id}: #{work_package.subject}")
-      expect(page)
-        .to have_css(".comments", text: visible_time_entry.comments)
-      expect(page)
-        .to have_css(".hours", text: visible_time_entry.hours)
+      expect(page).to have_content Time.zone.today.strftime("%m/%d/%Y")
+      expect(page).to have_css(".activity", text: visible_time_entry.activity.name)
+      expect(page).to have_css(".subject", text: "#{project.name} - ##{work_package.id}: #{work_package.subject}")
+      expect(page).to have_css(".comments", text: visible_time_entry.comments)
+      expect(page).to have_css(".hours", text: visible_time_entry.hours)
 
-      expect(page)
-        .to have_content((Date.today - 1.day).strftime("%m/%d/%Y"))
-      expect(page)
-        .to have_css(".activity", text: other_visible_time_entry.activity.name)
-      expect(page)
-        .to have_css(".subject", text: "#{project.name} - ##{work_package.id}: #{work_package.subject}")
-      expect(page)
-        .to have_css(".comments", text: other_visible_time_entry.comments)
-      expect(page)
-        .to have_css(".hours", text: other_visible_time_entry.hours)
+      expect(page).to have_content(1.day.ago.strftime("%m/%d/%Y"))
+      expect(page).to have_css(".activity", text: other_visible_time_entry.activity.name)
+      expect(page).to have_css(".subject", text: "#{project.name} - ##{work_package.id}: #{work_package.subject}")
+      expect(page).to have_css(".comments", text: other_visible_time_entry.comments)
+      expect(page).to have_css(".hours", text: other_visible_time_entry.hours)
 
       # Allows to edit
       page.find_test_selector("edit-time-entry-#{visible_time_entry.id}").click
@@ -139,7 +128,7 @@ RSpec.describe "Time entries widget on dashboard", :js do
 
     sleep(0.1)
 
-    time_logging_modal.perform_action "Save"
+    time_logging_modal.submit
     time_logging_modal.is_visible false
 
     within spent_time_widget.area do
