@@ -146,24 +146,38 @@ class TimeEntriesController < ApplicationController
   def load_and_authorize_optional_project
     if params[:project_id].present?
       @project = Project.visible.find(params[:project_id])
-      # TODO: Authorize
+
+      if !User.current.allowed_in_project?(:log_time, @project) &&
+        !User.current.allowed_in_any_work_package?(:log_own_time, in_project: @project)
+        deny_access
+      end
+
     end
   rescue ActiveRecord::NotFound
-    # noop
+    deny_access(not_found: true)
   end
 
   def load_and_authorize_optional_work_package
     if params[:work_package_id].present?
       @work_package = WorkPackage.visible.find_by(id: params[:work_package_id])
       @project = @work_package.project
-      # TODO: Authorize
+
+      if !User.current.allowed_in_project?(:log_time, @project) &&
+        !User.current.allowed_in_work_package?(:log_own_time, @work_package)
+        deny_access
+      end
     end
+  rescue ActiveRecord::NotFound
+    deny_access(not_found: true)
   end
 
   def load_or_build_and_authorize_time_entry
     @time_entry = if params[:time_entry_id]
-                    # TODO: Properly handle authorization
-                    TimeEntry.find_by(id: params[:time_entry_id])
+                    TimeEntry.find_by(id: params[:time_entry_id]).tap do |entry|
+                      if entry && !TimeEntries::UpdateContract.new(entry, current_user).user_allowed_to_update?
+                        deny_access(not_found: true)
+                      end
+                    end
                   else
                     TimeEntry.new(project: @project, work_package: @work_package, user: User.current)
                   end
