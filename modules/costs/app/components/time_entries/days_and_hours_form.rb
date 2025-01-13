@@ -60,6 +60,7 @@ module TimeEntries
                        required: start_and_end_time_required?,
                        label: TimeEntry.human_attribute_name(:end_time),
                        value: model.end_timestamp&.strftime("%H:%M"),
+                       caption: end_time_caption,
                        data: {
                          "time-entry-target" => "endTimeInput",
                          "action" => "input->time-entry#timeInputChanged"
@@ -93,6 +94,21 @@ module TimeEntries
       else
         ""
       end
+    end
+
+    def end_time_caption # rubocop:disable Metrics/AbcSize
+      relevant_hours = model.ongoing? ? model.ongoing_hours : model.hours
+
+      return if model.start_time.blank?
+      return if relevant_hours.blank?
+
+      end_time_in_minutes = model.start_time + (relevant_hours * 60)
+
+      return if end_time_in_minutes <= (24 * 60)
+
+      diff_in_days = (end_time_in_minutes / (60 * 24)).floor
+
+      "+#{I18n.t('datetime.distance_in_words.x_days', count: diff_in_days)}"
     end
   end
 end

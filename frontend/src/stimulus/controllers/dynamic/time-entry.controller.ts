@@ -110,10 +110,19 @@ export default class TimeEntryController extends Controller {
     //  - We have start & end time and no hours
     //  - We have start & end time and we have triggered the change from the end time field
     if (startTimeInMinutes && endTimeInMinutes && (hoursInMinutes === 0 || initiatedBy === this.endTimeInputTarget)) {
+      let exisitingDayGap = 0;
+
+      // when we already had hours set, and they were above 24 hours, we would most likely want to stay on that end date
+      if (hoursInMinutes >= 24 * 60) {
+        exisitingDayGap = Math.floor(hoursInMinutes / (24 * 60)) * (60 * 24);
+      }
+
       hoursInMinutes = endTimeInMinutes - startTimeInMinutes;
       if (hoursInMinutes <= 0) {
         hoursInMinutes += 24 * 60;
       }
+
+      hoursInMinutes += exisitingDayGap;
 
       const formattedHours = outputChronicDuration(hoursInMinutes * 60, { format: 'hours_only' }) || '';
       this.hoursInputTarget.value = formattedHours;
