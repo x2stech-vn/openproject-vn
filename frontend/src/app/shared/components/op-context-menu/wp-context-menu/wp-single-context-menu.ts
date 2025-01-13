@@ -1,6 +1,4 @@
-import {
-  Directive, ElementRef, Injector, Input,
-} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Injector, Input, OnDestroy } from '@angular/core';
 import { StateService } from '@uirouter/core';
 import { isClickedWithModifier } from 'core-app/shared/helpers/link-handling/link-handling';
 import { AuthorisationService } from 'core-app/core/model-auth/model-auth.service';
@@ -17,11 +15,12 @@ import { WorkPackageAction } from 'core-app/features/work-packages/components/wp
 import { WpDestroyModalComponent } from 'core-app/shared/components/modals/wp-destroy-modal/wp-destroy.modal';
 import { WorkPackageAuthorization } from 'core-app/features/work-packages/services/work-package-authorization.service';
 import { TurboRequestsService } from 'core-app/core/turbo/turbo-requests.service';
+import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
 
 @Directive({
   selector: '[wpSingleContextMenu]',
 })
-export class WorkPackageSingleContextMenuDirective extends OpContextMenuTrigger {
+export class WorkPackageSingleContextMenuDirective extends OpContextMenuTrigger implements AfterViewInit, OnDestroy {
   @Input('wpSingleContextMenu-workPackage') public workPackage:WorkPackageResource;
 
   constructor(
@@ -32,11 +31,23 @@ export class WorkPackageSingleContextMenuDirective extends OpContextMenuTrigger 
     readonly elementRef:ElementRef,
     readonly opModalService:OpModalService,
     readonly turboRequests:TurboRequestsService,
+    readonly apiV3Service:ApiV3Service,
     readonly opContextMenuService:OPContextMenuService,
     readonly authorisationService:AuthorisationService,
     protected copyToClipboardService:CopyToClipboardService,
   ) {
     super(elementRef, opContextMenuService);
+  }
+
+  private closeDialogHandler:EventListener = this.handleTimeEntryDialogClose.bind(this);
+
+  ngAfterViewInit():void {
+    super.ngAfterViewInit();
+    document.addEventListener('dialog:close', this.closeDialogHandler);
+  }
+
+  ngOnDestroy():void {
+    document.removeEventListener('dialog:close', this.closeDialogHandler);
   }
 
   protected open(evt:JQuery.TriggeredEvent) {
@@ -149,5 +160,16 @@ export class WorkPackageSingleContextMenuDirective extends OpContextMenuTrigger 
     }
 
     return this.items;
+  }
+
+  private handleTimeEntryDialogClose(event:CustomEvent):void {
+    const { detail: { dialog, submitted } } = event as { detail:{ dialog:HTMLDialogElement, submitted:boolean } };
+
+    if (dialog.id === 'time-entry-dialog' && submitted) {
+      void this.apiV3Service
+        .work_packages
+        .id(this.workPackage.id!)
+        .refresh();
+    }
   }
 }
