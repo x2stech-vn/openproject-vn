@@ -63,7 +63,7 @@ RUN echo "g++ version: $(g++ --version)" && echo "Exiting early" && exit 1
 RUN \
   bundle config set --local path 'vendor/bundle' && \
   bundle config set --local without 'test development' && \
-  bundle install --quiet --no-cache --jobs=8 --retry=3 && \
+  bunde_install() { counter=0; ret=0; while true; do echo "[try $counter] bundle install"; ((counter++)); ret=`bundle install --quiet --no-cache --jobs=8 --retry=3`; if [ ! $? -gt 0 ]; then return 0; elif [ $counter -gt 10 ]; then return 1; fi; done || return $ret; } && bundle_install && \
   bundle config set deployment 'true' && \
   cp Gemfile.lock Gemfile.lock.bak && \
   rm -rf vendor/bundle/ruby/*/cache && \
