@@ -4,13 +4,14 @@
   <%= render(TimeEntries::TimeEntryFormComponent.new(time_entry: time_entry, show_user: show_user, show_work_package: show_work_package)) %>
   <% end %>
   <% d.with_footer(variant: :large) do %>
-    <% if time_entry.ongoing? %>
+    <% if time_entry.persisted? %>
       <%= render(Primer::ButtonComponent.new(
         scheme: :danger,
         test_selector: "destroy-time-entry-button",
         data: {
           "turbo" => true,
-          "turbo-method" => :delete
+          "turbo-method" => :delete,
+          "turbo-confirm" => t('js.text_are_you_sure')
         },
         href: time_entry_path(time_entry),
         tag: :a

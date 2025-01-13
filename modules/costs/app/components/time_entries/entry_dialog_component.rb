@@ -44,5 +44,11 @@ module TimeEntries
     private
 
     attr_reader :time_entry, :open, :show_user, :show_work_package
+
+    def can_delete_time_entry?
+      return false if time_entry.new_record?
+
+      DeleteContract.deletion_allowed?(@time_entry, User.current)
+    end
   end
 end

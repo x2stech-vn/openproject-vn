@@ -165,29 +165,38 @@ export class TimeEntryCalendarComponent implements AfterViewInit, OnDestroy {
     buttonText: { today: this.text.today },
     initialView: 'timeGridWeek',
     firstDay: this.configuration.startOfWeek(),
-    timeZone: this.configuration.isTimezoneSet() ? this.configuration.timezone() : 'local',
+    timeZone: this.configuration.isTimezoneSet()
+      ? this.configuration.timezone()
+      : 'local',
     hiddenDays: [],
     // This is a magic number that is derived by trial and error
     contentHeight: 550,
     slotEventOverlap: false,
     slotLabelInterval: `${this.labelIntervalHours}:00:00`,
-    slotLabelFormat: (info:VerboseFormattingArg) => ((this.maxHour - info.date.hour) / this.scaleRatio).toString(),
+    slotLabelFormat: (info:VerboseFormattingArg) =>
+      ((this.maxHour - info.date.hour) / this.scaleRatio).toString(),
     allDaySlot: false,
     displayEventTime: false,
     slotMinTime: `${this.minHour - 1}:00:00`,
     slotMaxTime: `${this.maxHour}:00:00`,
     events: this.calendarEventsFunction.bind(this),
-    eventOverlap: (stillEvent:EventApi) => !stillEvent.classNames.includes(TIME_ENTRY_CLASS_NAME),
+    eventOverlap: (stillEvent:EventApi) =>
+      !stillEvent.classNames.includes(TIME_ENTRY_CLASS_NAME),
     plugins: [timeGrid, interactionPlugin],
     eventDidMount: this.alterEventEntry.bind(this),
     eventWillUnmount: this.beforeEventRemove.bind(this),
     eventClick: this.dispatchEventClick.bind(this),
     eventDrop: this.moveEvent.bind(this),
-    dayHeaderClassNames: (data:DayHeaderContentArg) => this.calendar.applyNonWorkingDay(data, this.nonWorkingDays),
-    dayCellClassNames: (data:DayCellContentArg) => this.calendar.applyNonWorkingDay(data, this.nonWorkingDays),
-    dayGridClassNames: (data:DayCellContentArg) => this.calendar.applyNonWorkingDay(data, this.nonWorkingDays),
-    slotLaneClassNames: (data:SlotLaneContentArg) => this.calendar.applyNonWorkingDay(data, this.nonWorkingDays),
-    slotLabelClassNames: (data:SlotLabelContentArg) => this.calendar.applyNonWorkingDay(data, this.nonWorkingDays),
+    dayHeaderClassNames: (data:DayHeaderContentArg) =>
+      this.calendar.applyNonWorkingDay(data, this.nonWorkingDays),
+    dayCellClassNames: (data:DayCellContentArg) =>
+      this.calendar.applyNonWorkingDay(data, this.nonWorkingDays),
+    dayGridClassNames: (data:DayCellContentArg) =>
+      this.calendar.applyNonWorkingDay(data, this.nonWorkingDays),
+    slotLaneClassNames: (data:SlotLaneContentArg) =>
+      this.calendar.applyNonWorkingDay(data, this.nonWorkingDays),
+    slotLabelClassNames: (data:SlotLabelContentArg) =>
+      this.calendar.applyNonWorkingDay(data, this.nonWorkingDays),
   };
 
   private initializeCalendar(displayedDayss:DisplayedDays) {
@@ -233,7 +242,9 @@ export class TimeEntryCalendarComponent implements AfterViewInit, OnDestroy {
   }
 
   async requireNonWorkingDays(start:Date | string, end:Date | string) {
-    this.nonWorkingDays = await firstValueFrom(this.dayService.requireNonWorkingYears$(start, end));
+    this.nonWorkingDays = await firstValueFrom(
+      this.dayService.requireNonWorkingYears$(start, end),
+    );
   }
 
   public calendarEventsFunction(
@@ -247,7 +258,9 @@ export class TimeEntryCalendarComponent implements AfterViewInit, OnDestroy {
       .then(async (collection) => {
         this.entries.emit(collection);
 
-        successCallback(await this.buildEntries(collection.elements, fetchInfo));
+        successCallback(
+          await this.buildEntries(collection.elements, fetchInfo),
+        );
       })
       .catch(failureCallback);
   }
@@ -284,8 +297,9 @@ export class TimeEntryCalendarComponent implements AfterViewInit, OnDestroy {
   ):Promise<EventInput[]> {
     this.setRatio(entries);
     await this.requireNonWorkingDays(fetchInfo.start, fetchInfo.end);
-    return this.buildTimeEntryEntries(entries)
-      .concat(this.buildAuxEntries(entries, fetchInfo));
+    return this.buildTimeEntryEntries(entries).concat(
+      this.buildAuxEntries(entries, fetchInfo),
+    );
   }
 
   private setRatio(entries:TimeEntryResource[]):void {
@@ -462,10 +476,7 @@ export class TimeEntryCalendarComponent implements AfterViewInit, OnDestroy {
     };
   }
 
-  protected dmFilters(
-    start:Moment,
-    end:Moment,
-  ):Array<[string, FilterOperator, string[]]> {
+  protected dmFilters(start:Moment, end:Moment):Array<[string, FilterOperator, string[]]> {
     const startDate = start.format('YYYY-MM-DD');
     const endDate = end.subtract(1, 'd').format('YYYY-MM-DD');
     return [
@@ -761,13 +772,17 @@ export class TimeEntryCalendarComponent implements AfterViewInit, OnDestroy {
   }
 
   private handleDialogClose(event:CustomEvent):void {
-    const { detail: { dialog, submitted } } = event as { detail:{ dialog:HTMLDialogElement, submitted:boolean } };
+    const {
+      detail: { dialog, submitted },
+    } = event as { detail:{ dialog:HTMLDialogElement; submitted:boolean } };
     if (dialog.id === 'time-entry-dialog' && submitted) {
-      void this.fetchTimeEntries(this.memoizedTimeEntries.start, this.memoizedTimeEntries.end)
-        .then(async (collection) => {
-          this.entries.emit(collection);
-          this.ucCalendar.getApi().refetchEvents();
-        });
+      void this.fetchTimeEntries(
+        this.memoizedTimeEntries.start,
+        this.memoizedTimeEntries.end,
+      ).then(async (collection) => {
+        this.entries.emit(collection);
+        this.ucCalendar.getApi().refetchEvents();
+      });
     }
   }
 }

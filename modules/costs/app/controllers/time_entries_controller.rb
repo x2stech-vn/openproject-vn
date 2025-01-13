@@ -50,7 +50,7 @@ class TimeEntriesController < ApplicationController
                    User.current.allowed_in_any_project?(:log_time)
                  end
 
-    @time_entry.spent_on = (params[:date].presence || Time.zone.today)
+    @time_entry.spent_on ||= params[:date].presence || Time.zone.today
   end
 
   def user_tz_caption
@@ -120,16 +120,18 @@ class TimeEntriesController < ApplicationController
   def destroy
     time_entry = TimeEntry.find_by(id: params[:id])
 
-    call = TimeEntries::DestroyService.new(user: current_user, model: time_entry).call
+    call = TimeEntries::DeleteService.new(user: current_user, model: time_entry).call
 
     @time_entry = call.result
 
-    unless call.success?
+    if call.success?
+      # TODO: Render soimething that closes our dialog
+    else
       form_component = TimeEntries::TimeEntryFormComponent.new(time_entry: @time_entry, **form_config_options)
       update_via_turbo_stream(component: form_component, status: :bad_request)
-
-      respond_with_turbo_streams
     end
+
+    respond_with_turbo_streams
   end
 
   private

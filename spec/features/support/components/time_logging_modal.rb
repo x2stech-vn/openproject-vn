@@ -63,6 +63,12 @@ module Components
       end
     end
 
+    def delete
+      within modal_container do
+        click_on I18n.t("button_delete")
+      end
+    end
+
     def has_field_with_value(field, value)
       within modal_container do
         expect(page).to have_field "time_entry_#{field}", with: value, visible: :all
