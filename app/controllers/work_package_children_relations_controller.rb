@@ -28,16 +28,13 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-class WorkPackageChildrenController < ApplicationController
+class WorkPackageChildrenRelationsController < ApplicationController
   include OpTurbo::ComponentStream
   include OpTurbo::DialogStreamHelper
 
   before_action :set_work_package
 
   before_action :authorize # Short-circuit early if not authorized
-
-  before_action :set_child, except: %i[new create]
-  before_action :set_relations, except: %i[new create]
 
   def new
     component = WorkPackageRelationsTab::AddWorkPackageChildDialogComponent
@@ -46,57 +43,46 @@ class WorkPackageChildrenController < ApplicationController
   end
 
   def create
-    target_work_package_id = params[:work_package][:id]
-    target_child_work_package = WorkPackage.find(target_work_package_id)
+    child = WorkPackage.find(params[:work_package][:id])
+    service_result = set_relation(child:, parent: @work_package)
 
-    target_child_work_package.parent = @work_package
-
-    if target_child_work_package.save
-      @children = @work_package.children.visible
-      @relations = @work_package.relations.visible
-
-      component = WorkPackageRelationsTab::IndexComponent.new(
-        work_package: @work_package,
-        relations: @relations,
-        children: @children,
-        scroll_to_id: target_work_package_id
-      )
-      replace_via_turbo_stream(component:)
-      render_success_flash_message_via_turbo_stream(message: I18n.t(:notice_successful_update))
-      respond_with_turbo_streams
-    end
+    respond_with_relations_tab_update(service_result, relation_to_scroll_to: service_result.result)
   end
 
   def destroy
-    @child.parent = nil
+    child = WorkPackage.find(params[:id])
+    service_result = set_relation(child:, parent: nil)
 
-    if @child.save
-      @work_package.reload
-      @children = @work_package.children.visible
-      component = WorkPackageRelationsTab::IndexComponent.new(
-        work_package: @work_package,
-        relations: @relations,
-        children: @children
-      )
-      replace_via_turbo_stream(component:)
-      render_success_flash_message_via_turbo_stream(message: I18n.t(:notice_successful_update))
-
-      respond_with_turbo_streams
-    end
+    respond_with_relations_tab_update(service_result)
   end
 
   private
 
+  def set_relation(child:, parent:)
+    WorkPackages::UpdateService.new(user: current_user, model: child)
+                               .call(parent:)
+  end
+
+  def respond_with_relations_tab_update(service_result, **)
+    if service_result.success?
+      @work_package.reload
+      component = WorkPackageRelationsTab::IndexComponent.new(
+        work_package: @work_package,
+        relations: @work_package.relations.visible,
+        children: @work_package.children.visible,
+        **
+      )
+      replace_via_turbo_stream(component:)
+      render_success_flash_message_via_turbo_stream(message: I18n.t(:notice_successful_update))
+
+      respond_with_turbo_streams
+    else
+      respond_with_turbo_streams(status: :unprocessable_entity)
+    end
+  end
+
   def set_work_package
     @work_package = WorkPackage.find(params[:work_package_id])
     @project = @work_package.project
-  end
-
-  def set_child
-    @child = WorkPackage.find(params[:id])
-  end
-
-  def set_relations
-    @relations = @work_package.relations.visible
   end
 end

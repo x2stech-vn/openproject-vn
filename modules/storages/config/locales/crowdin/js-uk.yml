@@ -43,7 +43,7 @@ uk:
           Папку проєкту з автоматичним керуванням поки не знайдено. Трохи зачекайте, перезапустіть сторінку, отримайте найновіші дані й повторіть спробу.
         managed_project_folder_no_access: >
           У вас немає доступу до керованої папки проєкту. Трохи зачекайте й повторіть спробу.
-        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols and make sure the folder does not exist already.
         upload_keep_both: "Зберегти обидва"
         upload_replace: "Замінити"
       file_links:

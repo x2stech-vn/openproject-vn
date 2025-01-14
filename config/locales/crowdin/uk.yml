@@ -685,7 +685,7 @@ uk:
     lag:
       subject: "Затримка"
       title: "Затримка (у днях)"
-      caption: "Різниця в кількості робочих між двома пакетами робіт"
+      caption: "The minimum number of working days to keep in between the two work packages."
     relations:
       label_relates_singular: "зв’язано з"
       label_relates_plural: "зв’язано з"
@@ -1873,6 +1873,8 @@ uk:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
       customize_life_cycle:
         description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:

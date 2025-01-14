@@ -29,8 +29,7 @@
 require "spec_helper"
 
 RSpec.describe "Shared Work Package Access",
-               :js, :with_cuprite,
-               with_ee: %i[work_package_sharing] do
+               :js, with_ee: %i[work_package_sharing] do
   shared_let(:project) { create(:project_with_types) }
   # This custom field is not explicitly displayed, but it's purpose is to ensure there are no errors
   # on the overview page while displaying project attributes.

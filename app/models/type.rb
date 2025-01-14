@@ -109,8 +109,6 @@ class Type < ApplicationRecord
   end
 
   def enabled_patterns
-    return {} if patterns.blank?
-
     patterns.all_enabled
   end
 

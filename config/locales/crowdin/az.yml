@@ -674,7 +674,7 @@ az:
     lag:
       subject: "Lag"
       title: "Lag (in days)"
-      caption: "The gap in number of working days in between the two work packages"
+      caption: "The minimum number of working days to keep in between the two work packages."
     relations:
       label_relates_singular: "related to"
       label_relates_plural: "related to"
@@ -1806,6 +1806,8 @@ az:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
       customize_life_cycle:
         description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:

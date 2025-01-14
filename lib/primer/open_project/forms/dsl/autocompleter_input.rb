@@ -8,19 +8,21 @@ module Primer
           attr_reader :name, :label, :autocomplete_options, :select_options, :wrapper_data_attributes
 
           class Option
-            attr_reader :label, :value, :selected
+            attr_reader :label, :value, :selected, :classes
 
-            def initialize(label:, value:, selected: false)
+            def initialize(label:, value:, classes: nil, selected: false)
               @label = label
               @value = value
               @selected = selected
+              @classes = classes
             end
 
             def to_h
               {
                 id: value,
-                name: label
-              }
+                name: label,
+                classes:
+              }.compact
             end
           end
 

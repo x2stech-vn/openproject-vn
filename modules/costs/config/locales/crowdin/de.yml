@@ -33,7 +33,7 @@ de:
       cost_type:
         unit: "Einheit"
         unit_plural: "Einheit plural"
-        default: "Cost type by default"
+        default: "Standardkostentyp"
       work_package:
         costs_by_type: "Gebuchte Einheiten"
         labor_costs: "Personaleinzelkosten"

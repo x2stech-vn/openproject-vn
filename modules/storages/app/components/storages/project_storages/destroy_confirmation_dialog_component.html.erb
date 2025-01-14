@@ -50,7 +50,7 @@ See COPYRIGHT and LICENSE files for more details.
           message.with_description { text }
         end
 
-        dialog.with_additional_content do
+        dialog.with_additional_details do
           render(Primer::Alpha::CheckBox.new(
             name: "confirm_delete",
             label: confirmation_text,

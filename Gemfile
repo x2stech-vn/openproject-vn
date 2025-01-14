@@ -408,4 +408,4 @@ end
 
 gem "openproject-octicons", "~>19.20.0 "
 gem "openproject-octicons_helper", "~>19.20.0 "
-gem "openproject-primer_view_components", "~>0.51.0"
+gem "openproject-primer_view_components", "~>0.52.0"

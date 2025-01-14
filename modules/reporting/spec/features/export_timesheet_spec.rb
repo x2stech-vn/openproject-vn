@@ -29,7 +29,7 @@
 require_relative "../spec_helper"
 require_relative "support/pages/cost_report_page"
 
-RSpec.describe "Timesheet PDF export", :js do
+RSpec.describe "Timesheet PDF export", :js, :selenium do
   shared_let(:project) { create(:project) }
   shared_let(:user) { create(:admin) }
   shared_let(:cost_type) { create(:cost_type, name: "Post-war", unit: "cap", unit_plural: "caps") }

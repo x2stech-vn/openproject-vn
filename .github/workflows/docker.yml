@@ -129,11 +129,6 @@ jobs:
             bim_support: false
             target: all-in-one
             runner: runner=4cpu-linux-arm64
-          - platform: linux/ppc64le
-            digest: ppc-aio
-            bim_support: false
-            target: all-in-one
-            runner: runner=4cpu-linux-x64
     steps:
       - name: Checkout
         with:

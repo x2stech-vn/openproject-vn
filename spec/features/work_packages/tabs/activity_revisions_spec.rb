@@ -3,7 +3,7 @@ require "spec_helper"
 require "features/work_packages/work_packages_page"
 require "support/edit_fields/edit_field"
 
-RSpec.describe "Activity tab", :js, :with_cuprite do
+RSpec.describe "Activity tab", :js do
   let(:project) { create(:project_with_types, public: true) }
 
   let(:creation_time) { 5.days.ago }

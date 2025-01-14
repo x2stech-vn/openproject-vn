@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "form configuration", :js do
+RSpec.describe "form configuration", :js, :selenium do
   shared_let(:admin) { create(:admin) }
   let(:type) { create(:type) }
 

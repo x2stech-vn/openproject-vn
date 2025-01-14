@@ -1,6 +1,7 @@
 require "spec_helper"
 
-RSpec.describe "Notification center", :js, :with_cuprite,
+RSpec.describe "Notification center",
+               :js,
                with_ee: %i[date_alerts],
                # We decrease the notification polling interval because some portions of the JS code rely on something triggering
                # the Angular change detection. This is usually done by the notification polling, but we don't want to wait
@@ -106,8 +107,8 @@ RSpec.describe "Notification center", :js, :with_cuprite,
 
         # rubocop:disable FactoryBot/ExcessiveCreateList
         create_list(:notification, 100, attributes.merge(reason: :mentioned)) +
-        create_list(:notification, 105, attributes.merge(reason: :watched)) +
-        create_list(:notification, 50, attributes_project2.merge(reason: :assigned))
+          create_list(:notification, 105, attributes.merge(reason: :watched)) +
+          create_list(:notification, 50, attributes_project2.merge(reason: :assigned))
         # rubocop:enable FactoryBot/ExcessiveCreateList
       end
 

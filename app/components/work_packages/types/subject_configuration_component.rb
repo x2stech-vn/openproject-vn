@@ -36,13 +36,14 @@ module WorkPackages
 
       def form_options
         {
-          url: "https://example.com",
-          method: :put,
+          url: update_type_tab_path(id: model.id, tab: "subject_configuration"),
+          method: :patch,
           model:,
           data: {
             application_target: "dynamic",
             controller: "admin--subject-configuration",
-            admin__subject_configuration_hide_pattern_input_value: true
+            admin__subject_configuration_hide_pattern_input_value:
+              !WorkPackages::Types::SubjectConfigurationForm.has_pattern?(model)
           }
         }
       end

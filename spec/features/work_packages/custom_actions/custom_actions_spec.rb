@@ -28,8 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Custom actions", :js, :with_cuprite,
-               with_ee: %i[custom_actions] do
+RSpec.describe "Custom actions", :js, with_ee: %i[custom_actions] do
   shared_let(:admin) { create(:admin) }
 
   shared_let(:permissions) { %i(view_work_packages edit_work_packages move_work_packages work_package_assigned) }
@@ -463,7 +462,7 @@ RSpec.describe "Custom actions", :js, :with_cuprite,
     expect(date_action.actions.length).to eq(1)
     expect(date_action.conditions.length).to eq(0)
 
-    edit_page = index_ca_page.edit("Current date")
+    index_ca_page.edit("Current date")
     expect(page).to have_select("custom_action_actions_date", selected: "Current date")
   end
 

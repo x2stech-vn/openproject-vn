@@ -31,6 +31,12 @@
 module WorkPackages
   module Types
     class SubjectConfigurationForm < ApplicationForm
+      class << self
+        def has_pattern?(type)
+          type.replacement_pattern_defined_for?(:subject)
+        end
+      end
+
       form do |subject_form|
         subject_form.radio_button_group(name: :subject_configuration) do |group|
           group.radio_button(
@@ -52,7 +58,8 @@ module WorkPackages
 
         subject_form.group(data: { "admin--subject-configuration-target": "patternInput" }) do |toggleable_group|
           toggleable_group.text_field(
-            name: :pattern,
+            name: :subject_pattern,
+            value: subject_pattern,
             label: I18n.t("types.edit.subject_configuration.pattern.label"),
             caption: I18n.t("types.edit.subject_configuration.pattern.caption"),
             required: true,
@@ -66,7 +73,13 @@ module WorkPackages
       private
 
       def has_pattern?
-        model.replacement_pattern_defined_for?(:subject)
+        self.class.has_pattern?(model)
+      end
+
+      def subject_pattern
+        return "" if model.patterns.subject.nil?
+
+        model.patterns.subject.blueprint
       end
     end
   end

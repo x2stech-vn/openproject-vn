@@ -663,7 +663,7 @@ ms:
     lag:
       subject: "Lag"
       title: "Lag (dalam hari)"
-      caption: "Jurang bilangan hari bekerja di antara dua pakej kerja"
+      caption: "The minimum number of working days to keep in between the two work packages."
     relations:
       label_relates_singular: "berkaitan dengan"
       label_relates_plural: "berkaitan dengan"
@@ -1767,6 +1767,8 @@ ms:
     upsale:
       title: "Alat tambah perusahaan"
       link_title: "Maklumat lanjut"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
       customize_life_cycle:
         description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:

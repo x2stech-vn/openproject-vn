@@ -29,7 +29,7 @@
 require "spec_helper"
 require "support/flash/expectations"
 
-RSpec.describe "Work package activity", :js, :with_cuprite, with_flag: { primerized_work_package_activities: true } do
+RSpec.describe "Work package activity", :js, with_flag: { primerized_work_package_activities: true } do
   include Flash::Expectations
 
   let(:project) { create(:project) }
@@ -959,7 +959,8 @@ RSpec.describe "Work package activity", :js, :with_cuprite, with_flag: { primeri
   end
 
   describe "images in the comment",
-           with_cuprite: false,
+           :js,
+           :selenium,
            with_settings: { journal_aggregation_time_minutes: 0, show_work_package_attachments: false } do
     let(:work_package) { create(:work_package, project:, author: admin) }
     let(:image_fixture) { UploadedFile.load_from("spec/fixtures/files/image.png") }

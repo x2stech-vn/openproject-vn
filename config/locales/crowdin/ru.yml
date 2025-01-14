@@ -343,8 +343,8 @@ ru:
     settings:
       change_identifier: Идентификатор изменений
       actions:
-        label_enable_all: "Enable all"
-        label_disable_all: "Disable all"
+        label_enable_all: "Включить всё"
+        label_disable_all: "Выключить всё"
       activities:
         no_results_title_text: В настоящее время никакой активности.
       forums:
@@ -357,18 +357,18 @@ ru:
         no_results_title_text: Нет доступных настраиваемых полей.
       life_cycle:
         header:
-          title: "Project lifecycle"
-          description_html: 'These project stages and gates in the project lifecycle will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> and are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. You can enable or disable individual attributes.'
-        non_defined: "Neither stages nor gates are currently defined."
-        section_header: "Stages and gates"
+          title: "Жизненный цикл проекта"
+          description_html: 'Эти этапы и стадии жизненного цикла проекта будут отображаться на <a href=%{overview_url} target="_blank">странице обзора проекта</a> и определяться в <a href=%{admin_settings_url} target="_blank">настройках администрирования</a> OpenProject. Вы можете включать или отключать отдельные атрибуты.'
+        non_defined: "В настоящее время не определены ни этапы, ни стадии."
+        section_header: "Этапы и стадии"
         step:
-          use_in_project: "Use %{step} in this project"
+          use_in_project: "Использовано %{step} в этом проекте"
         filter:
-          label: "Search project stage or gate"
+          label: "Поиск этапа или стадии проекта"
       project_custom_fields:
         header:
           title: "Атрибуты проекта"
-          description_html: 'These project attributes will be displayed in your <a href=%{overview_url} target="_blank">project overview page</a> under their respective sections. You can enable or disable individual attributes. Project attributes and sections are defined in the <a href=%{admin_settings_url} target="_blank">administration settings</a> by the administrator of the instance. '
+          description_html: 'Эти атрибуты проекта будут отображаться на <a href=%{overview_url} target="_blank">странице обзора проекта</a> в соответствующих разделах. Вы можете включить или отключить отдельные атрибуты. Атрибуты проекта и разделы определяются в <a href=%{admin_settings_url} target="_blank">настройках администрирования</a> OpenProject. '
         filter:
           label: "Поиск атрибута проекта"
         actions:
@@ -389,10 +389,10 @@ ru:
         no_results_title_text: Для этого проекта дополнительного дискового пространства не требуется.
   project_stage:
     working_days_count:
-      one: "Duration: %{count} working day"
+      one: "Продолжительность: %{count} рабочий день"
       few: "Duration: %{count} working days"
       many: "Duration: %{count} working days"
-      other: "Duration: %{count} working days"
+      other: "Продолжительность: %{count} рабочих дней"
   lists:
     create:
       success: "Измененный список был сохранен как новый"
@@ -604,26 +604,26 @@ ru:
       no_results_content_text: Создать новый тип
     edit:
       form_configuration:
-        tab: "Form configuration"
+        tab: "Настройка формы"
       more_info_text_html: >
         Корпоративная редакция позволяет настроить конфигурацию форм с этими дополнительными возможностями: <br> <ul class="%{list_styling_class}"> <li><b>Добавить новые группы атрибутов</b></li> <li><b>Переименовать группы атрибутов</b></li> </ul>
       projects:
-        tab: "Projects"
-        enabled_projects: "Enabled projects"
+        tab: "Проекты"
+        enabled_projects: "Включенные проекты"
       settings:
-        tab: "Settings"
-        type_color_text: The selected color distinguishes different types in Gantt charts or work packages tables. It is therefore recommended to use a strong color.
+        tab: "Настройки"
+        type_color_text: "Выбранный цвет выделяет разные типы\nна диаграммах Ганта или таблицах пакетов работ. Поэтому рекомендуется использовать насыщенный цвет."
       subject_configuration:
-        tab: "Subject configuration"
+        tab: "Настройка темы"
         manually_editable_subjects:
-          label: "Manually editable subjects"
-          caption: "Users can manually enter and edit work package subjects without restrictions."
+          label: "Вручную редактируемые темы"
+          caption: "Пользователи могут вручную вводить и редактировать темы пакетов работ без ограничений."
         automatically_generated_subjects:
-          label: "Automatically generated subjects"
-          caption: "Define a pattern using referenced attributes and text to automatically generate work package subjects. Users will not be able to manually edit subjects."
+          label: "Автоматически созданные темы"
+          caption: "Определите шаблон, используя атрибуты ссылок и текст, чтобы автоматически генерировать темы пакетов работ. Пользователи не смогут вручную редактировать темы."
         pattern:
-          label: "Subject pattern"
-          caption: "Search for an attribute or add text. To create a space between elements add it as a text."
+          label: "Шаблон темы"
+          caption: "Поиск атрибута или добавление текста. Чтобы создать пробел между элементами, добавьте его в виде текста."
   versions:
     overview:
       work_packages_in_archived_projects: "Эта версия используется совместно с архивными проектами, в которых все еще есть рабочие пакеты, назначенные на эту версию. Они учитываются, но не отображаются в связанных представлениях."
@@ -691,7 +691,7 @@ ru:
     lag:
       subject: "Отставание"
       title: "Отставание (в днях)"
-      caption: "Разница в количестве рабочих дней между двумя пакетами работ"
+      caption: "Минимальное количество рабочих дней, которое должно быть между двумя пакетами работ."
     relations:
       label_relates_singular: "связан с"
       label_relates_plural: "связаны с"
@@ -807,7 +807,7 @@ ru:
         is_required: "Обязательно"
         max_length: "Максимальная длина"
         min_length: "Минимальная длина"
-        content_right_to_left: "Right-to-Left content"
+        content_right_to_left: "Направление письма справа налево"
         multi_value: "Разрешить множественный выбор"
         possible_values: "Возможные значения"
         regexp: "Регулярное выражение"
@@ -843,8 +843,8 @@ ru:
         attr_lastname: "Атрибут Фамилия"
         attr_login: "Имя пользователя"
         attr_mail: "Атрибут Email"
-        filter_string: "Filter string"
-        admin: "Administrator"
+        filter_string: "Строка фильтра"
+        admin: "Администратор"
         base_dn: "Базовый DN"
         host: "Хост"
         onthefly: "Автоматическое создание пользователя"
@@ -889,8 +889,8 @@ ru:
         is_required: "Требуется для всех проектов"
         custom_field_section: Раздел
       project/life_cycle_step_definition:
-        name: "Name"
-        color: "Color"
+        name: "Имя"
+        color: "Цвет"
       query:
         column_names: "Столбцы"
         relations_to_type_column: "Отношения к %{type}"
@@ -1154,38 +1154,38 @@ ru:
           attributes:
             type:
               must_be_a_stage_or_gate: "должен быть либо Project::StageDefinition, либо Project::GateDefinition"
-              type_and_class_name_mismatch: "must match the instantiated class name"
+              type_and_class_name_mismatch: "должно совпадать с именем созданного экземпляра класса"
         project/gate_definition:
           attributes:
             type:
-              type_and_class_name_mismatch: "must be a Project::GateDefinition"
+              type_and_class_name_mismatch: "должно быть Project::GateDefinition"
         project/stage_definition:
           attributes:
             type:
-              type_and_class_name_mismatch: "must be a Project::StageDefinition"
+              type_and_class_name_mismatch: "должно быть Project::StageDefinition"
         project/life_cycle_step:
           attributes:
             type:
               must_be_a_stage_or_gate: "должен быть либо Project::Stage, либо Project::Gate"
               must_be_a_stage: "должен быть Project::Stage"
               must_be_a_gate: "должен быть Project::Stage"
-              type_and_class_name_mismatch: "must match the instantiated class name"
+              type_and_class_name_mismatch: "должно совпадать с именем созданного экземпляра класса"
         project/gate:
           attributes:
             base:
-              end_date_not_allowed: "Cannot assign end date to a Project::Gate"
+              end_date_not_allowed: "Невозможно назначить дату окончания для Project::Gate"
             type:
-              type_and_class_name_mismatch: "must be a Project::Gate"
+              type_and_class_name_mismatch: "должно быть Project::Gate"
             date:
-              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
+              non_continuous_dates: "не может быть раньше, чем дата окончания предыдущего %{step}."
         project/stage:
           attributes:
             date_range:
-              start_date_must_be_before_end_date: "start date must be before the end date."
-              non_continuous_dates: "can't be earlier than the previous %{step}'s end date."
-              incomplete: "is incomplete."
+              start_date_must_be_before_end_date: "дата начала должна быть раньше даты окончания."
+              non_continuous_dates: "не может быть раньше, чем дата окончания предыдущего %{step}."
+              incomplete: "неполный."
             type:
-              type_and_class_name_mismatch: "must be a Project::Stage"
+              type_and_class_name_mismatch: "должно быть Project::Stage"
         query:
           attributes:
             project:
@@ -1408,8 +1408,8 @@ ru:
         other: "Уведомлений"
       placeholder_user: "Пользователь-заполнитель"
       project: "Проект"
-      project/gate_definition: "Gate"
-      project/stage_definition: "Stage"
+      project/gate_definition: "Стадия"
+      project/stage_definition: "Этап"
       project_query:
         one: "Список проектов"
         few: "Списки проектов"
@@ -1879,8 +1879,10 @@ ru:
     upsale:
       title: "Корпоративное дополнение"
       link_title: "Дополнительная информация"
+      automatic_subject_generation:
+        description: "Создать автоматически генерируемые темы, используя атрибуты и текст."
       customize_life_cycle:
-        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
+        description: "Создать и организовать этапы и стадии проекта, отличные от тех, что предусмотрены планированием цикла проекта PM2."
       form_configuration:
         description: "Настройте конфигурацию формы с помощью этих дополнительных дополнений:"
         add_groups: "Добавить новую группу атрибутов"
@@ -2603,7 +2605,7 @@ ru:
   label_none_parentheses: "(нет)"
   label_not_contains: "не содержит"
   label_not_equals: "не"
-  label_life_cycle_step_plural: "Project lifecycle"
+  label_life_cycle_step_plural: "Жизненный цикл проекта"
   label_on: "на"
   label_operator_all: "не пусто"
   label_operator_none: "пусто"
@@ -2665,7 +2667,7 @@ ru:
   label_project_new: "Новый проект"
   label_project_plural: "Проекты"
   label_project_list_plural: "Списки проектов"
-  label_project_lifecycle: "Project lifecycle"
+  label_project_lifecycle: "Жизненный цикл проекта"
   label_project_attributes_plural: "Атрибуты проекта"
   label_project_custom_field_plural: "Атрибуты проекта"
   label_project_settings: "Настройки проекта"
@@ -2945,13 +2947,13 @@ ru:
         prefix: "Получено из-за настройки уведомления: %{reason}"
         date_alert_start_date: "Дата оповещения"
         date_alert_due_date: "Дата оповещения"
-        reminder: "Reminder"
+        reminder: "Напоминание"
       see_all: "Показать все"
       updated_at: "Обновлено в %{timestamp} пользователем %{user}"
     reminder_notifications:
-      subject: "Reminder: %{note}"
-      heading: "You have a new reminder"
-      note: "Note: “%{note}”"
+      subject: "Напоминание: %{note}"
+      heading: "У вас новое напоминание"
+      note: "Примечание: “%{note}”"
     sharing:
       work_packages:
         allowed_actions: "Вы можете %{allowed_actions} этот пакет работ. Это может измениться в зависимости от роли и разрешений вашего проекта."
@@ -3109,7 +3111,7 @@ ru:
   notice_bad_request: "Неправильный запрос."
   notice_not_authorized: "Вы не авторизованы для доступа к этой странице."
   notice_not_authorized_archived_project: "Проект, к которому Вы пытаетесь получить доступ, заархивирован."
-  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
+  notice_requires_enterprise_token: "Токен Enterprise отсутствует или не разрешает доступ к этой странице."
   notice_password_confirmation_failed: "Пароль не правильный. Продолжить нельзя."
   notice_principals_found_multiple: "Найдено %{number} результатов. Нажмите <TAB> для перехода к первому."
   notice_principals_found_single: "Найден один результат. Нажмите <TAB> для перехода к нему."
@@ -3198,7 +3200,7 @@ ru:
   permission_edit_own_time_entries: "Редактировать собственные учетные записи о времени"
   permission_edit_project: "Редактировать проект"
   permission_edit_project_attributes: "Редактирование атрибутов проекта"
-  permission_edit_project_stages_and_gates: "Edit project stages and gates"
+  permission_edit_project_stages_and_gates: "Редактировать этапы и стадии проекта"
   permission_edit_reportings: "Редактировать отчеты"
   permission_edit_time_entries: "Править трудозатраты других пользователей"
   permission_edit_timelines: "Редактировать графики"
@@ -3228,8 +3230,8 @@ ru:
   permission_search_project: "Поиск проекта"
   permission_select_custom_fields: "Выберите настраиваемые поля"
   permission_select_project_custom_fields: "Выберите атрибуты проекта"
-  permission_select_project_life_cycle: "Select project stages and gates"
-  permission_select_project_life_cycle_explanation: "Activate/Deactivate the stages and gates in a project. Enables the user to select the lifecycle appropriate for the project as inactive stages and gates will not be visible in the project overview page nor the project list."
+  permission_select_project_life_cycle: "Выберите этапы и стадии проекта"
+  permission_select_project_life_cycle_explanation: "Активировать/деактивировать этапы и стадии в проекте. Позволяет пользователю выбрать жизненный цикл, подходящий для данного проекта, поскольку неактивные этапы и стадии не будут видны ни на странице обзора проекта, ни в списке проектов."
   permission_select_project_modules: "Выбор модулей проекта"
   permission_share_work_packages: "Поделиться пакетами работ"
   permission_manage_types: "Выберите типы"
@@ -3254,7 +3256,7 @@ ru:
   permission_work_package_assigned_explanation: "Пакеты работ могут быть привязаны к пользователям и группам в зависимости от этой роли в рамках соответствующего проекта"
   permission_view_project_activity: "Просмотр деятельности по проекту"
   permission_view_project_attributes: "Просмотр атрибутов проекта"
-  permission_view_project_stages_and_gates: "View project stages and gates"
+  permission_view_project_stages_and_gates: "Просмотр этапов и стадий проекта"
   permission_save_bcf_queries: "Сохранить запросы BCF"
   permission_manage_public_bcf_queries: "Управление публичными BCF запросами"
   permission_edit_attribute_help_texts: "Редактировать атрибут справки"
@@ -3286,9 +3288,9 @@ ru:
       are_you_sure: "Уверены, что хотите архивизировать проект %{name}%?"
       archived: "Архивирован"
     count:
-      zero: "0 projects"
-      one: "1 project"
-      other: "%{count} projects"
+      zero: "0 проектов"
+      one: "1 проект"
+      other: "%{count} проект(ов/а)"
   project_module_activity: "Деятельность"
   project_module_forums: "Форумы"
   project_module_work_package_tracking: "Комплекс работ"
@@ -3420,7 +3422,7 @@ ru:
     activated: "активирован"
     deactivated: "деактивирован"
   search_input_placeholder: "Поиск ..."
-  setting_apiv3_cors_title: "Cross-Origin Resource Sharing (CORS)"
+  setting_apiv3_cors_title: "Совместное использование ресурсов между источниками (Cross-Origin Resource Sharing, CORS)"
   setting_apiv3_cors_enabled: "Включить CORS"
   setting_apiv3_cors_origins: "Разделение ресурсов (CORS) разрешено в API V3"
   setting_apiv3_cors_origins_text_html: >
@@ -3647,26 +3649,26 @@ ru:
         heading: "Новый атрибут"
         description: "Изменения этого атрибута проекта будут отражены во всех проектах, где он включен. Обязательные атрибуты не могут быть отключены для каждого проекта."
     project_life_cycle_step_definitions:
-      heading: "Project lifecycle"
-      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
-      label_add: "Add"
-      label_add_description: "Add lifecycle definition"
-      label_add_stage: "Stage"
-      label_add_gate: "Gate"
+      heading: "Жизненный цикл проекта"
+      heading_description: "Жизненный цикл проекта состоит из этапов и стадий, которые структурируют ваши проекты. Они появляются на странице обзора проекта и доступны в списке проектов. Отдельные этапы и стадии можно выбрать для настройки проекта, но изменение порядка на уровне проекта невозможно."
+      label_add: "Добавить"
+      label_add_description: "Добавить описание жизненного цикла"
+      label_add_stage: "Этап"
+      label_add_gate: "Стадия"
       filter:
-        label: "Search project stage or gate"
-      section_header: "Stages and gates"
-      non_defined: "Neither stages nor gates are currently defined."
+        label: "Поиск этапа или стадии проекта"
+      section_header: "Этапы и стадии"
+      non_defined: "В настоящее время не определены ни этапы, ни стадии."
       new:
-        description: "Changes to this project step will be reflected in all projects where it is enabled."
+        description: "Изменения в этом шаге проекта будут отражены во всех проектах, где он включен."
       new_stage:
-        heading: "New stage"
+        heading: "Новый этап"
       new_gate:
-        heading: "New gate"
+        heading: "Новая стадия"
       edit_stage:
-        heading: "Edit stage"
+        heading: "Изменить этап"
       edit_gate:
-        heading: "Edit gate"
+        heading: "Изменить стадию"
     projects:
       missing_dependencies: "Был проверен модуль проекта %{module}, который зависит от %{dependencies}. Вам также необходимо проверить эти зависимости."
       section_new_projects: "Настройки для новых проектов"
@@ -3700,7 +3702,7 @@ ru:
   text_are_you_sure_continue: "Вы уверены, что хотите продолжить?"
   text_are_you_sure_with_children: "Удалить пакет работ и все дочерние пакеты работ?"
   text_are_you_sure_with_project_custom_fields: "Удаление этого атрибута также приведет к удалению его значений во всех проектах. Вы уверены, что хотите это сделать?"
-  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
+  text_are_you_sure_with_project_life_cycle_step: "Удаление этого шага также приведет к удалению его использования во всех проектах. Вы уверены, что хотите это сделать?"
   text_assign_to_project: "Назначить на проект"
   text_form_configuration: >
     Вы можете настроить, какие поля будут показываться в формах пакетов работ. Вы можете свободно сгруппировать поля с учетом потребностей вашего домена.
@@ -4149,8 +4151,8 @@ ru:
       builtin: Встроенное приложение
       confidential: Конфиденциально
       singular: "Приложение OAuth"
-      scopes: "Scopes"
-      client_credentials: "Client credentials"
+      scopes: "Области"
+      client_credentials: "Учетные данные клиента"
       plural: "OAuth приложения"
       named: "OAuth приложение '%{name}'"
       new: "Новое приложение OAuth"

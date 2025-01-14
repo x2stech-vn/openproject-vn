@@ -30,7 +30,7 @@
 
 require "spec_helper"
 
-RSpec.describe "custom fields of type hierarchy", :js, :with_cuprite do
+RSpec.describe "custom fields of type hierarchy", :js do
   let(:admin) { create(:admin) }
   let(:custom_field_index_page) { Pages::CustomFields::IndexPage.new }
   let(:new_custom_field_page) { Pages::CustomFields::NewPage.new }

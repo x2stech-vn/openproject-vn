@@ -24,6 +24,6 @@ export function registerDialogStreamAction() {
     setTimeout(() => {
       const width = dialog.offsetWidth;
       dialog.style.width = `${width + 1}px`;
-    }, 50);
+    }, 100);
   };
 }

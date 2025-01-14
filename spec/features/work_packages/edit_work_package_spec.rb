@@ -1,7 +1,7 @@
 require "spec_helper"
 require "features/page_objects/notification"
 
-RSpec.describe "edit work package", :js, :with_cuprite do
+RSpec.describe "edit work package", :js do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
 
   let!(:standard_global_role) { create(:empty_global_role) }

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "Watcher tab", :js, :selenium, :with_cuprite do
+RSpec.describe "Watcher tab", :js, :selenium do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
 
   let!(:standard_global_role) { create(:empty_global_role) }

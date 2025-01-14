@@ -30,7 +30,9 @@ require "spec_helper"
 
 require_relative "../../support/pages/my/page"
 
-RSpec.describe "Arbitrary WorkPackage query table widget on my page", :js do
+RSpec.describe "Arbitrary WorkPackage query table widget on my page",
+               :js,
+               :selenium do
   let!(:type) { create(:type) }
   let!(:other_type) { create(:type) }
   let!(:priority) { create(:default_priority) }

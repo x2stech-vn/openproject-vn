@@ -29,8 +29,7 @@
 require "spec_helper"
 
 RSpec.describe "Wysiwyg work package mentions",
-               :js,
-               :with_cuprite do
+               :js do
   let!(:user) do
     create(:admin, firstname: "MeMyself", lastname: "AndI",
                    member_with_permissions: { project => %i[view_work_packages edit_work_packages] })

@@ -4,8 +4,7 @@ require "spec_helper"
 
 RSpec.describe "Work Package Activity Tab",
                "Comments by Gitlab",
-               :js,
-               :with_cuprite do
+               :js do
   shared_let(:gitlab_system_user) { create(:admin, firstname: "Gitlab", lastname: "System User") }
   shared_let(:admin) { create(:admin) }
 

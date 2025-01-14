@@ -661,7 +661,7 @@ zh-CN:
     lag:
       subject: "间隔"
       title: "间隔(天数)"
-      caption: "两个工作包之间相隔的工作日数"
+      caption: "两个工作包之间的最低工作日数。"
     relations:
       label_relates_singular: "关联到"
       label_relates_plural: "关联到"
@@ -859,8 +859,8 @@ zh-CN:
         is_required: "在所有项目中应用"
         custom_field_section: 单元
       project/life_cycle_step_definition:
-        name: "Name"
-        color: "Color"
+        name: "名称"
+        color: "颜色"
       query:
         column_names: "列"
         relations_to_type_column: "与%{type} 的关系"
@@ -1765,8 +1765,10 @@ zh-CN:
     upsale:
       title: "企业附加组件"
       link_title: "更多信息"
+      automatic_subject_generation:
+        description: "使用引用的属性和文本自动生成主题。"
       customize_life_cycle:
-        description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
+        description: "创建和组织与 PM2 项目周期规划不同的项目阶段和关口。"
       form_configuration:
         description: "使用以下附加组件自定义表单配置："
         add_groups: "添加新属性组"
@@ -2551,7 +2553,7 @@ zh-CN:
   label_project_new: "新的项目"
   label_project_plural: "项目"
   label_project_list_plural: "项目列表"
-  label_project_lifecycle: "Project lifecycle"
+  label_project_lifecycle: "项目生命周期"
   label_project_attributes_plural: "项目属性"
   label_project_custom_field_plural: "项目属性"
   label_project_settings: "项目设置"
@@ -2991,7 +2993,7 @@ zh-CN:
   notice_bad_request: "错误的请求。"
   notice_not_authorized: "您无权访问此页。"
   notice_not_authorized_archived_project: "您尝试访问的项目已存档。"
-  notice_requires_enterprise_token: "Enterprise token missing or doesn't allow access to this page."
+  notice_requires_enterprise_token: "企业令牌缺失或不允许访问此页面。"
   notice_password_confirmation_failed: "您的密码不正确。无法继续。"
   notice_principals_found_multiple: "找到 %{number} 条结果。\n 点击以关注第一条结果。"
   notice_principals_found_single: "这有一个结果。\n点击来关注它。"
@@ -3164,9 +3166,9 @@ zh-CN:
       are_you_sure: "是否确定想要归档项目 '%{name}'？"
       archived: "已存档"
     count:
-      zero: "0 projects"
-      one: "1 project"
-      other: "%{count} projects"
+      zero: "0 个项目"
+      one: "1个项目"
+      other: "%{count} 个项目"
   project_module_activity: "活动"
   project_module_forums: "论坛"
   project_module_work_package_tracking: "工作包"
@@ -3525,26 +3527,26 @@ zh-CN:
         heading: "新建属性"
         description: "对该项目属性的更改将反映在启用该属性的所有项目中。不能按项目禁用必填属性。"
     project_life_cycle_step_definitions:
-      heading: "Project lifecycle"
-      heading_description: "The project lifecycle consists of stages and gates that structure your projects. They will appear in the overview page of a project and be available in the projects list. Individual stages and gates can be selected to customize a project but reordering is not possible on a project level."
-      label_add: "Add"
-      label_add_description: "Add lifecycle definition"
-      label_add_stage: "Stage"
-      label_add_gate: "Gate"
+      heading: "项目生命周期"
+      heading_description: "项目生命周期由阶段和关口组成，用于构建项目。它们将显示在项目的概述页面，并在项目列表中提供。可以选择单个阶段和关口来定制项目，但无法在项目级别上重新排序。"
+      label_add: "添加"
+      label_add_description: "添加生命周期定义"
+      label_add_stage: "阶段"
+      label_add_gate: "关口"
       filter:
-        label: "Search project stage or gate"
-      section_header: "Stages and gates"
-      non_defined: "Neither stages nor gates are currently defined."
+        label: "搜索项目阶段或关口"
+      section_header: "阶段和关口"
+      non_defined: "目前既未定义阶段也未定关口。"
       new:
-        description: "Changes to this project step will be reflected in all projects where it is enabled."
+        description: "对该项目步骤的更改将反映在启用该步骤的所有项目中。"
       new_stage:
-        heading: "New stage"
+        heading: "新阶段"
       new_gate:
-        heading: "New gate"
+        heading: "新关口"
       edit_stage:
-        heading: "Edit stage"
+        heading: "编辑阶段"
       edit_gate:
-        heading: "Edit gate"
+        heading: "编辑阶段"
     projects:
       missing_dependencies: "已检查依赖于 %{dependencies} 的项目模块 %{module}。您也需要检查这些依赖项。"
       section_new_projects: "新项目的设置"
@@ -3578,7 +3580,7 @@ zh-CN:
   text_are_you_sure_continue: "确定要继续吗？"
   text_are_you_sure_with_children: "删除工作包和所有子工作包吗？"
   text_are_you_sure_with_project_custom_fields: "删除该属性也会删除其在所有项目中的值。您确定要这样做吗？"
-  text_are_you_sure_with_project_life_cycle_step: "Deleting this step will also delete its usages in all projects. Are you sure you want to do this?"
+  text_are_you_sure_with_project_life_cycle_step: "删除该步骤也会删除其在所有项目中的使用。您确定要这样做吗？"
   text_assign_to_project: "分配给项目"
   text_form_configuration: >
     您可以自定义哪些字段将显示在工作包窗体中。您可以自由地对字段进行分组, 以反映您的域的需求。

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) the OpenProject GmbH
@@ -71,7 +73,9 @@ class BaseTypeService
   def set_params_and_validate(params)
     # Only set attribute groups when it exists
     # (Regression #28400)
-    set_attribute_groups(params) unless params[:attribute_groups].nil?
+    set_attribute_groups(params) if params[:attribute_groups]
+
+    set_subject_pattern(params) if params[:subject_configuration]
 
     # This should go before `set_scalar_params` call to get the
     # project_ids, custom_field_ids diffs from the type and the params.
@@ -92,7 +96,7 @@ class BaseTypeService
   end
 
   def set_scalar_params(params)
-    type.attributes = params.except(:attribute_groups)
+    type.attributes = params.except(:attribute_groups, :subject_configuration, :subject_pattern)
   end
 
   def set_attribute_groups(params)
@@ -101,6 +105,12 @@ class BaseTypeService
     else
       type.attribute_groups = parse_attribute_groups_params(params)
     end
+  end
+
+  def set_subject_pattern(params)
+    type.patterns = type.patterns.update_pattern(:subject,
+                                                 blueprint: params[:subject_pattern],
+                                                 enabled: params[:subject_configuration] == "auto").value!
   end
 
   def parse_attribute_groups_params(params)

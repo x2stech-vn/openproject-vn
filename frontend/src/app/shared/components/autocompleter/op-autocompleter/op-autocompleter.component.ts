@@ -119,6 +119,8 @@ export class OpAutocompleterComponent<T extends IAutocompleteItem = IAutocomplet
 
   @Input() public inputBindValue = 'id';
 
+  @Input() public additionalClassProperty:string|null = null;
+
   @Input() public hiddenFieldAction = '';
 
   @Input() public required?:boolean = false;

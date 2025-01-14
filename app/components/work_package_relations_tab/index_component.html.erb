@@ -18,6 +18,8 @@
               t(:label_relation)
             end
 
+            render_child_menu_items(menu)
+
             if should_render_add_relations?
               Relation::TYPES.each do |relation_type, type_configuration_hash|
                 label_key = "#{I18N_NAMESPACE}.relations.#{type_configuration_hash[:name]}_singular"
@@ -31,19 +33,6 @@
                 ) do |item|
                   item.with_description.with_content(t("#{I18N_NAMESPACE}.relations.#{relation_type}_description"))
                 end
-              end
-            end
-
-            if should_render_add_child?
-              menu.with_item(
-                label: t("#{I18N_NAMESPACE}.relations.label_child_singular").capitalize,
-                href: new_work_package_child_path(@work_package),
-                test_selector: new_button_test_selector(relation_type: :child),
-                content_arguments: {
-                  data: { turbo_stream: true }
-                }
-              ) do |item|
-                item.with_description.with_content(t("#{I18N_NAMESPACE}.relations.child_description"))
               end
             end
           end

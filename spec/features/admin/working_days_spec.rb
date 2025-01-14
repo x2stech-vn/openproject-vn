@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Working Days", :js, :with_cuprite do
+RSpec.describe "Working Days", :js do
   create_shared_association_defaults_for_work_package_factory
 
   shared_let(:week_days) { week_with_saturday_and_sunday_as_weekend }

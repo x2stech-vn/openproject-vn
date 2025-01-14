@@ -3,7 +3,6 @@ require "features/page_objects/notification"
 
 RSpec.describe "Notification center date alert and mention",
                :js,
-               :with_cuprite,
                with_settings: { journal_aggregation_time_minutes: 0 } do
   shared_let(:project) { create(:project) }
   shared_let(:actor) { create(:user, firstname: "Actor", lastname: "User") }

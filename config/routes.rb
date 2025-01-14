@@ -339,12 +339,19 @@ Rails.application.routes.draw do
       end
 
       # states managed by client-side routing on work_package#index
-      get "(/*state)" => "work_packages#index", on: :collection, as: ""
+      get "(/*state)" => "work_packages#index", on: :collection, as: "", constraints: { state: /(?!(dialog)).+/ }
+
       get "/create_new" => "work_packages#index", on: :collection, as: "new_split"
       get "/new" => "work_packages#index", on: :collection, as: "new"
 
       # state for show view in project context
-      get "(/*state)" => "work_packages#show", on: :member, as: ""
+      get "(/*state)" => "work_packages#show", on: :member, as: "", constraints: { id: /\d+/, state: /(?!(dialog)).+/ }
+    end
+
+    namespace :work_packages do
+      resource :dialog, only: %i[new create] do
+        post :refresh_form
+      end
     end
 
     resources :activity, :activities, only: :index, controller: "activities" do
@@ -620,7 +627,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :children, only: %i[new create destroy], controller: "work_package_children"
+    resources :children_relations, only: %i[new create destroy], controller: "work_package_children_relations"
 
     resource :progress, only: %i[new edit update], controller: "work_packages/progress"
     collection do

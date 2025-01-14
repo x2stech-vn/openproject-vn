@@ -28,7 +28,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Work package activity", :js, :with_cuprite do
+RSpec.describe "Work package activity", :js do
   shared_let(:admin) { create(:admin) }
   shared_let(:project) { create(:project) }
 

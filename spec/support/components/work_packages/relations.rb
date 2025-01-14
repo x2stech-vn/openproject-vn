@@ -39,7 +39,7 @@ module Components
 
       attr_reader :work_package
 
-      def initialize(work_package)
+      def initialize(work_package = nil)
         @work_package = work_package
       end
 
@@ -77,15 +77,42 @@ module Components
 
       def expect_no_row(relatable)
         actual_relatable = find_relatable(relatable)
-        expect(page).not_to have_test_selector("op-relation-row-#{actual_relatable.id}")
+        expect(page).not_to have_test_selector("op-relation-row-#{actual_relatable.id}"),
+                            "expected no relation row for work package " \
+                            "##{actual_relatable.id} #{actual_relatable.subject.inspect}"
       end
 
       def select_relation_type(relation_type)
-        page.find_test_selector("new-relation-action-menu").click
-
-        within page.find_by_id("new-relation-action-menu-list") do
+        within_new_relation_action_menu do
           click_link_or_button relation_type
         end
+      end
+
+      def expect_new_relation_type(relation_type)
+        within_new_relation_action_menu do
+          expect(page).to have_link(relation_type, wait: 1)
+        end
+      end
+
+      def expect_no_new_relation_type(relation_type)
+        within_new_relation_action_menu do
+          expect(page).to have_no_link(relation_type, wait: 1)
+        end
+      end
+
+      def open_new_relation_action_menu
+        return if new_relation_action_menu.visible?
+
+        new_relation_button.click
+      end
+
+      def new_relation_action_menu
+        action_menu_id = new_relation_button["aria-controls"]
+        page.find(id: action_menu_id, visible: :all)
+      end
+
+      def new_relation_button
+        page.find_test_selector("new-relation-action-menu").find_button
       end
 
       def remove_relation(relatable)
@@ -160,7 +187,7 @@ module Components
           fill_in "Description", with: description
         end
 
-        click_link_or_button "Save"
+        click_link_or_button "Add"
 
         wait_for_reload if using_cuprite?
 
@@ -278,7 +305,7 @@ module Components
         SeleniumHubWaiter.wait
 
         retry_block do
-          select_relation_type "Child"
+          select_relation_type "Existing child"
         end
 
         within "##{WorkPackageRelationsTab::AddWorkPackageChildFormComponent::DIALOG_ID}" do
@@ -316,6 +343,13 @@ module Components
         end
 
         expect_no_row(work_package)
+      end
+
+      private
+
+      def within_new_relation_action_menu(&)
+        open_new_relation_action_menu
+        within(new_relation_action_menu, &)
       end
     end
   end

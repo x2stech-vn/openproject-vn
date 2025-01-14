@@ -176,8 +176,12 @@ module Pages
     def navigate_to_modules_menu_item(link_title)
       visit root_path
 
-      within "#op-app-header--modules-menu-list", visible: false do
-        click_on link_title, visible: false
+      within ".op-app-header" do
+        click_on "Modules"
+      end
+
+      within "#op-app-header--modules-menu-list", visible: :all do
+        click_on link_title, visible: :all
       end
     end
   end

@@ -30,7 +30,7 @@
 
 require "spec_helper"
 
-RSpec.describe "Projects life cycle settings", :js, :with_cuprite, with_flag: { stages_and_gates: true } do
+RSpec.describe "Projects life cycle settings", :js, with_flag: { stages_and_gates: true } do
   shared_let(:initiating_stage) { create(:project_stage_definition, name: "Initiating") }
   shared_let(:ready_to_execute_gate) { create(:project_gate_definition, name: "Ready to Execute") }
   shared_let(:executing_stage) { create(:project_stage_definition, name: "Executing") }

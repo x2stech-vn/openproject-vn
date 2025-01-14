@@ -60,12 +60,11 @@ class WorkPackageRelationsController < ApplicationController
                                              .call(create_relation_params)
 
     if service_result.success?
-      target_work_package_id = params[:relation][:to_id]
       @work_package.reload
       component = WorkPackageRelationsTab::IndexComponent.new(work_package: @work_package,
-                                                              relations: @work_package.relations,
-                                                              children: @work_package.children,
-                                                              scroll_to_id: target_work_package_id)
+                                                              relations: @work_package.relations.visible,
+                                                              children: @work_package.children.visible,
+                                                              relation_to_scroll_to: service_result.result)
       replace_via_turbo_stream(component:)
       respond_with_turbo_streams
     else
@@ -82,8 +81,8 @@ class WorkPackageRelationsController < ApplicationController
     if service_result.success?
       @work_package.reload
       component = WorkPackageRelationsTab::IndexComponent.new(work_package: @work_package,
-                                                              relations: @work_package.relations,
-                                                              children: @work_package.children)
+                                                              relations: @work_package.relations.visible,
+                                                              children: @work_package.children.visible)
       replace_via_turbo_stream(component:)
       respond_with_turbo_streams
     else
@@ -95,11 +94,12 @@ class WorkPackageRelationsController < ApplicationController
     service_result = Relations::DeleteService.new(user: current_user, model: @relation).call
 
     if service_result.success?
-      @children = WorkPackage.where(parent_id: @work_package.id)
+      @children = WorkPackage.where(parent_id: @work_package.id).visible
       @relations = @work_package
         .relations
         .reload
         .includes(:to, :from)
+        .visible
 
       component = WorkPackageRelationsTab::IndexComponent.new(work_package: @work_package,
                                                               relations: @relations,

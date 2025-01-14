@@ -43,7 +43,7 @@ ms:
           Folder yang dikendalikan secara automatik masih belum ditemui. Sila tunggu sebentar, muat semula halaman untuk dapatkan data terkini, dan cuba lagi.
         managed_project_folder_no_access: >
           Anda masih belum mempunyai akses ke folder projek yang dikendalikan. Sila tunggu sebentar dan cuba lagi.
-        cannot_create_folder: Gagal membuat folder. Elakkan menggunakan aksara dan simbol khas.
+        cannot_create_folder: Failed to create folder. Avoid using special characters and symbols and make sure the folder does not exist already.
         upload_keep_both: "Simpan kedua-duanya"
         upload_replace: "Gantikan"
       file_links:

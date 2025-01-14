@@ -664,7 +664,7 @@ ko:
     lag:
       subject: "지연"
       title: "지연(일)"
-      caption: "두 작업 패키지 간의 근무일 수 차이"
+      caption: "The minimum number of working days to keep in between the two work packages."
     relations:
       label_relates_singular: "관련 항목"
       label_relates_plural: "관련 항목"
@@ -1768,6 +1768,8 @@ ko:
     upsale:
       title: "Enterprise add-on"
       link_title: "More information"
+      automatic_subject_generation:
+        description: "Create automatically generated subjects using referenced attributes and text."
       customize_life_cycle:
         description: "Create and organize different project stages and gates than the ones provided by PM2 project cycle planning."
       form_configuration:

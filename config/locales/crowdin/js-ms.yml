@@ -357,10 +357,10 @@ ms:
           learn_about: "Ketahui lebih lanjut mengenai fitur-fitur baharu."
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                Keluaran ini membawakan pelbagai ciri dan penambahbaikan untuk anda, mis. <br> <ul class="%{list_styling_class}"> <li>Medan tersuai hierarki jenis (Enterprise add-on).</li> <li>Reka bentuk semula tab Perhubungan dalam pakej kerja.</li> < li>Reka bentuk semula halaman indeks Mesyuarat.</li> <li>Pemecahan halaman manual dalam eksport pakej kerja PDF.</li> <li>Mod Zen untuk senarai projek.</li> </ul>
+                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Set reminders for work packages to generate date alert notifications.</li> <li>Create new folders directly from the location picker for file storage.</li> <li>Specify a required lag between work packages successors and predecessors.</li> <li>Enable ordering and grouping for work packages on values of custom fields type hierarchy.</li> <li>Export time entries as PDF timesheets.</li> <li>Add a popover displaying user information when hovering.</li> </ul>
     ical_sharing_modal:
       title: "Langgan kalendar"
       inital_setup_error_message: "Ralat berlaku ketika sedang mengambil data."

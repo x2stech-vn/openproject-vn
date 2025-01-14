@@ -29,8 +29,7 @@
 require "spec_helper"
 require_relative "../shared_context"
 
-RSpec.describe "Edit project stages and gates on project overview page", :js, :with_cuprite,
-               with_flag: { stages_and_gates: true } do
+RSpec.describe "Edit project stages and gates on project overview page", :js, with_flag: { stages_and_gates: true } do
   include_context "with seeded projects and stages and gates"
   shared_let(:overview) { create :overview, project: }
 

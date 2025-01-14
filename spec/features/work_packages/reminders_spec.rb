@@ -31,8 +31,7 @@
 require "spec_helper"
 
 RSpec.describe "Work package reminder modal",
-               :js,
-               :with_cuprite do
+               :js do
   let!(:project) { create(:project) }
   let!(:work_package) { create(:work_package, project:) }
   let!(:role_that_allows_managing_own_reminders) do

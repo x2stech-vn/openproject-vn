@@ -29,8 +29,7 @@
 require "spec_helper"
 
 RSpec.describe "Projects", "creation",
-               :js,
-               :with_cuprite do
+               :js do
   shared_let(:name_field) { FormFields::InputFormField.new :name }
   shared_let(:project_custom_field_section) { create(:project_custom_field_section, name: "Section A") }
 

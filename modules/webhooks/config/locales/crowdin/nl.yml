@@ -8,7 +8,7 @@ nl:
         url: 'Payload URL'
         secret: 'Handtekening geheim'
         events: 'Evenementen'
-        enabled: 'Enabled'
+        enabled: 'Ingeschakeld'
         projects: 'Ingeschakelde projecten'
       webhooks/log:
         event_name: 'Naam van gebeurtenis'

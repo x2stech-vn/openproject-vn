@@ -34,8 +34,7 @@ require_module_spec_helper
 # We decrease the notification polling interval because some portions of the JS code rely on something triggering
 # the Angular change detection. This is usually done by the notification polling, but we don't want to wait
 RSpec.describe "Admin lists project mappings for a storage",
-               :js, :storage_server_helpers, :webmock, :with_cuprite,
-               with_settings: { notifications_polling_interval: 1_000 } do
+               :js, :storage_server_helpers, :webmock, with_settings: { notifications_polling_interval: 1_000 } do
   shared_let(:admin) { create(:admin, preferences: { time_zone: "Etc/UTC" }) }
   shared_let(:non_admin) { create(:user) }
 

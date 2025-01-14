@@ -34,7 +34,6 @@ require_relative "../../support/pages/meetings/index"
 
 RSpec.describe "Structured meetings CRUD",
                :js,
-               :with_cuprite,
                with_flag: { recurring_meetings: true } do
   include Components::Autocompleter::NgSelectAutocompleteHelpers
 

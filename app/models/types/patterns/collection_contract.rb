@@ -32,7 +32,7 @@ module Types
   module Patterns
     class CollectionContract < Dry::Validation::Contract
       params do
-        required(:subject).hash do
+        optional(:subject).hash do
           required(:blueprint).filled(:string)
           required(:enabled).filled(:bool)
         end

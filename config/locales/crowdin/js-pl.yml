@@ -357,10 +357,10 @@ pl:
           learn_about: "Dowiedz się więcej o nowych funkcjach"
           #Include the version to invalidate outdated translations in other locales.
           #Otherwise, e.g. chinese might still have the translations for 10.0 in the 12.0 release.
-          "15_1":
+          "15_2":
             standard:
               new_features_html: >
-                Ta wersja wprowadza różne funkcje i ulepszenia, np. <br> <ul class="%{list_styling_class}"> <li>Niestandardowe pola hierarchii typów (dodatek wersji Enterprise).</li> <li>Przeprojektowanie karty Relacje w pakietach roboczych.</li> <li>Przeprojektowanie strony indeksu Spotkania.</li> <li>Ręczne podziały stron w eksporcie pakietów roboczych w formacie PDF.</li> <li>Tryb Zen dla list projektów.</li> </ul>
+                The release brings various features and improvements for you, e.g. <br> <ul class="%{list_styling_class}"> <li>Set reminders for work packages to generate date alert notifications.</li> <li>Create new folders directly from the location picker for file storage.</li> <li>Specify a required lag between work packages successors and predecessors.</li> <li>Enable ordering and grouping for work packages on values of custom fields type hierarchy.</li> <li>Export time entries as PDF timesheets.</li> <li>Add a popover displaying user information when hovering.</li> </ul>
     ical_sharing_modal:
       title: "Subskrybuj kalendarz"
       inital_setup_error_message: "Podczas pobierania danych wystąpił błąd."

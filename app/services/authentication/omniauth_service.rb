@@ -165,7 +165,7 @@ module Authentication
     def remap_existing_user
       return unless Setting.oauth_allow_remapping_of_existing_users?
 
-      User.not_builtin.find_by_login(user_attributes[:login]) # rubocop:disable Rails/DynamicFindBy
+      User.not_builtin.find_by_login(user_attributes[:login])
     end
 
     ##
@@ -285,7 +285,7 @@ module Authentication
     # Try to provide some context of the auth_hash in case of errors
     def auth_uid
       hash = auth_hash || {}
-      hash.dig(:info, :uid) || hash.dig(:uid) || "unknown"
+      hash.dig(:info, :uid) || hash[:uid] || "unknown"
     end
   end
 end

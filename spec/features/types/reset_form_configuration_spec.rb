@@ -28,7 +28,9 @@
 
 require "spec_helper"
 
-RSpec.describe "Reset form configuration", :js do
+RSpec.describe "Reset form configuration",
+               :js,
+               :selenium do
   shared_let(:admin) { create(:admin) }
   let(:type) { create(:type) }
 
