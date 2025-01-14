@@ -148,13 +148,13 @@ class TimeEntriesController < ApplicationController
       end
 
     end
-  rescue ActiveRecord::NotFound
+  rescue ActiveRecord::RecordNotFound
     deny_access(not_found: true)
   end
 
   def load_and_authorize_optional_work_package
     if params[:work_package_id].present?
-      @work_package = WorkPackage.visible.find_by(id: params[:work_package_id])
+      @work_package = WorkPackage.visible.find(params[:work_package_id])
       @project = @work_package.project
 
       if !User.current.allowed_in_project?(:log_time, @project) &&
@@ -162,14 +162,14 @@ class TimeEntriesController < ApplicationController
         deny_access
       end
     end
-  rescue ActiveRecord::NotFound
+  rescue ActiveRecord::RecordNotFound
     deny_access(not_found: true)
   end
 
   def load_or_build_and_authorize_time_entry
     @time_entry = if params[:id]
                     TimeEntry.visible.find_by(id: params[:id]).tap do |entry|
-                      if entry && !TimeEntries::UpdateContract.new(entry, current_user).user_allowed_to_update?
+                      if entry.blank? || !TimeEntries::UpdateContract.new(entry, current_user).user_allowed_to_update?
                         deny_access(not_found: true)
                       end
                     end
