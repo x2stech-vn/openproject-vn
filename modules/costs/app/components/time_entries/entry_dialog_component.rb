@@ -31,6 +31,7 @@
 module TimeEntries
   class EntryDialogComponent < ApplicationComponent
     include OpTurbo::Streamable
+    include OpPrimer::ComponentHelpers
 
     MODAL_ID = "time-entry-dialog"
 
