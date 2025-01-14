@@ -37,8 +37,9 @@ class TimeEntriesController < ApplicationController
   with_options only: [:dialog] do
     before_action :load_and_authorize_optional_project
     before_action :load_and_authorize_optional_work_package
-    before_action :load_or_build_and_authorize_time_entry
   end
+
+  before_action :load_or_build_and_authorize_time_entry, only: %i[dialog update destroy]
 
   authorization_checked! :dialog, :create, :update, :user_tz_caption, :refresh_form, :destroy
 
@@ -76,8 +77,6 @@ class TimeEntriesController < ApplicationController
 
     time_entry = call.result
 
-    # TODO Some logic to figure out what fields we want to show (user, etc)
-
     replace_via_turbo_stream(
       component: TimeEntries::TimeEntryFormComponent.new(time_entry: time_entry, **form_config_options)
     )
@@ -101,10 +100,8 @@ class TimeEntriesController < ApplicationController
   end
 
   def update
-    time_entry = TimeEntry.find_by(id: params[:id])
-
     call = TimeEntries::UpdateService
-      .new(user: current_user, model: time_entry)
+      .new(user: current_user, model: @time_entry)
       .call(permitted_params.time_entries)
 
     @time_entry = call.result
@@ -118,14 +115,12 @@ class TimeEntriesController < ApplicationController
   end
 
   def destroy
-    time_entry = TimeEntry.find_by(id: params[:id])
-
-    call = TimeEntries::DeleteService.new(user: current_user, model: time_entry).call
+    call = TimeEntries::DeleteService.new(user: current_user, model: @time_entry).call
 
     @time_entry = call.result
 
     if call.success?
-      # TODO: Render soimething that closes our dialog
+      close_dialog_via_turbo_stream("#time-entry-dialog")
     else
       form_component = TimeEntries::TimeEntryFormComponent.new(time_entry: @time_entry, **form_config_options)
       update_via_turbo_stream(component: form_component, status: :bad_request)
@@ -172,8 +167,8 @@ class TimeEntriesController < ApplicationController
   end
 
   def load_or_build_and_authorize_time_entry
-    @time_entry = if params[:time_entry_id]
-                    TimeEntry.find_by(id: params[:time_entry_id]).tap do |entry|
+    @time_entry = if params[:id]
+                    TimeEntry.visible.find_by(id: params[:id]).tap do |entry|
                       if entry && !TimeEntries::UpdateContract.new(entry, current_user).user_allowed_to_update?
                         deny_access(not_found: true)
                       end

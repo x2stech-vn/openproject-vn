@@ -343,7 +343,7 @@ export class PathHelperService {
   }
 
   public timeEntryEditDialog(timeEntryId:string) {
-    return `${this.timeEntryDialog()}?time_entry_id=${timeEntryId}`;
+    return `${this.staticBase}/time_entries/${timeEntryId}/dialog`;
   }
 
   public timeEntryWorkPackageDialog(workPackageId:string) {

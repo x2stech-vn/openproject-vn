@@ -100,6 +100,10 @@ module OpTurbo
         .render_in(view_context)
     end
 
+    def close_dialog_via_turbo_stream(target)
+      turbo_streams << OpTurbo::StreamComponent.new(action: :closeDialog, target:).render_in(view_context)
+    end
+
     def turbo_streams
       @turbo_streams ||= []
     end
